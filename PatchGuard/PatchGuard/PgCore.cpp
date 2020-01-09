@@ -307,62 +307,6 @@ void PgCoreDumpPgContext(PVOID pgContext, SIZE_T size)
     }
 }
 
-// 只能解密0~911 比前面的更少
-BOOLEAN PgCoreGetFirstRorKeyAndOffset(ULONG64* lpRorKey, ULONG64* lpOffset, PVOID pgContext, SIZE_T ContextSize, PPG_CORE_INFO pgCore)
-{
-    if (lpRorKey == NULL || lpOffset == NULL || pgContext == NULL || ContextSize == 0 || pgCore == NULL)
-        return false;
-
-    PULONG64 p = (PULONG64)pgContext;
-    ULONG64 offset = 0;
-    
-    for (size_t i = 0; i < ContextSize / 8 - 1 - 1; i++)
-    {
-        if (p[i] == 0 && p[i + 1] == 0)
-        {
-            offset = (ULONG64)&p[i] - (ULONG64)pgContext;
-            p = &p[i];
-            break;
-        }
-    }
-
-    if (offset <= 0xc0)
-    {
-        LOGF_ERROR("not find 0x8000000080\r\n");
-        return false;
-    }
-
-    LOGF_INFO("GetKeyAndOffset -> offset:%p    p:%p\r\n", offset, p);
-
-    ULONG64 rcx = (offset - 0xc0) / 8;
-    ULONG64 rorKey = 0;
-
-    while (offset > 0xc0)
-    {
-        offset = (ULONG64)&p[1] - (ULONG64)pgContext;
-
-        rcx = (offset - 0xc0) / 8;
-
-        rorKey = p[1] ^ 0;
-        rorKey = __ror64(rorKey, rcx);
-        rorKey = __btc64(rorKey, rorKey);
-
-        if ((rorKey ^ p[0]) == 0)
-        {
-            LOGF_DEBUG("find first key:%p    offset:%p    p:%p    *p:%p\r\n", rorKey, offset, &p[1], p[1]);
-            *lpRorKey = rorKey;
-            *lpOffset = offset;
-            return true;
-        }
-
-        p--;
-        offset = offset - 8;
-
-    }
-
-    return false;
-}
-
 BOOLEAN PgCoreGetFirstRorKeyAndOffsetByC3(ULONG64* lpRorKey, ULONG64* lpOffset, PVOID pgContext, SIZE_T ContextSize, PPG_CORE_INFO pgCore)
 {
     if (lpRorKey == NULL || lpOffset == NULL || pgContext == NULL || ContextSize == 0 || pgCore == NULL)
@@ -501,6 +445,20 @@ BOOLEAN PgCoreDecrytionPartDump(PULONG64 pgContext, SIZE_T ContextSize, PPG_CORE
 
 }
 
+BOOLEAN PgCoreCompareFilelds(PULONG64 pg, ULONG64 pFilelds[2], ULONG rcx)
+{
+    auto rorkey = pg[1] ^ pFilelds[1];
+    
+    rorkey = __ror64(rorkey, rcx);
+
+    rorkey = __btc64(rorkey, rorkey);
+
+    if ((rorkey ^ pg[0]) == pFilelds[0])
+        return true;
+    else
+        return false;
+}
+
 BOOLEAN NTAPI PgCorePoolCallback(BOOLEAN bNonPagedPool, PVOID Va, SIZE_T size, UCHAR tag[4], PVOID context)
 {
     if (bNonPagedPool == false)
@@ -520,10 +478,13 @@ BOOLEAN NTAPI PgCorePoolCallback(BOOLEAN bNonPagedPool, PVOID Va, SIZE_T size, U
     PCHAR p = (PCHAR)Va;
 
     PCHAR pEnd = p + size - 0x8 * 4;
+    
+    ULONG offsetHeader = 0;
 
     PULONG64 CompareFields = NULL;
 
     /*
+            rs1
             INIT:00000001409ABA8F                               loc_1409ABA8F:                          ; CODE XREF: CmpAppendDllSection+8E↓j
             INIT:00000001409ABA8F 48 31 84 CA C0 00 00 00                       xor     [rdx+rcx*8+0C0h], rax
             INIT:00000001409ABA97 48 D3 C8                                      ror     rax, cl
@@ -549,45 +510,55 @@ BOOLEAN NTAPI PgCorePoolCallback(BOOLEAN bNonPagedPool, PVOID Va, SIZE_T size, U
             ffffcc02`1f01047f  fffff807`316b0060 nt!ExQueueWorkItem
                                                                                                         rcx = (offset-0xc0) / 8
                                                                                                         // offset = rcx * 8 + 0xc0;
+            rs5.
+            ffff8183`c20a0014  daa1c838`0103c62e
+            .................
+            .................
+            offset:0xc8
+            ffff8183`c20a00dc  00000000`00000000                                                        rcx = 1
+            ffff8183`c20a00e4  00000000`00000000                                                        rcx = 2
+            ffff8183`c20a00ec  00000000`00000000                                                        rcx = 3
+            ffff8183`c20a00f4  fffff802`472b6350 nt!ExAcquireResourceSharedLite                         rcx = 4
+            ffff8183`c20a00fc  fffff802`472b60e0 nt!ExAcquireResourceExclusiveLite                      rcx = 5
+            ffff8183`c20a0104  fffff802`4755c030 nt!ExAllocatePoolWithTag                               rcx = 6
+            ffff8183`c20a010c  fffff802`4755c010 nt!ExFreePool                                          rcx = 7
+           
            */
     do
     {
         CompareFields = (PULONG64)p;
 
-        auto rorkey = pCoreInfo->PgContextFiled[3] ^ CompareFields[3];
+        size_t rcx = 6;
+        // 用nt!ExAcquireResourceExclusiveLite和 nt!ExAcquireResourceSharedLite进行碰撞
+        BOOLEAN bFouned = PgCoreCompareFilelds(CompareFields, pCoreInfo->PgContextFiled, rcx);
 
-        ULONG rcx = 8;
-
-        rorkey = __ror64(rorkey, rcx);
-
-        rorkey = __btc64(rorkey, rorkey);
-
-        if ((rorkey ^ CompareFields[2]) == pCoreInfo->PgContextFiled[2])
+        if (!bFouned)
         {
-            LOGF_INFO("Tag: %.*s, Address: 0x%p, Size: 0x%p\r\n", 4, tag, Va, size);
+            rcx = 5;
+            bFouned = PgCoreCompareFilelds(CompareFields, pCoreInfo->PgContextFiled, rcx);
+        }
 
-            LOGF_INFO("hit pg -> rcx:%p    btckey:%p\r\n", rcx, rorkey);
+        if (bFouned)
+        {
+            if (rcx == 6)
+                offsetHeader = 0x1d; // offset ExAcquireResourceSharedLite - 0xe8 = pg context    0x1d = e8 / 8
+            else
+                offsetHeader = 0x1c; // offset ExAcquireResourceSharedLite - 0xe0 = pg context    0x1c = e0 / 8
 
-            rcx--;
-
-            rorkey = __ror64(rorkey, rcx);
-
-            rorkey = __btc64(rorkey, rorkey);
-
-            LOGF_INFO("next rcx:%p    btckey:%p    %p\r\n", rcx, rorkey, CompareFields[1] ^ pCoreInfo->PgContextFiled[1]);
-
-            if (rorkey != (CompareFields[1] ^ pCoreInfo->PgContextFiled[1]))
-                LOGF_ERROR("error rorkey -> not equal.\r\n");
-
-            auto PgContext = CompareFields - 0x1d; // offset ExAcquireResourceSharedLite - 0xe8 = pg context    0x1d = e8 / 8
+            auto PgContext = CompareFields - offsetHeader;
             auto PgContextSize = size - ((ULONG64)PgContext - (ULONG64)Va);
 
-            LOGF_INFO("PgContext:%p    size:%p\r\n", PgContext, PgContextSize);
+            LOGF_INFO("Tag: %.*s, Address: 0x%p, Size: 0x%p\r\n", 4, tag, Va, size);
+
+            LOGF_INFO("PgContext:%p    size:%p    rcx:%p\r\n", PgContext, PgContextSize, rcx);
 
             //PgCoreDumpPgContext(PgContext, PgContextSize);
             ULONG64 offset = 0;
-            PgCoreGetFirstRorKeyAndOffsetByC3(&rorkey, &offset, PgContext, PgContextSize, (PPG_CORE_INFO)context);
-            PgCoreDecrytionPartDump(PgContext, PgContextSize, (PPG_CORE_INFO)context);
+            ULONG64 rorkey = 0;
+            // 解密c8~第二部分结束
+            //PgCoreGetFirstRorKeyAndOffsetByC3(&rorkey, &offset, PgContext, PgContextSize, (PPG_CORE_INFO)context);
+            // 解密c8~0x988
+            //PgCoreDecrytionPartDump(PgContext, PgContextSize, (PPG_CORE_INFO)context);
 
             return true;
         }

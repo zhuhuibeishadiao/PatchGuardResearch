@@ -17,7 +17,8 @@ RtlMinimalBarrier - RtlMinimalBarrier+0xA00 是明文
 此ret为RtlMinimalBarrier函数尾部代码    
 
 ![pg](https://github.com/zhuhuibeishadiao/PatchGuardResearch/blob/master/doc/pg.PNG)    
-首先我们通过pgContext的前4个函数进行内存碰撞，得到pgContext的首地址(注意,在1809 rs5版本中,rcx的值改变了)    
+首先我们通过pgContext的前2个函数进行内存碰撞，得到pgContext的首地址(注意,在1809 rs5版本中,rcx的值改变了)
+然后通过找到未加密的RtlMinimalBarrier的ret,进行解密.
 具体的细节待全部完成后更新.    
 
 ## 此项目暂不攻破PatchGuard    
@@ -33,10 +34,10 @@ PatchGuard:主逻辑
 [tandasat : some-tips-to-analyze-patchguard](http://standa-note.blogspot.com/2015/10/some-tips-to-analyze-patchguard.html)  
 [tandasat : findpg](https://github.com/tandasat/findpg)  
 [tandasat : PgResarch](https://github.com/tandasat/PgResarch)  
-[mengwuji : windows10 patchguard绕过讨论]    
-[mengwuji : 绕过windows10 patchguard原理与实现]    
+mengwuji : windows10 patchguard绕过讨论      
+mengwuji : 绕过windows10 patchguard原理与实现      
 [9176324 : Shark](https://github.com/9176324/Shark)  
 [DarthTon : Blackbone](https://github.com/DarthTon/Blackbone)    
-[Mr Guo]    
+Mr Guo      
 
 
