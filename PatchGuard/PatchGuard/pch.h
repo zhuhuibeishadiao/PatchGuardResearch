@@ -47,6 +47,11 @@ extern "C" {
             __in PDUMP_HEADER DumpHeader
         );
 
+    NTSYSAPI PVOID RtlPcToFileHeader(
+        PVOID PcValue,
+        PVOID *BaseOfImage
+    );
+
 #define DPRINT(format, ...) DbgPrintEx(DPFLTR_IHVDRIVER_ID, DPFLTR_ERROR_LEVEL, format, __VA_ARGS__)
 
 #ifdef __cplusplus

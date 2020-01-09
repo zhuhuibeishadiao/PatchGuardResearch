@@ -75,6 +75,19 @@ EXTERN_C NTSTATUS DriverEntry(PDRIVER_OBJECT pDriverObject, PUNICODE_STRING pReg
         return status;
     }
 
+    status = PgIdpInitialization();
+
+    if (!NT_SUCCESS(status))
+    {
+        LOGF_ERROR("PgIdpInitialization faild : 0x%x\r\n", status);
+        LogTermination();
+
+        if (g_pgCoreInfo.LdeAsm)
+            ExFreePoolWithTag(g_pgCoreInfo.LdeAsm, 'edlk');
+
+        return status;
+    }
+
     LOGF_DEBUG("PgCoreinitialization success.\r\n");
 
     status = PsCreateSystemThread(&g_hLoopFindThread, THREAD_ALL_ACCESS, nullptr, nullptr, nullptr, LoopFindPgRoutine, nullptr);
@@ -83,6 +96,10 @@ EXTERN_C NTSTATUS DriverEntry(PDRIVER_OBJECT pDriverObject, PUNICODE_STRING pReg
     {
         LOGF_ERROR("Create Loop Find Routine faild.\r\n");
         LogTermination();
+
+        if (g_pgCoreInfo.LdeAsm)
+            ExFreePoolWithTag(g_pgCoreInfo.LdeAsm, 'edlk');
+
         return status;
     }
 

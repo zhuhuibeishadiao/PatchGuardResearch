@@ -569,21 +569,27 @@ BOOLEAN NTAPI PgCorePoolCallback(BOOLEAN bNonPagedPool, PVOID Va, SIZE_T size, U
     return true;
 }
 
+BOOLEAN NTAPI PgCorePhysicalMemoryCallback(PVOID Va, SIZE_T size, PVOID context)
+{
+    if (!MmIsAddressValid(Va) || !MmIsAddressValid((PCHAR)Va + size - 1))
+        return true;
+
+    // some code
+
+    return true;
+}
+
 NTSTATUS PgCoreFindPgContext(PPG_CORE_INFO pgCoreInfo)
 {
-    LOGF_DEBUG("-----[PgCore] Find PgContext in IndependentPages.-----\r\n");
-    auto status = PgIdpEnumIndependentPages(PgCorePoolCallback, pgCoreInfo);
-    LOGF_DEBUG("-----[PgCore] Find PgContext in IndependentPages end.-----\r\n");
+    LOGF_DEBUG("-----[PgCore] Find PgContext in PhysicalMemory.-----\r\n");
 
-    if (!NT_SUCCESS(status))
-        LOGF_ERROR("[PgCore] Enum IndependentPages return 0x%x\r\n", status);
+    auto status = PgIdpEnumPhysicalMemory(PgCorePhysicalMemoryCallback, pgCoreInfo);
 
-    LOGF_DEBUG("-----[PgCore] Find PgContext in big pool.-----\r\n");
-    status = PgHelperEnumBigPool(PgCorePoolCallback, pgCoreInfo, NULL);
-    LOGF_DEBUG("-----[PgCore] Find PgContext in big pool end.-----\r\n");
+    LOGF_DEBUG("-----[PgCore] Find PgContext in PhysicalMemory end.-----\r\n");
 
-    if (!NT_SUCCESS(status))
-        LOGF_ERROR("[PgCore] Enum Big Pool return 0x%x\r\n", status);
+
+    if(!NT_SUCCESS(status))
+        LOGF_ERROR("[PgCore] Enum Physical Memory return 0x%x\r\n", status);
 
     return status;
 }
