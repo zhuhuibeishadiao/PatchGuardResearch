@@ -1,0 +1,747 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0047)http://www.kanliuxing.com/thread-16634-1-1.html -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=GBK">
+
+<title>绕过windows10 patchguard原理与实现_驱动开发技术_看流星社区 www.kanliuxing.com</title>
+<link href="http://www.kanliuxing.com/thread-16634-1-1.html" rel="canonical"><meta name="keywords" content="绕过windows10 patchguard原理与实现_驱动开发技术_看流星社区">
+<meta name="description" content="绕过windows10 patchguard原理与实现_驱动开发技术_看流星社区 www.kanliuxing.com">
+<meta name="MSSmartTagsPreventParsing" content="True">
+<meta http-equiv="MSThemeCompatible" content="Yes">
+<!--<base href="http://www.kanliuxing.com/">--><base href="."><link rel="stylesheet" type="text/css" href="./绕过windows10 patchguard原理与实现_驱动开发技术_看流星社区 www.kanliuxing.com_files/style_1_common.css"><link rel="stylesheet" type="text/css" href="./绕过windows10 patchguard原理与实现_驱动开发技术_看流星社区 www.kanliuxing.com_files/style_1_forum_viewthread.css"><script src="./绕过windows10 patchguard原理与实现_驱动开发技术_看流星社区 www.kanliuxing.com_files/hm.js.下载"></script><script type="text/javascript">var STYLEID = '1', STATICURL = 'static/', IMGDIR = 'static/image/common', VERHASH = 'em8', charset = 'gbk', discuz_uid = '0', cookiepre = '1fZs_2132_', cookiedomain = '', cookiepath = '/', showusercard = '1', attackevasive = '0', disallowfloat = 'newthread|reply', creditnotice = '1|流星币|,2|好评|,3|解答币|', defaultstyle = '', REPORTURL = 'aHR0cDovL3d3dy5rYW5saXV4aW5nLmNvbS90aHJlYWQtMTY2MzQtMS0xLmh0bWw=', SITEURL = 'http://www.kanliuxing.com/', JSPATH = 'data/cache/', CSSPATH = 'data/cache/style_', DYNAMICURL = '';</script>
+<script src="./绕过windows10 patchguard原理与实现_驱动开发技术_看流星社区 www.kanliuxing.com_files/common.js.下载" type="text/javascript"></script>
+<meta name="application-name" content="看流星社区">
+<meta name="msapplication-tooltip" content="看流星社区">
+<meta name="msapplication-task" content="name=看流星社区;action-uri=http://www.kanliuxing.com/forum.php;icon-uri=http://www.kanliuxing.com/static/image/common/bbs.ico">
+<link rel="archives" title="看流星社区" href="http://www.kanliuxing.com/archiver/">
+<script src="./绕过windows10 patchguard原理与实现_驱动开发技术_看流星社区 www.kanliuxing.com_files/forum.js.下载" type="text/javascript"></script>
+</head>
+
+<body id="nv_forum" class="pg_viewthread" onkeydown="if(event.keyCode==27) return false;">
+<div id="append_parent"><div id="ls_fastloginfield_ctrl_menu" class="sltm" style="display: none; width: 40px;"><ul><li class="current">用户名</li><li>Email</li></ul></div></div><div id="ajaxwaitid"></div>
+<div id="toptb" class="cl">
+<div class="wp">
+<div class="z"><a href="javascript:;" onclick="setHomepage(&#39;http://www.kanliuxing.com/&#39;);">设为首页</a><a href="http://www.kanliuxing.com/" onclick="addFavorite(this.href, &#39;看流星社区&#39;);return false;">收藏本站</a></div>
+<div class="y">
+<a id="switchblind" href="javascript:;" onclick="toggleBlind(this)" title="开启辅助访问" class="switchblind">开启辅助访问</a>
+<a href="javascript:;" id="switchwidth" onclick="widthauto(this)" title="切换到宽版" class="switchwidth">切换到宽版</a>
+</div>
+</div>
+</div>
+
+<div id="qmenu_menu" class="p_pop blk" style="display: none;">
+<div class="ptm pbw hm">
+请 <a href="javascript:;" class="xi2" onclick="lsSubmit()"><strong>登录</strong></a> 后使用快捷导航<br>没有帐号？<a href="http://www.kanliuxing.com/member.php?mod=kanliuvip" class="xi2 xw1">注册账号</a>
+</div>
+<div id="fjump_menu" class="btda"></div></div><div id="hd">
+<div class="wp">
+<div class="hdc cl"><h2><a href="http://www.kanliuxing.com/" title="看流星社区"><img src="./绕过windows10 patchguard原理与实现_驱动开发技术_看流星社区 www.kanliuxing.com_files/logo.png" alt="看流星社区" border="0"></a></h2><script src="./绕过windows10 patchguard原理与实现_驱动开发技术_看流星社区 www.kanliuxing.com_files/logging.js.下载" type="text/javascript"></script>
+<form method="post" autocomplete="off" id="lsform" action="http://www.kanliuxing.com/member.php?mod=logging&amp;action=login&amp;loginsubmit=yes&amp;infloat=yes&amp;lssubmit=yes" onsubmit="return lsSubmit();">
+<div class="fastlg cl">
+<span id="return_ls" style="display:none"></span>
+<div class="y pns">
+<table cellspacing="0" cellpadding="0">
+<tbody><tr>
+<td>
+<span class="ftid">
+<select name="fastloginfield" id="ls_fastloginfield" width="40" tabindex="900" selecti="0" style="display: none;">
+
+
+<option value="username"></option></select><a href="javascript:;" id="ls_fastloginfield_ctrl" style="width:40px" tabindex="900">用户名</a>
+</span>
+<script type="text/javascript">simulateSelect('ls_fastloginfield')</script>
+</td>
+<td><input type="text" name="username" id="ls_username" autocomplete="off" class="px vm" tabindex="901"></td>
+<td class="fastlg_l"><label for="ls_cookietime"><input type="checkbox" name="cookietime" id="ls_cookietime" class="pc" value="2592000" tabindex="903">自动登录</label></td>
+<td>&nbsp;<a href="javascript:;" onclick="showWindow(&#39;login&#39;, &#39;member.php?mod=logging&amp;action=login&amp;viewlostpw=1&#39;)">找回密码</a></td>
+</tr>
+<tr>
+<td><label for="ls_password" class="z psw_w">密码</label></td>
+<td><input type="password" name="password" id="ls_password" class="px vm" autocomplete="off" tabindex="902"></td>
+<td class="fastlg_l"><button type="submit" class="pn vm" tabindex="904" style="width: 75px;"><em>登录</em></button></td>
+<td>&nbsp;<a href="http://www.kanliuxing.com/member.php?mod=kanliuvip" class="xi2 xw1">注册账号</a></td>
+</tr>
+</tbody></table>
+<input type="hidden" name="quickforward" value="yes">
+<input type="hidden" name="handlekey" value="ls">
+</div>
+</div>
+</form>
+
+</div>
+
+<div id="nv" style="top: 0px; left: 401.5px; z-index: 199; border-left-width: 0px; border-right-width: 0px; height: 33px; width: 1100px; position: fixed; opacity: 0.85;">
+<a href="javascript:;" id="qmenu" onmouseover="delayShow(this, function () {showMenu({&#39;ctrlid&#39;:&#39;qmenu&#39;,&#39;pos&#39;:&#39;34!&#39;,&#39;ctrlclass&#39;:&#39;a&#39;,&#39;duration&#39;:2});showForummenu(31);})">快捷导航</a>
+<ul><li id="mn_N6666"><a href="http://www.kanliuxing.com/" hidefocus="true">看流星社区</a></li></ul>
+</div>
+<div id="mu" class="cl">
+</div><div id="scbar" class="cl">
+<form id="scbar_form" method="post" autocomplete="off" onsubmit="searchFocus($(&#39;scbar_txt&#39;))" action="http://www.kanliuxing.com/search.php?searchsubmit=yes" target="_blank">
+<input type="hidden" name="mod" id="scbar_mod" value="search">
+<input type="hidden" name="formhash" value="32507bb7">
+<input type="hidden" name="srchtype" value="title">
+<input type="hidden" name="srhfid" value="31">
+<input type="hidden" name="srhlocality" value="forum::viewthread">
+<table cellspacing="0" cellpadding="0">
+<tbody><tr>
+<td class="scbar_icon_td"></td>
+<td class="scbar_txt_td"><input type="text" name="srchtxt" id="scbar_txt" value="请输入搜索内容" autocomplete="off" x-webkit-speech="" speech="" class=" xg1" placeholder="请输入搜索内容"></td>
+<td class="scbar_type_td"><a href="javascript:;" id="scbar_type" class="xg1" onclick="showMenu(this.id)" hidefocus="true">搜索</a></td>
+<td class="scbar_btn_td"><button type="submit" name="searchsubmit" id="scbar_btn" sc="1" class="pn pnc" value="true"><strong class="xi2">搜索</strong></button></td>
+<td class="scbar_hot_td">
+<div id="scbar_hot">
+<strong class="xw1">热搜: </strong>
+
+<a href="http://www.kanliuxing.com/search.php?mod=forum&amp;srchtxt=%C4%A7%B9%ED%D7%F7%B7%BB&amp;formhash=32507bb7&amp;searchsubmit=true&amp;source=hotsearch" target="_blank" class="xi2" sc="1">魔鬼作坊</a>
+
+
+
+<a href="http://www.kanliuxing.com/search.php?mod=forum&amp;srchtxt=%C7%FD%B6%AF%B9%FD%B1%A3%BB%A4&amp;formhash=32507bb7&amp;searchsubmit=true&amp;source=hotsearch" target="_blank" class="xi2" sc="1">驱动过保护</a>
+
+
+
+<a href="http://www.kanliuxing.com/search.php?mod=forum&amp;srchtxt=%B8%A8%D6%FA%B6%E0%BF%AA&amp;formhash=32507bb7&amp;searchsubmit=true&amp;source=hotsearch" target="_blank" class="xi2" sc="1">辅助多开</a>
+
+
+
+<a href="http://www.kanliuxing.com/search.php?mod=forum&amp;srchtxt=%D2%D7%D3%EF%D1%D4%BD%CC%B3%CC&amp;formhash=32507bb7&amp;searchsubmit=true&amp;source=hotsearch" target="_blank" class="xi2" sc="1">易语言教程</a>
+
+
+
+<a href="http://www.kanliuxing.com/search.php?mod=forum&amp;srchtxt=CRC%D0%A3%D1%E9&amp;formhash=32507bb7&amp;searchsubmit=true&amp;source=hotsearch" target="_blank" class="xi2" sc="1">CRC校验</a>
+
+</div>
+</td>
+</tr>
+</tbody></table>
+</form>
+</div>
+<ul id="scbar_type_menu" class="p_pop" style="display: none;"><li><a href="javascript:;" rel="curforum" fid="31">本版</a></li><li><a href="javascript:;" rel="user">用户</a></li></ul>
+<script type="text/javascript">
+initSearchmenu('scbar', '');
+</script>
+</div>
+</div>
+
+
+<div id="wp" class="wp">
+<script type="text/javascript">var fid = parseInt('31'), tid = parseInt('16634');</script>
+
+<script src="./绕过windows10 patchguard原理与实现_驱动开发技术_看流星社区 www.kanliuxing.com_files/forum_viewthread.js.下载" type="text/javascript"></script>
+<script type="text/javascript">zoomstatus = parseInt(1);var imagemaxwidth = '600';var aimgcount = new Array();</script>
+
+<style id="diy_style" type="text/css"></style>
+<!--[diy=diynavtop]--><div id="diynavtop" class="area"></div><!--[/diy]-->
+<div id="pt" class="bm cl">
+<div class="z">
+<a href="http://www.kanliuxing.com/" class="nvhm" title="首页">看流星社区</a><em>&#187;</em><a href="http://www.kanliuxing.com/">看流星社区</a> <em>&#8250;</em> <a href="http://www.kanliuxing.com/forum.php?gid=3">&#187; 【编程技术】</a> <em>&#8250;</em> <a href="http://www.kanliuxing.com/forum-31-1.html">驱动开发技术</a> <em>&#8250;</em> <a href="http://www.kanliuxing.com/thread-16634-1-1.html">绕过windows10 patchguard原理与实现</a>
+</div>
+</div>
+
+<div class="wp aklx_t"><table width="100%" border="1" cellspacing="1" cellpadding="0" size="3">
+<tbody><tr>
+<td width="34%">
+<center>
+<a href="http://www.moguizuofang.com/" target="_blank"><font color="#FF00FF"><b>零基础辅助入门教学 原创
+
+高清 专业课程售后(每日解答)</b><font></font></font></a><font color="#FF00FF"><font>
+</font></font></center><font color="#FF00FF"><font>
+</font></font></td>
+
+<td width="33%">
+<center>
+<a href="http://www.moguizuofang.com/" target="_blank"><font color="#FF00FF"><b>零基础辅助入门教学 原创
+
+高清 专业课程售后(每日解答)</b><font></font></font></a><font color="#FF00FF"><font>
+</font></font></center><font color="#FF00FF"><font>
+</font></font></td>
+
+<td width="33%">
+<center>
+<a href="http://www.moguizuofang.com/" target="_blank"><font color="#FF00FF"><b>零基础辅助入门教学 原创
+
+高清 专业课程售后(每日解答)</b><font></font></font></a><font color="#FF00FF"><font>
+</font></font></center><font color="#FF00FF"><font>
+</font></font></td>
+</tr>
+
+<tr>
+<td width="34%">
+<center>
+<a href="http://www.moguizuofang.com/" target="_blank"><font color="#FF00FF"><b>零基础辅助入门教学 原创
+
+高清 专业课程售后(每日解答)</b><font></font></font></a><font color="#FF00FF"><font>
+</font></font></center><font color="#FF00FF"><font>
+</font></font></td>
+
+<td width="33%">
+<center>
+<a href="http://www.moguizuofang.com/" target="_blank"><font color="#FF00FF"><b>零基础辅助入门教学 原创
+
+高清 专业课程售后(每日解答)</b><font></font></font></a><font color="#FF00FF"><font>
+</font></font></center><font color="#FF00FF"><font>
+</font></font></td>
+
+<td width="33%">
+<center>
+<a href="http://www.moguizuofang.com/" target="_blank"><font color="#FF00FF"><b>零基础辅助入门教学 原创
+
+高清 专业课程售后(每日解答)</b><font></font></font></a><font color="#FF00FF"><font>
+</font></font></center><font color="#FF00FF"><font>
+</font></font></td>
+</tr>
+
+<tr>
+<td width="34%">
+<center>
+<a href="http://wpa.qq.com/msgrd?v=3&amp;uin=20209081&amp;site=qq&amp;menu=yes" rel="noffow" target="_blank"><font color="#0000FF" font-size:12px="">赞助广告位 请点击这里联系站长 QQ20209081<font></font></font></a><font color="#0000FF" font-size:12px=""><font>
+</font></font></center><font color="#0000FF" font-size:12px=""><font>
+</font></font></td>
+
+<td width="33%">
+<center>
+<a href="http://wpa.qq.com/msgrd?v=3&amp;uin=20209081&amp;site=qq&amp;menu=yes" rel="noffow" target="_blank"><font color="#0000FF" font-size:12px="">赞助广告位 请点击这里联系站长 QQ20209081<font></font></font></a><font color="#0000FF" font-size:12px=""><font>
+</font></font></center><font color="#0000FF" font-size:12px=""><font>
+</font></font></td>
+
+<td width="33%">
+<center>
+<a href="http://wpa.qq.com/msgrd?v=3&amp;uin=20209081&amp;site=qq&amp;menu=yes" rel="noffow" target="_blank"><font color="#0000FF" font-size:12px="">赞助广告位 请点击这里联系站长 QQ20209081<font></font></font></a><font color="#0000FF" font-size:12px=""><font>
+</font></font></center><font color="#0000FF" font-size:12px=""><font>
+</font></font></td>
+</tr>
+
+
+</tbody></table>
+
+
+<table width="100%" border="1" cellspacing="1" cellpadding="0" size="3">
+
+<tbody><tr>
+<td width="100%">
+<center><a href="http://www.moguizuofang.com/" target="_blank"><img src="./绕过windows10 patchguard原理与实现_驱动开发技术_看流星社区 www.kanliuxing.com_files/mogui002.jpg" height="131" width="1000" border="0"></a></center>
+</td>
+</tr>
+
+
+</tbody></table>
+</div><style id="diy_style" type="text/css"></style>
+<div class="wp">
+<!--[diy=diy1]--><div id="diy1" class="area"></div><!--[/diy]-->
+</div>
+
+<div id="ct" class="wp cl">
+<div id="pgt" class="pgs mbm cl ">
+<div class="pgt"></div>
+<span class="y pgb"><a href="http://www.kanliuxing.com/forum-31-1.html">返回列表</a></span>
+<a id="newspecial" onmouseover="$(&#39;newspecial&#39;).id = &#39;newspecialtmp&#39;;this.id = &#39;newspecial&#39;;showMenu({&#39;ctrlid&#39;:this.id})" onclick="showWindow(&#39;newthread&#39;, &#39;forum.php?mod=post&amp;action=newthread&amp;fid=31&#39;)" href="javascript:;" title="发新帖"><img src="./绕过windows10 patchguard原理与实现_驱动开发技术_看流星社区 www.kanliuxing.com_files/pn_post.png" alt="发新帖"></a></div>
+
+
+
+<div id="postlist" class="pl bm">
+<table cellspacing="0" cellpadding="0">
+<tbody><tr>
+<td class="pls ptn pbn">
+<div class="hm ptn">
+<span class="xg1">查看:</span> <span class="xi1">1697</span><span class="pipe">|</span><span class="xg1">回复:</span> <span class="xi1">1</span>
+</div>
+</td>
+<td class="plc ptm pbn vwthd">
+<div class="y">
+<a href="http://www.kanliuxing.com/forum.php?mod=viewthread&amp;action=printable&amp;tid=16634" title="打印" target="_blank"><img src="./绕过windows10 patchguard原理与实现_驱动开发技术_看流星社区 www.kanliuxing.com_files/print.png" alt="打印" class="vm"></a>
+<a href="http://www.kanliuxing.com/forum.php?mod=redirect&amp;goto=nextoldset&amp;tid=16634" title="上一主题"><img src="./绕过windows10 patchguard原理与实现_驱动开发技术_看流星社区 www.kanliuxing.com_files/thread-prev.png" alt="上一主题" class="vm"></a>
+<a href="http://www.kanliuxing.com/forum.php?mod=redirect&amp;goto=nextnewset&amp;tid=16634" title="下一主题"><img src="./绕过windows10 patchguard原理与实现_驱动开发技术_看流星社区 www.kanliuxing.com_files/thread-next.png" alt="下一主题" class="vm"></a>
+</div>
+<h1 class="ts">
+<span id="thread_subject">绕过windows10 patchguard原理与实现</span>
+</h1>
+<span class="xg1">
+<a href="http://www.kanliuxing.com/thread-16634-1-1.html" onclick="return copyThreadUrl(this, &#39;看流星社区&#39;)">[复制链接]</a>
+</span>
+</td>
+</tr>
+</tbody></table>
+
+
+<table cellspacing="0" cellpadding="0" class="ad">
+<tbody><tr>
+<td class="pls">
+</td>
+<td class="plc">
+</td>
+</tr>
+</tbody></table><div id="post_561665"><table id="pid561665" class="plhin" summary="pid561665" cellspacing="0" cellpadding="0">
+<tbody><tr>
+<td class="pls" rowspan="2">
+<div id="favatar561665" class="pls favatar" style="top: 33px; position: fixed;">
+ <div class="pi">
+<div class="authi"><a href="http://www.kanliuxing.com/space-uid-30078.html" target="_blank" class="xw1">CARRIE</a>
+</div>
+</div>
+<div class="p_pop blk bui card_gender_" id="userinfo561665" style="display: none; margin-top: -11px;">
+<div class="m z">
+<div id="userinfo561665_ma"></div>
+</div>
+<div class="i y">
+<div>
+<strong><a href="http://www.kanliuxing.com/space-uid-30078.html" target="_blank" class="xi2">CARRIE</a></strong>
+<em>当前离线</em>
+</div><dl class="cl">
+<dt>注册时间</dt><dd>2011-3-6</dd>
+<dt>最后登录</dt><dd>1970-1-1</dd>
+</dl><div class="imicn">
+<a href="http://www.kanliuxing.com/home.php?mod=space&amp;uid=30078&amp;do=profile" target="_blank" title="查看详细资料"><img src="./绕过windows10 patchguard原理与实现_驱动开发技术_看流星社区 www.kanliuxing.com_files/userinfo.gif" alt="查看详细资料"></a>
+</div>
+<div id="avatarfeed"><span id="threadsortswait"></span></div>
+</div>
+</div>
+<div>
+<div class="avatar"><a href="http://www.kanliuxing.com/space-uid-30078.html" class="avtm" target="_blank"><img src="./绕过windows10 patchguard原理与实现_驱动开发技术_看流星社区 www.kanliuxing.com_files/noavatar_big.gif" onerror="this.onerror=null;this.src=&#39;http://www.kanliuxing.com/uc_server/images/noavatar_big.gif&#39;"></a></div>
+</div>
+</div>
+</td>
+<td class="plc">
+<div class="pi">
+<div id="fj" class="y">
+<label class="z">电梯直达</label>
+<input type="text" class="px p_fre z" size="2" onkeyup="$(&#39;fj_btn&#39;).href=&#39;forum.php?mod=redirect&amp;ptid=16634&amp;authorid=0&amp;postno=&#39;+this.value" onkeydown="if(event.keyCode==13) {window.location=$(&#39;fj_btn&#39;).href;return false;}" title="跳转到指定楼层">
+<a href="javascript:;" id="fj_btn" class="z" title="跳转到指定楼层"><img src="./绕过windows10 patchguard原理与实现_驱动开发技术_看流星社区 www.kanliuxing.com_files/fj_btn.png" alt="跳转到指定楼层" class="vm"></a>
+</div>
+<strong>
+<a href="http://www.kanliuxing.com/thread-16634-1-1.html" id="postnum561665" onclick="setCopy(this.href, &#39;帖子地址复制成功&#39;);return false;">
+<em>1</em><sup>#</sup></a>
+</strong>
+<div class="pti">
+<div class="pdbt">
+</div>
+<div class="authi">
+<img class="authicn vm" id="authicon561665" src="./绕过windows10 patchguard原理与实现_驱动开发技术_看流星社区 www.kanliuxing.com_files/online_member.gif">
+<em id="authorposton561665">发表于 2018-2-28 11:57:31</em>
+<span class="pipe">|</span>
+<a href="http://www.kanliuxing.com/forum.php?mod=viewthread&amp;tid=16634&amp;page=1&amp;authorid=30078" rel="nofollow">只看该作者</a>
+<span class="none"><img src="./绕过windows10 patchguard原理与实现_驱动开发技术_看流星社区 www.kanliuxing.com_files/arw_r.gif" class="vm" alt="回帖奖励"></span>
+<span class="pipe show">|</span><a href="http://www.kanliuxing.com/forum.php?mod=viewthread&amp;tid=16634&amp;extra=page%3D1&amp;ordertype=1" class="show">倒序浏览</a>
+<span class="pipe show">|</span><a href="javascript:;" onclick="readmode($(&#39;thread_subject&#39;).innerHTML, 561665);" class="show">阅读模式</a>
+</div>
+</div>
+</div><div class="pct"><div class="aklx_pt"><a href="http://www.moguizuofang.com/" target="_blank"><img src="./绕过windows10 patchguard原理与实现_驱动开发技术_看流星社区 www.kanliuxing.com_files/mogui001.png" border="0"></a></div><style type="text/css">.pcb{margin-right:0}</style><div class="pcb">
+ 
+<div class="t_fsz">
+<table cellspacing="0" cellpadding="0"><tbody><tr><td class="t_f" id="postmessage_561665">
+<br>
+上贴说过CmpAppendDllSection是经过双加密的，我没能力双解密出来，所以说过一种办法是绕过CmpAppendDllSection函数体，对它后面的内容进行加解密，因为它后面的内容是只进行过一次加密的，而且我们对它怎么加密的已经清楚了，所以想解密出来就要想想办法。今天早上我还想不出怎么去解密出CmpAppendDllSection函数后面的内容，但是下午就想到了，有点儿小兴奋。<br>
+先贴出CmpAppendDllSection后面的解密代码：<br>
+<div class="blockcode"><div id="code_jKY"><ol><li><br>
+</li><li> auto TempSize = FollowContextSize;&nbsp; &nbsp; //context的尺寸<br>
+</li><li> auto FollowContextKey = ContextKey;<br>
+</li><li> //解密剩下的部分<br>
+</li><li> do {<br>
+</li><li>&nbsp;&nbsp;pTempMem[(0xC0 / sizeof(ULONG_PTR)) + TempSize] ^= FollowContextKey;<br>
+</li><li>&nbsp;&nbsp;auto RorBit = static_cast&lt;UCHAR&gt;(TempSize);<br>
+</li><li>&nbsp;&nbsp;FollowContextKey = ROR(FollowContextKey, RorBit, 64);<br>
+</li><li> } while (--TempSize);<br>
+</li><li></li></ol></div><em onclick="copycode($(&#39;code_jKY&#39;));">复制代码</em></div><br>
+
+<br>
+上面的解密难点在于key是每8个字节变动一次，而且通过当前key无法推到出下一次key，所以之前我就想了很久没辙。下午换了个思路，既然无法通过当前key推算出下一个key的内容，那能不能推出下下下下下......次key的内容呢？答案是能！上面的代码可以看出key每经过0x100*8个字节后，就会变回原来的key，意思就是当前的动态key和+0x800字节后面计算的动态key是一样的！发现这点后的我就立马去实验了，结果完全可行。先来看看我虚拟机的CmpAppendDllSection代码：<br>
+<div class="blockcode"><div id="code_gZ6"><ol><li><br>
+</li><li>INIT:00000001407C4B00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; CmpAppendDllSection proc near&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;; DATA XREF: sub_1407AAAC8+1C4Do<br>
+</li><li>INIT:00000001407C4B00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;db&nbsp; &nbsp;&nbsp; &nbsp;2Eh<br>
+</li><li>INIT:00000001407C4B00 2E 48 31 11&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;[rcx], rdx<br>
+</li><li>INIT:00000001407C4B04 48 31 51 08&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;[rcx+8], rdx<br>
+</li><li>INIT:00000001407C4B08 48 31 51 10&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;[rcx+10h], rdx<br>
+</li><li>INIT:00000001407C4B0C 48 31 51 18&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;[rcx+18h], rdx<br>
+</li><li>INIT:00000001407C4B10 48 31 51 20&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;[rcx+20h], rdx<br>
+</li><li>INIT:00000001407C4B14 48 31 51 28&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;[rcx+28h], rdx<br>
+</li><li>INIT:00000001407C4B18 48 31 51 30&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;[rcx+30h], rdx<br>
+</li><li>INIT:00000001407C4B1C 48 31 51 38&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;[rcx+38h], rdx<br>
+</li><li>INIT:00000001407C4B20 48 31 51 40&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;[rcx+40h], rdx<br>
+</li><li>INIT:00000001407C4B24 48 31 51 48&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;[rcx+48h], rdx<br>
+</li><li>INIT:00000001407C4B28 48 31 51 50&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;[rcx+50h], rdx<br>
+</li><li>INIT:00000001407C4B2C 48 31 51 58&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;[rcx+58h], rdx<br>
+</li><li>INIT:00000001407C4B30 48 31 51 60&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;[rcx+60h], rdx<br>
+</li><li>INIT:00000001407C4B34 48 31 51 68&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;[rcx+68h], rdx<br>
+</li><li>INIT:00000001407C4B38 48 31 51 70&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;[rcx+70h], rdx<br>
+</li><li>INIT:00000001407C4B3C 48 31 51 78&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;[rcx+78h], rdx<br>
+</li><li>INIT:00000001407C4B40 48 31 91 80 00 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;[rcx+80h], rdx<br>
+</li><li>INIT:00000001407C4B47 48 31 91 88 00 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;[rcx+88h], rdx<br>
+</li><li>INIT:00000001407C4B4E 48 31 91 90 00 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;[rcx+90h], rdx<br>
+</li><li>INIT:00000001407C4B55 48 31 91 98 00 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;[rcx+98h], rdx<br>
+</li><li>INIT:00000001407C4B5C 48 31 91 A0 00 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;[rcx+0A0h], rdx<br>
+</li><li>INIT:00000001407C4B63 48 31 91 A8 00 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;[rcx+0A8h], rdx<br>
+</li><li>INIT:00000001407C4B6A 48 31 91 B0 00 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;[rcx+0B0h], rdx<br>
+</li><li>INIT:00000001407C4B71 48 31 91 B8 00 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;[rcx+0B8h], rdx<br>
+</li><li>INIT:00000001407C4B78 48 31 91 C0 00 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;[rcx+0C0h], rdx<br>
+</li><li>INIT:00000001407C4B7F 31 11&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;[rcx], edx<br>
+</li><li>INIT:00000001407C4B81 48 8B C2&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;rax, rdx<br>
+</li><li>INIT:00000001407C4B84 48 8B D1&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;rdx, rcx<br>
+</li><li>INIT:00000001407C4B87 8B 8A C4 00 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;ecx, [rdx+0C4h]<br>
+</li><li>INIT:00000001407C4B8D<br>
+</li><li>INIT:00000001407C4B8D&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; loc_1407C4B8D:&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;; CODE XREF: CmpAppendDllSection+98j<br>
+</li><li>INIT:00000001407C4B8D 48 31 84 CA C0 00 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;[rdx+rcx*8+0C0h], rax<br>
+</li><li>INIT:00000001407C4B95 48 D3 C8&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;ror&nbsp; &nbsp;&nbsp;&nbsp;rax, cl<br>
+</li><li>INIT:00000001407C4B98 E2 F3&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;loop&nbsp; &nbsp; loc_1407C4B8D<br>
+</li><li>INIT:00000001407C4B9A 8B 82 50 05 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;eax, [rdx+550h]<br>
+</li><li>INIT:00000001407C4BA0 48 03 C2&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;add&nbsp; &nbsp;&nbsp;&nbsp;rax, rdx<br>
+</li><li>INIT:00000001407C4BA3 48 83 EC 28&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;sub&nbsp; &nbsp;&nbsp;&nbsp;rsp, 28h<br>
+</li><li>INIT:00000001407C4BA7 FF D0&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;call&nbsp; &nbsp; rax&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; ;我选择这个rax为我查找的内容进行解密，然后再加密回去，这样pg调用rax的时候就会被我劫持到，进而绕过它~<br>
+</li><li>INIT:00000001407C4BA9 48 83 C4 28&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;add&nbsp; &nbsp;&nbsp;&nbsp;rsp, 28h<br>
+</li><li>INIT:00000001407C4BAD 4C 8B 80 00 01 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;r8, [rax+100h]<br>
+</li><li>INIT:00000001407C4BB4 48 8D 88 00 05 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;lea&nbsp; &nbsp;&nbsp;&nbsp;rcx, [rax+500h]<br>
+</li><li>INIT:00000001407C4BBB BA 01 00 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;edx, 1<br>
+</li><li>INIT:00000001407C4BC0 41 FF E0&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;jmp&nbsp; &nbsp;&nbsp;&nbsp;r8<br>
+</li><li>INIT:00000001407C4BC0&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; CmpAppendDllSection endp<br>
+</li><li></li></ol></div><em onclick="copycode($(&#39;code_gZ6&#39;));">复制代码</em></div><br>
+
+<br>
+我已经知道上面地址00000001407C4BA7那里调用的rax是在ida中的哪个函数了，于是结合上面的思路就有了下面的代码：<br>
+<div class="blockcode"><div id="code_vDj"><ol><li><br>
+</li><li>ULONG_PTR NewExecPatchGuard(ULONG_PTR Unuse, ULONG_PTR Context)<br>
+</li><li>{<br>
+</li><li> KeBugCheckEx(0x119, Context, 0, 0, 0);<br>
+</li><li>}<br>
+</li><li>static void AttackPatchGuard(PUCHAR StartAddress, ULONG_PTR SizeOfBytes)<br>
+</li><li>{<br>
+</li><li>#define PageSize 0x1000<br>
+</li><li> if (SizeOfBytes &lt; PageSize)<br>
+</li><li> {<br>
+</li><li>&nbsp;&nbsp;return ;<br>
+</li><li> }<br>
+</li><li> for (auto i = 0;i &lt; SizeOfBytes;i++)<br>
+</li><li> {<br>
+</li><li>&nbsp;&nbsp;//下面攻击密文pg<br>
+</li><li>&nbsp;&nbsp;if ((i + 0x800 + 0x10) &lt; SizeOfBytes)<br>
+</li><li>&nbsp;&nbsp;{<br>
+</li><li>&nbsp; &nbsp;auto TempKey1 = *(ULONG_PTR*)(StartAddress + i) ^ 0x4808588948c48b48;<br>
+</li><li>&nbsp; &nbsp;auto TempKey2 = *(ULONG_PTR*)(StartAddress + i + 0x8) ^ 0x5518788948107089;<br>
+</li><li>&nbsp; &nbsp;if ((*(ULONG_PTR*)(StartAddress + i + 0x800) ^ 0x8948f60344028b48) == TempKey1 &amp;&amp;<br>
+</li><li>&nbsp; &nbsp; (*(ULONG_PTR*)(StartAddress + i + 0x800 + 0x8) ^ 0xc1834808c2834801) == TempKey2)<br>
+</li><li>&nbsp; &nbsp;{<br>
+</li><li>&nbsp; &nbsp; LOG_DEBUG("ExecPatchGuard address:%p&nbsp; &nbsp; TempKey1:%p&nbsp; &nbsp; TempKey2:%p\n", StartAddress + i, TempKey1, TempKey2);<br>
+</li><li>&nbsp; &nbsp; UCHAR Code[0x10] = {0};<br>
+</li><li>&nbsp; &nbsp; memcpy(Code,"\x48\xB8\x21\x43\x65\x87\x78\x56\x34\x12\xFF\xE0\x90\x90\x90\x90",0x10);<br>
+</li><li>&nbsp; &nbsp; *(ULONG_PTR*)(Code + 0x2) = (ULONG_PTR)NewExecPatchGuard;<br>
+</li><li>&nbsp; &nbsp; *(ULONG_PTR*)(StartAddress + i) = *(ULONG_PTR*)Code ^ TempKey1;<br>
+</li><li>&nbsp; &nbsp; *(ULONG_PTR*)(StartAddress + i + 0x8) = *(ULONG_PTR*)(Code + 0x8) ^ TempKey2;<br>
+</li><li>&nbsp; &nbsp;}<br>
+</li><li>&nbsp;&nbsp;}<br>
+</li><li> }<br>
+</li><li>}<br>
+</li><li></li></ol></div><em onclick="copycode($(&#39;code_vDj&#39;));">复制代码</em></div><br>
+
+<br>
+我故意在我接管的函数里面制造了一个蓝屏，果然蓝屏了(我实际应该弄个打印....)。<br>
+然后改了NewExecPatchGuard为下面的代码：<br>
+<div class="blockcode"><div id="code_xpP"><ol><li><br>
+</li><li>ULONG_PTR NewExecPatchGuard(ULONG_PTR Unuse, ULONG_PTR Context)<br>
+</li><li>{<br>
+</li><li> *(ULONG_PTR*)(Context + 0x100) = (ULONG_PTR)NewExQueueWorkItem;<br>
+</li><li> return Context;<br>
+</li><li>}<br>
+</li><li></li></ol></div><em onclick="copycode($(&#39;code_xpP&#39;));">复制代码</em></div><br>
+
+<br>
+并且我的代码中设置了一个hook，静静的等了40多分钟没毛病，思路果然是没问题的，窃喜~<br>
+<br>
+这是我用最少的代码干掉pg的，而且真的感觉炒鸡简单~ 不过有个问题是，这个每个版本硬编码可能不一样，要多采集点儿才行。<br>
+</td></tr></tbody></table>
+
+
+</div>
+<div id="comment_561665" class="cm">
+</div>
+
+<div id="post_rate_div_561665"></div>
+</div>
+</div>
+
+</td></tr>
+<tr><td class="plc plm">
+<div id="p_btn" class="mtw mbm hm cl">
+
+<a href="http://www.kanliuxing.com/home.php?mod=spacecp&amp;ac=favorite&amp;type=thread&amp;id=16634&amp;formhash=32507bb7" id="k_favorite" onclick="showWindow(this.id, this.href, &#39;get&#39;, 0);" onmouseover="this.title = $(&#39;favoritenumber&#39;).innerHTML + &#39; 人收藏&#39;" title="收藏本帖"><i><img src="./绕过windows10 patchguard原理与实现_驱动开发技术_看流星社区 www.kanliuxing.com_files/fav.gif" alt="收藏">收藏<span id="favoritenumber" style="display:none">0</span></i></a>
+</div>
+</td>
+</tr>
+<tr id="_postposition561665"></tr>
+<tr>
+<td class="pls"></td>
+<td class="plc" style="overflow:visible;">
+<div class="po hin">
+<div class="pob cl">
+<em>
+<a class="fastre" href="http://www.kanliuxing.com/forum.php?mod=post&amp;action=reply&amp;fid=31&amp;tid=16634&amp;reppost=561665&amp;extra=page%3D1&amp;page=1" onclick="showWindow(&#39;reply&#39;, this.href)">回复</a>
+</em>
+
+<p>
+<a href="javascript:;" onclick="showWindow(&#39;miscreport561665&#39;, &#39;misc.php?mod=report&amp;rtype=post&amp;rid=561665&amp;tid=16634&amp;fid=31&#39;, &#39;get&#39;, -1);return false;">举报</a>
+</p>
+
+</div>
+</div>
+</td>
+</tr>
+<tr class="ad">
+<td class="pls">
+</td>
+<td class="plc">
+</td>
+</tr>
+</tbody></table>
+</div><div id="post_630840"><table id="pid630840" class="plhin" summary="pid630840" cellspacing="0" cellpadding="0">
+<tbody><tr>
+<td class="pls" rowspan="2">
+<div id="favatar630840" class="pls favatar">
+ <a name="lastpost"></a><div class="pi">
+<div class="authi"><a href="http://www.kanliuxing.com/space-uid-116574.html" target="_blank" class="xw1">invisk</a>
+</div>
+</div>
+<div class="p_pop blk bui card_gender_" id="userinfo630840" style="display: none; margin-top: -11px;">
+<div class="m z">
+<div id="userinfo630840_ma"></div>
+</div>
+<div class="i y">
+<div>
+<strong><a href="http://www.kanliuxing.com/space-uid-116574.html" target="_blank" class="xi2">invisk</a></strong>
+<em>当前离线</em>
+</div><dl class="cl">
+<dt>注册时间</dt><dd>2019-4-23</dd>
+<dt>最后登录</dt><dd>1970-1-1</dd>
+</dl><div class="imicn">
+<a href="http://www.kanliuxing.com/home.php?mod=space&amp;uid=116574&amp;do=profile" target="_blank" title="查看详细资料"><img src="./绕过windows10 patchguard原理与实现_驱动开发技术_看流星社区 www.kanliuxing.com_files/userinfo.gif" alt="查看详细资料"></a>
+</div>
+<div id="avatarfeed"><span id="threadsortswait"></span></div>
+</div>
+</div>
+<div>
+<div class="avatar"><a href="http://www.kanliuxing.com/space-uid-116574.html" class="avtm" target="_blank"><img src="./绕过windows10 patchguard原理与实现_驱动开发技术_看流星社区 www.kanliuxing.com_files/noavatar_big.gif" onerror="this.onerror=null;this.src=&#39;http://www.kanliuxing.com/uc_server/images/noavatar_big.gif&#39;"></a></div>
+</div>
+</div>
+</td>
+<td class="plc">
+<div class="pi">
+<strong>
+<a href="http://www.kanliuxing.com/forum.php?mod=redirect&amp;goto=findpost&amp;ptid=16634&amp;pid=630840" id="postnum630840" onclick="setCopy(this.href, &#39;帖子地址复制成功&#39;);return false;">
+<em>2</em><sup>#</sup></a>
+</strong>
+<div class="pti">
+<div class="pdbt">
+</div>
+<div class="authi">
+<img class="authicn vm" id="authicon630840" src="./绕过windows10 patchguard原理与实现_驱动开发技术_看流星社区 www.kanliuxing.com_files/online_member.gif">
+<em id="authorposton630840">发表于 2019-5-16 14:33:06</em>
+<span class="pipe">|</span>
+<a href="http://www.kanliuxing.com/forum.php?mod=viewthread&amp;tid=16634&amp;page=1&amp;authorid=116574" rel="nofollow">只看该作者</a>
+</div>
+</div>
+</div><div class="pct"><div class="pcb">
+<div class="t_fsz">
+<table cellspacing="0" cellpadding="0"><tbody><tr><td class="t_f" id="postmessage_630840">
+CmpAppendDllSection nice</td></tr></tbody></table>
+
+
+</div>
+<div id="comment_630840" class="cm">
+</div>
+
+<div id="post_rate_div_630840"></div>
+</div>
+</div>
+
+</td></tr>
+<tr><td class="plc plm">
+</td>
+</tr>
+<tr id="_postposition630840"></tr>
+<tr>
+<td class="pls"></td>
+<td class="plc" style="overflow:visible;">
+<div class="po hin">
+<div class="pob cl">
+<em>
+<a class="fastre" href="http://www.kanliuxing.com/forum.php?mod=post&amp;action=reply&amp;fid=31&amp;tid=16634&amp;repquote=630840&amp;extra=page%3D1&amp;page=1" onclick="showWindow(&#39;reply&#39;, this.href)">回复</a>
+<a class="replyadd" href="http://www.kanliuxing.com/forum.php?mod=misc&amp;action=postreview&amp;do=support&amp;tid=16634&amp;pid=630840&amp;hash=32507bb7" onclick="showWindow(&#39;login&#39;, this.href)" onmouseover="this.title = ($(&#39;review_support_630840&#39;).innerHTML ? $(&#39;review_support_630840&#39;).innerHTML : 0) + &#39; 人 支持&#39;">支持 <span id="review_support_630840"></span></a>
+<a class="replysubtract" href="http://www.kanliuxing.com/forum.php?mod=misc&amp;action=postreview&amp;do=against&amp;tid=16634&amp;pid=630840&amp;hash=32507bb7" onclick="showWindow(&#39;login&#39;, this.href)" onmouseover="this.title = ($(&#39;review_against_630840&#39;).innerHTML ? $(&#39;review_against_630840&#39;).innerHTML : 0) + &#39; 人 反对&#39;">反对 <span id="review_against_630840"></span></a>
+</em>
+
+<p>
+<a href="javascript:;" onclick="showWindow(&#39;miscreport630840&#39;, &#39;misc.php?mod=report&amp;rtype=post&amp;rid=630840&amp;tid=16634&amp;fid=31&#39;, &#39;get&#39;, -1);return false;">举报</a>
+</p>
+
+</div>
+</div>
+</td>
+</tr>
+<tr class="ad">
+<td class="pls">
+</td>
+<td class="plc">
+</td>
+</tr>
+</tbody></table>
+</div><div id="postlistreply" class="pl"><div id="post_new" class="viewthread_table" style="display: none"></div></div>
+</div>
+
+
+<form method="post" autocomplete="off" name="modactions" id="modactions">
+<input type="hidden" name="formhash" value="32507bb7">
+<input type="hidden" name="optgroup">
+<input type="hidden" name="operation">
+<input type="hidden" name="listextra" value="page%3D1">
+<input type="hidden" name="page" value="1">
+</form>
+
+
+
+<div class="pgs mtm mbm cl">
+<span class="pgb y"><a href="http://www.kanliuxing.com/forum-31-1.html">返回列表</a></span>
+<a id="newspecialtmp" onmouseover="$(&#39;newspecial&#39;).id = &#39;newspecialtmp&#39;;this.id = &#39;newspecial&#39;;showMenu({&#39;ctrlid&#39;:this.id})" onclick="showWindow(&#39;newthread&#39;, &#39;forum.php?mod=post&amp;action=newthread&amp;fid=31&#39;)" href="javascript:;" title="发新帖"><img src="./绕过windows10 patchguard原理与实现_驱动开发技术_看流星社区 www.kanliuxing.com_files/pn_post.png" alt="发新帖"></a>
+</div>
+
+<!--[diy=diyfastposttop]--><div id="diyfastposttop" class="area"></div><!--[/diy]-->
+<script type="text/javascript">
+var postminchars = parseInt('10');
+var postmaxchars = parseInt('10000');
+var disablepostctrl = parseInt('0');
+</script>
+
+<div id="f_pst" class="pl bm bmw">
+<form method="post" autocomplete="off" id="fastpostform" action="http://www.kanliuxing.com/forum.php?mod=post&amp;action=reply&amp;fid=31&amp;tid=16634&amp;extra=page%3D1&amp;replysubmit=yes&amp;infloat=yes&amp;handlekey=fastpost" onsubmit="return fastpostvalidate(this)">
+<table cellspacing="0" cellpadding="0">
+<tbody><tr>
+<td class="pls">
+</td>
+<td class="plc">
+<style>
+.div_nuoui{border: 1px dashed #43AAFA;padding: 5px;background: #FFFFCC;mmargin-bottom:5px;}
+.button_nuoui {background-color: #0097DA;padding: 3px 5px 3px 5px;margin-right: 5px;border:1px solid #C0C0C0;color: #FFFFFF;cursor: pointer;mmargin-bottom:5px;}
+.font_nuoui {font-weight: 700;color: #43AAFA;font-size: 14px;}
+</style>
+<script type="text/javascript">
+function addmsg_nuoui(selectmsg_nuoui){
+var selectmsg_nuoui;
+seditor_insertunit('fastpost',selectmsg_nuoui);
+gete_nuoui("div1_nuoui").innerHTML = "<span class='font_nuoui'><img src='images/finish_nuoui.png'>恭喜您已经成功添加了回复内容！</span>";
+}
+
+function gete_nuoui(id){
+ return document.getElementById(id);
+}
+</script>
+<div id="div1_nuoui" class="div_nuoui">
+<span class="font_nuoui"><img src="./绕过windows10 patchguard原理与实现_驱动开发技术_看流星社区 www.kanliuxing.com_files/select_nuoui.png"> 点击按钮快速添加回复内容: </span>
+<span class="button_nuoui" onclick="addmsg_nuoui(&#39;支持楼主，支持看流星社区，以后我会经常来！&#39;)">支持</span>
+<span class="button_nuoui" onclick="addmsg_nuoui(&#39;看到这么好的资源真是高兴，楼主辛苦了！&#39;)">高兴</span>
+<span class="button_nuoui" onclick="addmsg_nuoui(&#39;激动人心，无法言表，感谢楼主，感谢看流星社区的分享！&#39;)">激动</span>
+<span class="button_nuoui" onclick="addmsg_nuoui(&#39;楼主超给力，看流星社区真是难得给力的平台啊。&#39;)">给力</span>
+<span class="button_nuoui" onclick="addmsg_nuoui(&#39;楼主加油，我们都看好你哦。&#39;)">加油</span>
+<span class="button_nuoui" onclick="addmsg_nuoui(&#39;找了很久，居然在www.kanliuxing.com找到了，感谢楼主的分享！&#39;)">苦寻</span>
+<span class="button_nuoui" onclick="addmsg_nuoui(&#39;太生气了，无法HOLD啦 &gt;_&lt;......&#39;)">生气</span>
+<span class="button_nuoui" onclick="addmsg_nuoui(&#39;雁过留声，看帖必回；看帖不回，无人道！&#39;)">回帖</span>
+<span class="button_nuoui" onclick="addmsg_nuoui(&#39;过来转转,我只是路过打酱油的。&#39;)">路过</span>
+<span class="button_nuoui" onclick="addmsg_nuoui(&#39;感谢楼主无私的分享与奉献 :)&#39;)">感恩</span>
+</div>	
+
+<span id="fastpostreturn"></span>
+
+
+<div class="cl">
+<div id="fastsmiliesdiv" class="y"><div id="fastsmiliesdiv_data"><div id="fastsmilies"></div></div></div><div class="hasfsl" id="fastposteditor">
+<div class="tedt mtn">
+<div class="bar">
+<span class="y">
+<a href="http://www.kanliuxing.com/forum.php?mod=post&amp;action=reply&amp;fid=31&amp;tid=16634" onclick="return switchAdvanceMode(this.href)">高级模式</a>
+</span><script src="./绕过windows10 patchguard原理与实现_驱动开发技术_看流星社区 www.kanliuxing.com_files/seditor.js.下载" type="text/javascript"></script>
+<div class="fpd">
+<a href="javascript:;" title="文字加粗" class="fbld">B</a>
+<a href="javascript:;" title="设置文字颜色" class="fclr" id="fastpostforecolor">Color</a>
+<a id="fastpostimg" href="javascript:;" title="图片" class="fmg">Image</a>
+<a id="fastposturl" href="javascript:;" title="添加链接" class="flnk">Link</a>
+<a id="fastpostquote" href="javascript:;" title="引用" class="fqt">Quote</a>
+<a id="fastpostcode" href="javascript:;" title="代码" class="fcd">Code</a>
+<a href="javascript:;" class="fsml" id="fastpostsml">Smilies</a>
+</div></div>
+<div class="area">
+<div class="pt hm">
+您需要登录后才可以回帖 <a href="http://www.kanliuxing.com/member.php?mod=logging&amp;action=login" onclick="showWindow(&#39;login&#39;, this.href)" class="xi2">登录</a> | <a href="http://www.kanliuxing.com/member.php?mod=kanliuvip" class="xi2">注册账号</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="seccheck_fastpost">
+</div>
+
+
+<input type="hidden" name="formhash" value="32507bb7">
+<input type="hidden" name="usesig" value="">
+<input type="hidden" name="subject" value="  ">
+<p class="ptm pnpost">
+<a href="http://www.kanliuxing.com/home.php?mod=spacecp&amp;ac=credit&amp;op=rule&amp;fid=31" class="y" target="_blank">本版积分规则</a>
+<button type="button" onclick="showWindow(&#39;login&#39;, &#39;member.php?mod=logging&amp;action=login&amp;guestmessage=yes&#39;)" onmouseover="checkpostrule(&#39;seccheck_fastpost&#39;, &#39;ac=reply&#39;);this.onmouseover=null" name="replysubmit" id="fastpostsubmit" class="pn pnc vm" value="replysubmit" tabindex="5"><strong>发表回复</strong></button>
+<label for="fastpostrefresh"><input id="fastpostrefresh" type="checkbox" class="pc">回帖后跳转到最后一页</label>
+<script type="text/javascript">if(getcookie('fastpostrefresh') == 1) {$('fastpostrefresh').checked=true;}</script>
+</p>
+</td>
+</tr>
+</tbody></table>
+</form>
+</div>
+
+<script type="text/javascript">
+new lazyload();
+</script>
+<script type="text/javascript">document.onkeyup = function(e){keyPageScroll(e, 0, 0, 'forum.php?mod=viewthread&tid=16634', 1);}</script>
+</div>
+
+<div class="wp mtn">
+<!--[diy=diy3]--><div id="diy3" class="area"></div><!--[/diy]-->
+</div>
+
+<script type="text/javascript">
+function succeedhandle_followmod(url, msg, values) {
+var fObj = $('followmod_'+values['fuid']);
+if(values['type'] == 'add') {
+fObj.innerHTML = '不收听';
+fObj.href = 'home.php?mod=spacecp&ac=follow&op=del&fuid='+values['fuid'];
+} else if(values['type'] == 'del') {
+fObj.innerHTML = '收听TA';
+fObj.href = 'home.php?mod=spacecp&ac=follow&op=add&hash=32507bb7&fuid='+values['fuid'];
+}
+}
+fixed_avatar([561665,630840], 1);
+</script>	</div>
+<div id="ft" class="wp cl">
+<div id="flk" class="y">
+<p>
+<a href="http://www.kanliuxing.com/forum.php?mod=misc&amp;action=showdarkroom">小黑屋</a><span class="pipe">|</span><a href="http://www.kanliuxing.com/forum.php?mobile=yes">手机版</a><span class="pipe">|</span><a href="http://www.kanliuxing.com/archiver/">Archiver</a><span class="pipe">|</span><strong><a href="http://www.kanliuxing.com/" target="_blank">看流星社区</a></strong>
+<span class="pipe">|</span><a href="http://www.kanliuxing.com/sitemap.xml" target="_blank" title="网站地图">网站地图</a><script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?703524348f751c7353e4a4a77e560f8e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script></p>
+<p class="xs0">
+GMT+8, 2019-12-24 21:42<span id="debuginfo">
+</span>
+</p>
+</div>
+<div id="frt">
+<p>Powered by <strong><a href="http://www.kanliuxing.com/" target="_blank">Kanliuxing</a></strong> <em>X3.4</em></p>
+<p class="xs0">&#169; 2010-2019 kanliuxing.com</p>
+</div></div>
+<script src="./绕过windows10 patchguard原理与实现_驱动开发技术_看流星社区 www.kanliuxing.com_files/home.php" type="text/javascript"></script>
+
+<div id="scrolltop" style="left: auto; right: 0px; visibility: visible;">
+<span><a href="http://www.kanliuxing.com/forum.php?mod=post&amp;action=reply&amp;fid=31&amp;tid=16634&amp;extra=page%3D1&amp;page=1" onclick="showWindow(&#39;reply&#39;, this.href)" class="replyfast" title="快速回复"><b>快速回复</b></a></span>
+<span hidefocus="true"><a title="返回顶部" onclick="window.scrollTo(&#39;0&#39;,&#39;0&#39;)" class="scrolltopa"><b>返回顶部</b></a></span>
+<span>
+<a href="http://www.kanliuxing.com/forum-31-1.html" hidefocus="true" class="returnlist" title="返回列表"><b>返回列表</b></a>
+</span>
+</div>
+<script type="text/javascript">_attachEvent(window, 'scroll', function () { showTopLink(); });checkBlind();</script>
+
+
+</body></html>

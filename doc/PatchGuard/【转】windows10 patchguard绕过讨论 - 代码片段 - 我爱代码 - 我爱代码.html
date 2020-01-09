@@ -1,0 +1,888 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0044)http://www.woaidaima.com/thread-848-1-1.html -->
+<html xmlns="http://www.w3.org/1999/xhtml" class=" widthauto"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>【转】windows10 patchguard绕过讨论 - 代码片段 -  我爱代码 -  我爱代码 </title>
+<link href="http://www.woaidaima.com/thread-848-1-1.html" rel="canonical">
+<meta name="keywords" content="【转】windows10 patchguard绕过讨论">
+<meta name="description" content=" 【转】windows10 patchguard绕过讨论 ,我爱代码">
+<meta name="generator" content="Discuz! X3.2">
+<meta name="author" content="Discuz! Team and Comsenz UI Team">
+<meta name="copyright" content="2001-2013 Comsenz Inc.">
+<meta name="MSSmartTagsPreventParsing" content="True">
+<meta http-equiv="MSThemeCompatible" content="Yes">
+<!--<base href="http://www.woaidaima.com/">--><base href="."><link rel="stylesheet" type="text/css" href="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/style_12_common.css"><link rel="stylesheet" type="text/css" href="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/style_12_forum_viewthread.css"><script src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/hm.js.下载"></script><script type="text/javascript">var STYLEID = '12', STATICURL = 'static/', IMGDIR = 'static/image/common', VERHASH = 'ebr', charset = 'utf-8', discuz_uid = '0', cookiepre = 'OKXK_376e_', cookiedomain = 'www.woaidaima.com', cookiepath = '/', showusercard = '1', attackevasive = '0', disallowfloat = 'newthread', creditnotice = '1|威望|,2|代码豆|,3|贡献|', defaultstyle = '', REPORTURL = 'aHR0cDovL3d3dy53b2FpZGFpbWEuY29tL3RocmVhZC04NDgtMS0xLmh0bWw=', SITEURL = 'http://www.woaidaima.com/', JSPATH = 'data/cache/', CSSPATH = 'data/cache/style_', DYNAMICURL = '';</script>
+<script src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/common.js.下载" type="text/javascript"></script>
+<script> var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?fd67b905ebe205c6c54c6220ae3ca797";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();</script>
+
+<meta name="application-name" content="我爱代码">
+<meta name="msapplication-tooltip" content="我爱代码">
+<meta name="msapplication-task" content="name=首页;action-uri=http://www.woaidaima.com/portal.php;icon-uri=http://www.woaidaima.com/static/image/common/portal.ico"><meta name="msapplication-task" content="name=论坛;action-uri=http://www.woaidaima.com/forum.php;icon-uri=http://www.woaidaima.com/static/image/common/bbs.ico">
+<link rel="archives" title="我爱代码" href="http://www.woaidaima.com/archiver/">
+<link rel="stylesheet" id="css_widthauto" type="text/css" href="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/style_12_widthauto.css">
+<script type="text/javascript">HTMLNODE.className += ' widthauto'</script>
+<script src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/forum.js.下载" type="text/javascript"></script>
+     <script type="text/javascript" src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/jquery-1.8.3.min.js.下载"></script>
+ <script type="text/javascript">
+        var jq=jQuery.noConflict();
+     </script>
+     <script src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/deanactions.min.js.下载" type="text/javascript"></script>
+ <link rel="stylesheet" type="text/css" href="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/animate.min.css">
+     <script>
+    var wow = new WOW({boxClass: 'deanactions',});wow.init();
+    </script>
+    <script src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/jquery.flexslider-min.js.下载" type="text/javascript"></script>
+            <script type="text/javascript">
+            jQuery(document).ready(function(){
+                jQuery('.flexslider').flexslider({
+                    directionNav: true,
+                    pauseOnAction: false
+                });
+            });
+            </script>
+    <script src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/jquery.easing.1.3.js.下载" type="text/javascript"></script>
+     <script src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/jquery.skitter.js.下载" type="text/javascript"></script>
+     <script type="text/javascript">
+jQuery(document).ready(function(){
+
+jQuery(document).ready(function() {
+jQuery(".box_skitter_large").skitter({
+animation: "random",
+interval: 3000,
+numbers: false, 
+numbers_align: "right", 
+hideTools: true,
+controls: false,
+focus: false,
+focus_position: true,
+width_label:'340px', 
+enable_navigation_keys: true,   
+progressbar: false
+});
+});				  
+ 
+});
+</script>
+     <script src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/jquery.pagnation.js.下载" type="text/javascript"></script>
+ <script type="text/javascript" src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/jquery.SuperSlide.2.1.1.js.下载"></script>
+     <script language="javascript" type="text/javascript">
+function killErrors() {
+return true;
+}
+window.onerror = killErrors;
+</script>
+</head>
+
+<body id="nv_forum" class="pg_viewthread" onkeydown="if(event.keyCode==27) return false;">
+<div id="append_parent"></div><div id="ajaxwaitid"></div>
+<div id="toptb" class="cl" style="display:none;">
+<div class="wp">
+<div class="z"><a href="javascript:;" onclick="setHomepage(&#39;http://www.woaidaima.com/&#39;);">设为首页</a><a href="http://www.woaidaima.com/" onclick="addFavorite(this.href, &#39;我爱代码&#39;);return false;">收藏本站</a></div>
+<div class="y">
+</div>
+                <div class="clear"></div>
+</div>
+</div>
+
+            <div id="qmenu_menu" class="p_pop blk" style="display: none;">
+<div class="ptm pbw hm">
+请 <a href="javascript:;" class="xi2" onclick="lsSubmit()"><strong>登录</strong></a> 后使用快捷导航<br>没有帐号？<a href="http://www.woaidaima.com/member.php?mod=register" class="xi2 xw1">立即注册</a>
+</div>
+<div id="fjump_menu" class="btda"></div></div><div id="hd">
+        	<div id="deanheader" style="position: fixed; top: 0px; width: 100%; z-index: 150; left: 0px; margin-top: 0px; opacity: 0.9; padding: 0px;">
+            	                <div class="w1180">
+                    <div class="deanlogo"><h2><a href="http://www.woaidaima.com/" title="我爱代码"><img src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/logo.png" alt="我爱代码" border="0"></a></h2></div>
+                    <div class="deannav">
+                                           <ul>
+                                                                                                        <li class="a" id="mn_forum"><a href="http://www.woaidaima.com/forum.php" hidefocus="true" title="我爱代码论坛">论坛<span>我爱代码论坛</span></a></li>                                                                                                                                                                                                           </ul>
+                                           </div>
+                    <div class="deansearch"><div id="scbar" class="cl">
+<form id="scbar_form" method="post" autocomplete="off" onsubmit="searchFocus($(&#39;scbar_txt&#39;))" action="http://www.woaidaima.com/search.php?searchsubmit=yes" target="_blank">
+<input type="hidden" name="mod" id="scbar_mod" value="search">
+<input type="hidden" name="formhash" value="04c356bb">
+<input type="hidden" name="srchtype" value="title">
+<input type="hidden" name="srhfid" value="59">
+<input type="hidden" name="srhlocality" value="forum::viewthread">
+<table cellspacing="0" cellpadding="0">
+<tbody><tr>
+
+<td><input type="text" name="srchtxt" id="scbar_txt" value="请输入搜索内容" autocomplete="off" x-webkit-speech="" speech="" class=" xg1" placeholder="请输入搜索内容"></td>
+<td><button type="submit" name="searchsubmit" id="scbar_btn" sc="1" class="pn pnc" value="true" mid="lVUTkRUmgWWWWWWWWWWWWWWWWWWWWWWW">&nbsp;&nbsp;</button></td>
+</tr>
+</tbody></table>
+</form>
+</div>
+<ul id="scbar_type_menu" class="p_pop" style="display: none;"><li><a href="javascript:;" rel="curforum" fid="59">本版</a></li><li><a href="javascript:;" rel="article">文章</a></li><li><a href="javascript:;" rel="forum" class="curtype">帖子</a></li><li><a href="javascript:;" rel="user">用户</a></li></ul>
+<script type="text/javascript">
+initSearchmenu('scbar', '');
+</script>
+</div>
+                    <div class="deandl">
+                    	                    <style type="text/css">
+.deanlogin .pipe{ display:none;} 
+.deanlogin dl a{ padding:0;}
+</style>
+<div class="deanlogin">                 
+            <style tpye="text/css">
+
+    </style>
+    	 <div class="deandenglu">
+         	<div class="deanundl">
+            	<div class="deanundlicon">
+                	<div class="deandlkuang">
+                    	<i></i>
+                        <ul>
+                            <li><a href="javascript:;" onclick="showWindow(&#39;login&#39;, &#39;member.php?mod=logging&amp;action=login&amp;viewlostpw=1&#39;)">忘记密码？</a></li>
+                            <li><a href="http://www.woaidaima.com/connect.php?mod=login&amp;op=init&amp;referer=index.php&amp;statfrom=login_simple" title="QQ登录">QQ登录</a></li>
+                            <li><a href="http://www.woaidaima.com/wechat-login.html" target="_blank">微信登录</a></li>
+                        </ul>
+                    </div>
+                </div>
+            	<a class="deandlbtn" href="http://www.woaidaima.com/member.php?mod=logging&amp;action=login">登陆</a>
+                <a class="deanregbtn" href="http://www.woaidaima.com/member.php?mod=register">注册</a>
+                <div class="clear"></div>
+            </div>
+            
+        </div>
+            
+<script type="text/javascript">
+                jq(".deanundlicon").hover(
+                    function(){
+                        jq(".deandlkuang").show();
+                        },
+                    function(){
+                        jq(".deandlkuang").hide();
+                        })
+                jq(".deanundlicon").hover(
+                    function(){
+                        jq(this).addClass("curss");
+                        },
+                    function(){
+                        jq(this).removeClass("curss");
+                        })
+            </script>      
+         
+</div>
+                        
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                
+            </div>
+        	<script src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/nv.js.下载" type="text/javascript"></script>
+            <!--侧边工具栏-->
+            <div class="deansidetools">
+            	<ul>
+                	<li>
+                    	<a class="deanqqservices" href="http://wpa.qq.com/msgrd?v=3&amp;uin=394999482&amp;site=qq&amp;menu=yes" target="_blank">
+                        	<span><i></i>QQ客服</span>
+                        </a>
+                    </li>
+                    <li>
+                    	<a class="deansidetoolcontact" href="http://www.woaidaima.com/#" target="_blank">
+                        	<span class="deantelsd"><i></i>咨询电话：还没想好要放什么</span>
+                        </a>
+                    </li>
+                    <li>
+                    	<a class="deansidetoolfankui" href="http://www.woaidaima.com/#" target="_blank">
+                        	<span><i></i>问题反馈</span>
+                        </a>
+                    </li>
+                    <!--返回顶部-->
+                    <div id="scrolltop" style="left: auto; right: 0px; visibility: visible;">
+                                                                        <span hidefocus="true"><a title="返回顶部" onclick="window.scrollTo(&#39;0&#39;,&#39;0&#39;)" class="scrolltopa"><span><i></i>返回顶部</span></a></span>
+                        
+                    </div>
+                    
+                </ul>
+            </div>
+            
+            
+            
+<div class="wp">
+
+<div class="p_pop h_pop" id="mn_userapp_menu" style="display: none"></div><div id="mu" class="cl">
+</div></div>
+</div>
+
+
+<div id="wp" class="wp">
+
+<script type="text/javascript">var fid = parseInt('59'), tid = parseInt('848');</script>
+
+<script src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/forum_viewthread.js.下载" type="text/javascript"></script>
+<script type="text/javascript">zoomstatus = parseInt(1);var imagemaxwidth = '600';var aimgcount = new Array();</script>
+
+<style id="diy_style" type="text/css"></style>
+<!--[diy=diynavtop]--><div id="diynavtop" class="area"></div><!--[/diy]-->
+<div id="pt" class="bm cl">
+<div class="z">
+<a href="http://www.woaidaima.com/" class="nvhm" title="首页">我爱代码</a> <em>›</em> <a href="http://www.woaidaima.com/forum.php?gid=98">源码相关</a> <em>›</em> <a href="http://www.woaidaima.com/forum-59-1.html">代码片段</a> <em>›</em> <a href="http://www.woaidaima.com/thread-848-1-1.html">【转】windows10 patchguard绕过讨论</a>
+</div>
+</div>
+
+<style id="diy_style" type="text/css"></style>
+<div class="wp">
+<!--[diy=diy1]--><div id="diy1" class="area"></div><!--[/diy]-->
+</div>
+
+<div id="ct" class="wp cl ">
+
+    <div class="mn" style="width:100%">
+    	
+        <div class="deanfbhf">
+                <a class="deanfabuanniu" onclick="showWindow(&#39;newthread&#39;, &#39;forum.php?mod=post&amp;action=newthread&amp;fid=59&#39;)" href="javascript:;" title="发新帖">发布主题</a>
+                            <div class="clear"></div>
+            </div>
+            	<!--论坛聚焦--> 
+        <div class="deanbbsjj">
+            <i></i>
+            <div class="deanbbsjjl">
+                <div class="deanbbstop">
+                    <!--[diy=deanbbstop]--><div id="deanbbstop" class="area"><div id="framebkJ2Y5" class="frame move-span cl frame-1"><div id="framebkJ2Y5_left" class="column frame-1-c"><div id="framebkJ2Y5_left_temp" class="move-span temp"></div><div id="portal_block_649" class="block move-span"><div id="portal_block_649_content" class="dxb_bc"><h5><a href="http://www.woaidaima.com/thread-698-1-1.html" target="_blank">win7x64动态过PG源码</a></h5>
+                        <p>
+win7x64动态过PG源码2017年1月28日(测试稳定不蓝 去掉代码断点 卸载没有测试)
+
+
+**** 本内容被作者隐藏 ***
+<a href="http://www.woaidaima.com/thread-698-1-1.html" target="_blank">详细</a></p></div></div></div></div></div><!--[/diy]-->
+                    
+                </div>
+                <div class="deanbbsbottom">
+                    <ul>
+                        <!--[diy=deanbbsbottom]--><div id="deanbbsbottom" class="area"><div id="framegTmjvN" class="frame move-span cl frame-1"><div id="framegTmjvN_left" class="column frame-1-c"><div id="framegTmjvN_left_temp" class="move-span temp"></div><div id="portal_block_650" class="block move-span"><div id="portal_block_650_content" class="dxb_bc"><li>
+                            <span>[驱动过保护]</span>
+                            <a href="http://www.woaidaima.com/thread-698-1-1.html" target="_blank">win7x64动态过PG源码</a>
+                            <em>07-26</em>
+                            <div class="clear"></div>
+                        </li><li>
+                            <span>[外挂辅助]</span>
+                            <a href="http://www.woaidaima.com/thread-69-1-1.html" target="_blank">【7】天涯明月刀 工作室辅助【源码】【工作</a>
+                            <em>06-13</em>
+                            <div class="clear"></div>
+                        </li><li>
+                            <span>[外挂辅助]</span>
+                            <a href="http://www.woaidaima.com/thread-71-1-1.html" target="_blank">【4】冒险岛 工作室辅助【源码】【工作室】</a>
+                            <em>06-13</em>
+                            <div class="clear"></div>
+                        </li><li>
+                            <span>[驱动过保护]</span>
+                            <a href="http://www.woaidaima.com/thread-845-1-1.html" target="_blank">嵌套VT解决TP检测VT问题</a>
+                            <em>10-20</em>
+                            <div class="clear"></div>
+                        </li><li>
+                            <span>[官方公告]</span>
+                            <a href="http://www.woaidaima.com/thread-729-1-1.html" target="_blank">如何获得【代码豆】</a>
+                            <em>07-29</em>
+                            <div class="clear"></div>
+                        </li><li>
+                            <span>[工具]</span>
+                            <a href="http://www.woaidaima.com/thread-740-1-1.html" target="_blank">过win7 win8 win10 Pass PatchGuard</a>
+                            <em>07-30</em>
+                            <div class="clear"></div>
+                        </li></div></div></div></div></div><!--[/diy]-->
+                        
+                    </ul>
+                </div>
+            </div>
+            <div class="deanbbsjjr">
+                <ul>
+                    <!--[diy=deanbbsjjr]--><div id="deanbbsjjr" class="area"><div id="frameyder76" class="frame move-span cl frame-1"><div id="frameyder76_left" class="column frame-1-c"><div id="frameyder76_left_temp" class="move-span temp"></div><div id="portal_block_651" class="block move-span"><div id="portal_block_651_content" class="dxb_bc"><li>
+                    	<a href="http://www.woaidaima.com/thread-698-1-1.html" target="_blank">
+                        	<div class="deanbbsimg"><img src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/894c206675675f954424bc807d61492e.jpg" width="162" height="120"></div>
+                            <p>win7x64动态过PG源码</p>
+                        </a>
+                    </li><li>
+                    	<a href="http://www.woaidaima.com/thread-845-1-1.html" target="_blank">
+                        	<div class="deanbbsimg"><img src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/e16eeea076a343d84ae178a135dac859.jpg" width="162" height="120"></div>
+                            <p>嵌套VT解决TP检测VT问题</p>
+                        </a>
+                    </li><li>
+                    	<a href="http://www.woaidaima.com/thread-69-1-1.html" target="_blank">
+                        	<div class="deanbbsimg"><img src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/a8852990c5333082148b31b88012e52c.jpg" width="162" height="120"></div>
+                            <p>【7】天涯明月刀 工作室辅助【源码】【工作</p>
+                        </a>
+                    </li><li>
+                    	<a href="http://www.woaidaima.com/thread-2020-1-1.html" target="_blank">
+                        	<div class="deanbbsimg"><img src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/77904d67fb7bab9fcca76ed39d09551a.jpg" width="162" height="120"></div>
+                            <p>过游戏保护XignCode3.TP.NP.HS.PP.GPK</p>
+                        </a>
+                    </li><li>
+                    	<a href="http://www.woaidaima.com/thread-740-1-1.html" target="_blank">
+                        	<div class="deanbbsimg"><img src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/504688555f79c780c29758be60936a7e.jpg" width="162" height="120"></div>
+                            <p>过win7 win8 win10 Pass PatchGuard</p>
+                        </a>
+                    </li><li>
+                    	<a href="http://www.woaidaima.com/thread-71-1-1.html" target="_blank">
+                        	<div class="deanbbsimg"><img src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/b1f81ae39494eefa481f1b2d8f650cfd.jpg" width="162" height="120"></div>
+                            <p>【4】冒险岛 工作室辅助【源码】【工作室】</p>
+                        </a>
+                    </li><li>
+                    	<a href="http://www.woaidaima.com/thread-723-1-1.html" target="_blank">
+                        	<div class="deanbbsimg"><img src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/f5c6da8d68d5e1ac44d8cd401e6665d5.jpg" width="162" height="120"></div>
+                            <p>【134】WinDbg中文使用手册 CHM 电子书</p>
+                        </a>
+                    </li><li>
+                    	<a href="http://www.woaidaima.com/thread-27-1-1.html" target="_blank">
+                        	<div class="deanbbsimg"><img src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/d7e703d0ae26a6c3a364a4932832bcd3.jpg" width="162" height="120"></div>
+                            <p>【35】穿越火线(CF)辅助【源码】【玩家】</p>
+                        </a>
+                    </li></div></div></div></div></div><!--[/diy]-->
+                    
+                    <div class="clear"></div>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+        
+        
+        
+        <div id="pgt" class="pgs mbm cl " style=" display:none;">
+            <div class="pgt"></div>
+            <span class="y pgb"><a href="http://www.woaidaima.com/forum-59-1.html">返回列表</a></span>
+                            <a id="newspecial" onmouseover="$(&#39;newspecial&#39;).id = &#39;newspecialtmp&#39;;this.id = &#39;newspecial&#39;;showMenu({&#39;ctrlid&#39;:this.id})" onclick="showWindow(&#39;newthread&#39;, &#39;forum.php?mod=post&amp;action=newthread&amp;fid=59&#39;)" href="javascript:;" title="发新帖"><img src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/pn_post.png" alt="发新帖"></a>                                            </div>
+    
+        
+    
+    
+        
+    
+    
+    <div id="postlist" class="pl bm deanconone">
+  		  		
+        <div class="vwthdtit cl">
+           
+                        <div class="vwthduser cl z">
+</div>
+            <h1 class="vwthdts z">
+                                                <span id="thread_subject">【转】windows10 patchguard绕过讨论</span>
+            </h1>
+                        <span class="vwthdreplies y">
+            	<strong>1</strong><br>回复
+            </span>
+            <span class="vwthdviews y">
+            	<strong>1783</strong><br>查看
+            </span>
+                             <div class="y">
+                    <a href="http://www.woaidaima.com/forum.php?mod=viewthread&amp;action=printable&amp;tid=848" title="打印" target="_blank"><img src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/print.png" alt="打印" class="vm"></a>
+                                        <a href="http://www.woaidaima.com/forum.php?mod=redirect&amp;goto=nextoldset&amp;tid=848" title="上一主题"><img src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/thread-prev.png" alt="上一主题" class="vm"></a>
+                    <a href="http://www.woaidaima.com/forum.php?mod=redirect&amp;goto=nextnewset&amp;tid=848" title="下一主题"><img src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/thread-next.png" alt="下一主题" class="vm"></a>
+                </div>
+                                    <span class="xg1">
+                                                                                                <a href="http://www.woaidaima.com/thread-848-1-1.html" onclick="return copyThreadUrl(this, &#39;我爱代码&#39;)">[复制链接]</a>
+            </span>
+            
+                    </div>
+        
+        
+        <script type="text/javascript">
+jQuery(".vwthdewm").hover(function(){
+jQuery(this).children(".vwthdewmsub").show();
+},function(){
+jQuery(this).children(".vwthdewmsub").hide();
+})
+</script>
+        
+            
+        <table cellspacing="0" cellpadding="0" class="ad" style=" display:none;">
+            <tbody><tr>
+                <td class="pls">
+                                </td>
+                <td class="plc">
+                                </td>
+            </tr>
+        </tbody></table>
+                             
+            <div id="post_1750" class="viewbox firstfloor cl">
+                
+ 
+
+<table id="pid1750" class="plhin boxtable" summary="pid1750" cellspacing="0" cellpadding="0">
+<tbody><tr>
+<td class="pls" rowspan="2">
+<div id="favatar1750" class="pls favatar" style="top: 0px; position: fixed;">
+ <div class="p_pop blk bui vuimg card_gender_0" id="userinfo1750" style="display: none; margin-top: -11px;">
+<div class="m z">
+<div id="userinfo1750_ma"></div>
+</div>
+<div class="i y">
+<div>
+<strong><a href="http://www.woaidaima.com/home.php?mod=space&amp;uid=1" target="_blank" class="xi2">woaidaima2016</a></strong>
+<em>当前离线</em>
+</div><dl class="cl">
+<dt>积分</dt><dd><a href="http://www.woaidaima.com/home.php?mod=space&amp;uid=1&amp;do=profile" target="_blank" class="xi2">7944</a></dd>
+</dl><div class="imicn">
+<a href="http://www.woaidaima.com/home.php?mod=space&amp;uid=1&amp;do=profile" target="_blank" title="查看详细资料"><img src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/userinfo.gif" alt="查看详细资料"></a>
+</div>
+<div id="avatarfeed"><span id="threadsortswait"></span></div>
+</div>
+</div>
+<div>
+<div class="avatar" onmouseover="showauthor(this, &#39;userinfo1750&#39;)"><a href="http://www.woaidaima.com/home.php?mod=space&amp;uid=1" class="avtm" target="_blank"><img src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/avatar.php"></a></div>
+</div>
+                <div class="pi">
+<div class="authi"><a href="http://www.woaidaima.com/home.php?mod=space&amp;uid=1" target="_blank">woaidaima2016</a>
+</div>
+</div>
+                
+<div class="tns xg2"><table cellspacing="0" cellpadding="0"><tbody><tr><th><p><a href="http://www.woaidaima.com/home.php?mod=space&amp;uid=1&amp;do=thread&amp;type=thread&amp;view=me&amp;from=space" class="xi2">2535</a></p>主题</th><th><p><a href="http://www.woaidaima.com/home.php?mod=space&amp;uid=1&amp;do=thread&amp;type=reply&amp;view=me&amp;from=space" class="xi2">2555</a></p>帖子</th><td><p><a href="http://www.woaidaima.com/home.php?mod=space&amp;uid=1&amp;do=profile" class="xi2">7944</a></p>积分</td></tr></tbody></table></div>
+
+<p><em><a href="http://www.woaidaima.com/home.php?mod=spacecp&amp;ac=usergroup&amp;gid=1" target="_blank">管理员</a></em></p>
+
+
+<p><span><img src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/star_level3.gif" alt="Rank: 9"><img src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/star_level3.gif" alt="Rank: 9"><img src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/star_level1.gif" alt="Rank: 9"></span></p>
+
+
+
+<dl class="pil cl">
+	<dt>积分</dt><dd><a href="http://www.woaidaima.com/home.php?mod=space&amp;uid=1&amp;do=profile" target="_blank" class="xi2">7944</a></dd>
+</dl>
+
+<dl class="pil cl"></dl><ul class="plso cl">
+<li class="pm2"><a href="http://www.woaidaima.com/home.php?mod=spacecp&amp;ac=pm&amp;op=showmsg&amp;handlekey=showmsg_1&amp;touid=1&amp;pmid=0&amp;daterange=2&amp;pid=1750&amp;tid=848" onclick="showWindow(&#39;sendpm&#39;, this.href);" title="发消息" class="xi2">发消息</a></li>
+</ul>
+                
+</div>
+</td>
+<td class="plc" style="width:100%">
+<div class="pi">
+                                <strong>
+<a href="http://www.woaidaima.com/thread-848-1-1.html" id="postnum1750" onclick="setCopy(this.href, &#39;帖子地址复制成功&#39;);return false;">
+楼主</a>
+</strong>
+                <div class="pti">
+<div class="pdbt">
+</div>
+<div class="authi firstauthi">
+
+                                <img class="authicn vm" id="authicon1750" src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/online_admin.gif">
+<em id="authorposton1750">发表于 2017-11-9 09:16:05</em>
+<span class="pipe">|</span>
+<a href="http://www.woaidaima.com/forum.php?mod=viewthread&amp;tid=848&amp;page=1&amp;authorid=1" rel="nofollow">只看该作者</a>
+                    <span class="none"><img src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/arw_r.gif" class="vm" alt="回帖奖励"></span>
+                    <span class="pipe show">|</span><a href="http://www.woaidaima.com/forum.php?mod=viewthread&amp;tid=848&amp;extra=page%3D1&amp;ordertype=1" class="show">倒序浏览</a>
+<span class="pipe show">|</span><a href="javascript:;" onclick="readmode($(&#39;thread_subject&#39;).innerHTML, 1750);" class="show">阅读模式</a>
+
+
+
+</div>
+
+</div>
+</div><div class="pct"><style type="text/css">.pcb{margin-right:0}</style><div class="pcb">
+ 
+<div class="t_fsz">
+<table cellspacing="0" cellpadding="0"><tbody><tr><td class="t_f" id="postmessage_1750">
+<div class="attach_nopermission attach_tips">
+<div>
+<h3><strong>
+想要查看内容赶紧注册登陆吧!</strong></h3>
+<p>您需要 <a href="http://www.woaidaima.com/member.php?mod=logging&amp;action=login" onclick="showWindow(&#39;login&#39;, this.href);return false;">登录</a> 才可以下载或查看，没有帐号？<a href="http://www.woaidaima.com/member.php?mod=register" title="注册帐号">立即注册</a> 
+
+<a href="http://www.woaidaima.com/connect.php?mod=login&amp;op=init&amp;referer=forum.php%3Fmod%3Dviewthread%26tid%3D848%26extra%3Dpage%253D1%26page%3D1&amp;statfrom=login" target="_top" rel="nofollow"><img src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/qq_login.gif" class="vm"></a>
+
+</p>
+</div>
+<span class="atips_close" onclick="this.parentNode.style.display=&#39;none&#39;">x</span>
+</div>
+最近很少发帖，主要是不知道写什么好。有的坛友建议我写帖子多活跃下气氛，我思来想去，还是写点儿别人没写过的吧。windows10 patchguard我在网络上搜索一圈基本没看到分析文章也没解决方案，有的都是需要修改内核文件永久性绕过，而非动态绕过。当然如果使用虚拟化或者intel processor trace来绕过的不在本贴讨论范围之内，本贴只是讨论不提供绕过代码，下面进入主题~<br>
+以前讨论过windows7上绕过patchguard的方法，比较常用的有hook关键地方绕过，或者解密pg的context后，修改pg的检测代码来绕过。我用的方法是解密pg的context修改关键点绕过的，这种方法之后也经过了大量考验的，非常稳定。windows7解密context的方法是CmpAppendDllSection函数完成的，算法很简单。windows10中，pg执行开始点也是从CmpAppendDllSection开始的，所以我把代码复制上来说说这种加密方式的弊端。<br>
+<img id="aimg_I04rj" onclick="zoom(this, this.src, 0, 0, 0)" class="zoom" width="600" file="http://www.mengwuji.net/data/attachment/forum/201711/09/012425p476f2fg11mavsgm.jpg" onmouseover="img_onmouseoverfunc(this)" style="cursor:pointer" border="0" alt="" src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/012425p476f2fg11mavsgm.jpg" lazyloaded="true" height="600"><br>
+<br>
+代码以xor&nbsp; &nbsp;&nbsp;&nbsp;[rcx], rdx开始，其中rcx实际是CmpAppendDllSection地址，rdx是context的解密key，我们要想解密context必须拿到这个key才行，那么大家看上面代码能想出办法破解出key吗？请大家静静的思考几分钟看看~(当初我对着pg代码看了一个星期，才想到解密方法...&gt;&lt;)<br>
+上面代码有个逻辑问题，我们可以利用这种逻辑漏洞找出key。假设现在我们知道CmpAppendDllSection的地址，但是CmpAppendDllSection本身被加密了，我们现在只知道CmpAppendDllSection加密后的密文内容，和CmpAppendDllSection没加密的内容(ida看看就知道了明文内容)，如何解密呢？我们要用到一个非常简单的算法，既是：K = A ^ B ，那么A = B ^ K。现在我们来设几个值，设：<br>
+CmpAppendDllSection+0x0的密文内容为A，大小8字节；<br>
+CmpAppendDllSection+0x0的明文内容为B，大小8字节；<br>
+CmpAppendDllSection+0x8的密文内容为C，大小8字节；<br>
+CmpAppendDllSection+0x8的明文内容为D，大小8字节；<br>
+解密KEY定为K；<br>
+因为解密CmpAppendDllSection+0x0和解密CmpAppendDllSection+0x8用到的key都是相同的，那按照图中代码，他们存在这种关系：K = A ^ B，K = C ^ D，所以能得出A ^ B == C ^ D。那么解法就出来了，我们遍历系统内存时，为了判断此内存是否是pg的context，我们就可以读出内容，然后使A ^ B == C ^ D关系成立(为了保险你还可以多判断些字节的内容，方法是一样的)，判断成立后就可以直接用K = A ^ B解出key的值，进而解出整个context，修改完成后再给加密回去，解密与加密算法代码如下：<br>
+<ul type="1" class="litype_1"><li></li><li>static void AttackPatchGuardEncryptCode(PUCHAR Context, ULONG_PTR ContextKey, ULONG_PTR ContextSizeOfBytes)</li><li>{</li><li> auto pTempMem = reinterpret_cast&lt;PULONG_PTR&gt;(ExAllocatePool(NonPagedPool, ContextSizeOfBytes));</li><li> RtlCopyMemory(pTempMem, Context, ContextSizeOfBytes);</li><li> //首先解密出context头部的CmpAppendDllSection解密函数</li><li> for (auto i&nbsp;&nbsp;= 0;i &lt; 0xC8/sizeof(ULONG_PTR); i++)</li><li> {</li><li>&nbsp;&nbsp;pTempMem<i> ^= ContextKey;</i></li><li><i> }</i></li><li><i> auto FollowContextSize = pTempMem[0xC0 / sizeof(ULONG_PTR)] &gt;&gt; 32;</i></li><li><i> auto TempSize = FollowContextSize;</i></li><li><i> auto FollowContextKey = ContextKey;</i></li><li><i> //解密剩下的部分</i></li><li><i> do {</i></li><li><i>&nbsp;&nbsp;pTempMem[(0xC0 / sizeof(ULONG_PTR)) + TempSize] ^= FollowContextKey;</i></li><li><i>&nbsp;&nbsp;auto RorBit = static_cast&lt;UCHAR&gt;(TempSize);</i></li><li><i>&nbsp;&nbsp;FollowContextKey = ROR(FollowContextKey, RorBit, 64);</i></li><li><i> } while (--TempSize);</i></li><li><i> //以上解密完成，我们接下去修改context内容</i></li><li><i> auto TempContext = reinterpret_cast&lt;UCHAR*&gt;(pTempMem);</i></li><li><i> for (auto i = 0;i &lt; ContextSizeOfBytes; i++)</i></li><li><i> {</i></li><li><i>&nbsp;&nbsp;if ((i + 0x84 + 0x16) &lt; ContextSizeOfBytes &amp;&amp; \</i></li><li><i>&nbsp; &nbsp;memcmp(TempContext + i + 0x84, "\x48\x8B\xD1\x8B\x8A\xC4\x00\x00\x00\x48\x31\x84\xCA\xC0\x00\x00\x00\x48\xD3\xC8\xE2\xF3", 0x16) == 0)</i></li><li><i>&nbsp;&nbsp;{</i></li><li><i>&nbsp; &nbsp;LOG_DEBUG(" -- CmpAppendDllSection address:%p", TempContext + i);</i></li><li><i>&nbsp; &nbsp;LOG_DEBUG(" -- CmpAppendDllSection address content:%p", *(ULONG_PTR*)(TempContext + i));</i></li><li><i>&nbsp;&nbsp;}</i></li><li><i> }</i></li><li><i> //头加密回去</i></li><li><i> for (auto i = 0; i &lt; 0xC8 / sizeof(ULONG_PTR); i++)</i></li><li><i> {</i></li><li><i>&nbsp;&nbsp;pTempMem<i> ^= ContextKey;</i></i></li><li><i><i> }</i></i></li><li><i><i> TempSize = FollowContextSize;</i></i></li><li><i><i> FollowContextKey = ContextKey;</i></i></li><li><i><i> //尾加密回去</i></i></li><li><i><i> do {</i></i></li><li><i><i>&nbsp;&nbsp;pTempMem[(0xC0 / sizeof(ULONG_PTR)) + TempSize] ^= FollowContextKey;</i></i></li><li><i><i>&nbsp;&nbsp;auto RorBit = static_cast&lt;UCHAR&gt;(TempSize);</i></i></li><li><i><i>&nbsp;&nbsp;FollowContextKey = ROR(FollowContextKey, RorBit, 64);</i></i></li><li><i><i> } while (--TempSize);</i></i></li><li><i><i> RtlCopyMemory(Context, pTempMem, ContextSizeOfBytes);</i></i></li><li><i><i> ExFreePool(pTempMem);</i></i></li><li><i><i>}</i></i></li><li><i><i><br>
+</i></i></li></ul><i><i><br>
+<i>复制代码</i><br>
+<br>
+<br>
+调用AttackPatchGuardEncryptCode的示例代码如下：<br>
+<ul type="1" class="litype_1"><li></li><li>auto TempKey = *reinterpret_cast&lt;ULONG_PTR*&gt;(StartAddress + i + 0x78) ^ 0x31000000C0913148;</li><li>&nbsp; &nbsp;if ((*(ULONG_PTR*)(StartAddress + i + 0x78 + 0x08) ^ 0x8BD18B48C28B4811) == TempKey &amp;&amp;</li><li>&nbsp; &nbsp; (*(ULONG_PTR*)(StartAddress + i + 0x78 + 0x10) ^ 0x843148000000C48A) == TempKey &amp;&amp;</li><li>&nbsp; &nbsp; (*(ULONG_PTR*)(StartAddress + i + 0x78 + 0x18) ^ 0xC8D348000000C0CA) == TempKey)</li><li>&nbsp; &nbsp;{</li><li>&nbsp; &nbsp; //以上条件满足说明找到了密文，我们来接着找contextkey进行解密</li><li>&nbsp; &nbsp; auto ContextKey = (*(ULONG_PTR*)(StartAddress + i + 0x8)) ^ 0x1851314810513148;</li><li>&nbsp; &nbsp; auto ContextSizeOfBytes = (((*(ULONG_PTR*)(StartAddress + i + 0xc0)) ^ ContextKey) &gt;&gt; 32) * 0x8; //context+0xc4是保存从+0xc8偏移context后面整个加密长度(换算成字节乘以0x8),注意只有4字节</li><li>&nbsp; &nbsp; ContextSizeOfBytes += 0xC8;&nbsp;&nbsp;//加上前面的长度</li><li>&nbsp; &nbsp; LOG_DEBUG("ContextKey:%p&nbsp; &nbsp; ContextSizeOfBytes:%x\n", ContextKey, ContextSizeOfBytes);</li><li>&nbsp; &nbsp; if ((i + ContextSizeOfBytes) &lt;= SizeOfBytes)</li><li>&nbsp; &nbsp; {</li><li>&nbsp; &nbsp;&nbsp;&nbsp;AttackPatchGuardEncryptCode(StartAddress + i, ContextKey, ContextSizeOfBytes);</li><li>&nbsp; &nbsp; }</li><li>&nbsp; &nbsp;}</li><li><br>
+</li></ul><br>
+<i>复制代码</i><br>
+<br>
+<br>
+以上是windows7 pg绕过方法，下面我们来讨论windows10的。<br>
+前几天开始研究windows10的pg时，直接把内核模块拖入ida中发现CmpAppendDllSection函数依然存在，所以确定windows10的pg context解密算法没变，于是套用了windows7的方法，结果没找到context。开始以为是内核内存有些给疏漏了，所以没找到，花了两天时间去研究pg可能申请内存的方法。发现pg在某些情况下是通过ExAllocatePoolWithTag申请非分页内存，某些情况下是通过MmAllocateIndependentPages申请内存的。于是我研究了下MmAllocateIndependentPages申请内存的遍历方法，当然大多数情况都是通过ExAllocatePoolWithTag申请的内存来存放context。可惜的是，遍历后依然没有找到context，我十分郁闷，难道还能跑到分页内存池去不成，绝对不可能好吧！经过一些技巧性实验，终于发现了问题所在。<br>
+windows10在CmpAppendDllSection解密算法不变的情况下，又多加了一层算法来解密CmpAppendDllSection函数。也就变成了执行pg代码前，先用一种算法解密一次CmpAppendDllSection，然后执行CmpAppendDllSection时，CmpAppendDllSection再解密自身和剩下的context内容。我找到了解密算法，如下：<br>
+<ul type="1" class="litype_1"><li></li><li>.text:0000000140151130&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; CallPatchGuard_1 proc near&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;; DATA XREF: .rdata:0000000140258954o</li><li>.text:0000000140151130 40 53&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;push&nbsp; &nbsp; rbx</li><li>.text:0000000140151132 55&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;push&nbsp; &nbsp; rbp</li><li>.text:0000000140151133 48 83 EC 28&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;sub&nbsp; &nbsp;&nbsp;&nbsp;rsp, 28h</li><li>.text:0000000140151137 48 8B EA&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;rbp, rdx</li><li>.text:000000014015113A 88 4D 44&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;[rbp+44h], cl</li><li>.text:000000014015113D 84 C9&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;test&nbsp; &nbsp; cl, cl</li><li>.text:000000014015113F 0F 84 07 02 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;jz&nbsp; &nbsp;&nbsp; &nbsp;loc_14015134C</li><li>.text:0000000140151145 E9 2F 01 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;jmp&nbsp; &nbsp;&nbsp;&nbsp;loc_140151279</li><li>.text:000000014015114A&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; ; ---------------------------------------------------------------------------</li><li>.text:000000014015114A</li><li>.text:000000014015114A&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; loc_14015114A:&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;; CODE XREF: CallPatchGuard_1+1FBj</li><li>.text:000000014015114A 45 33 DB&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;r11d, r11d</li><li>.text:000000014015114D 44 89 5D 40&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;[rbp+40h], r11d</li><li>.text:0000000140151151 48 8B 5D 28&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;rbx, [rbp+28h]</li><li>.text:0000000140151155</li><li>.text:0000000140151155&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; loc_140151155:&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;; CODE XREF: CallPatchGuard_1+D5j</li><li>.text:0000000140151155 4D 8B 01&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;r8, [r9]</li><li>.text:0000000140151158 4C 89 85 18 01 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;[rbp+118h], r8</li><li>.text:000000014015115F 49 8B D0&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;rdx, r8</li><li>.text:0000000140151162 48 8B 05 77 E3 22 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;rax, cs:KiWaitNever</li><li>.text:0000000140151169 48 33 D0&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;rdx, rax</li><li>.text:000000014015116C 8B C8&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;ecx, eax</li><li>.text:000000014015116E 48 D3 C2&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;rol&nbsp; &nbsp;&nbsp;&nbsp;rdx, cl</li><li>.text:0000000140151171 48 33 D3&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;rdx, rbx</li><li>.text:0000000140151174 48 0F CA&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;bswap&nbsp; &nbsp;rdx</li><li>.text:0000000140151177 48 33 15 E2 E4 22 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;rdx, cs:KiWaitAlways</li><li>.text:000000014015117E 49 89 11&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;[r9], rdx</li><li>.text:0000000140151181 41 8B C3&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;eax, r11d</li><li>.text:0000000140151184 49 0F AF C2&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;imul&nbsp; &nbsp; rax, r10</li><li>.text:0000000140151188 48 03 C2&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;add&nbsp; &nbsp;&nbsp;&nbsp;rax, rdx</li><li>.text:000000014015118B 49 89 01&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;[r9], rax</li><li>.text:000000014015118E 41 8B C8&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;ecx, r8d</li><li>.text:0000000140151191 F7 D1&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;not&nbsp; &nbsp;&nbsp;&nbsp;ecx</li><li>.text:0000000140151193 83 E1 3F&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;and&nbsp; &nbsp;&nbsp;&nbsp;ecx, 3Fh</li><li>.text:0000000140151196 B8 C8 00 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;eax, 0C8h</li><li>.text:000000014015119B 41 2B C3&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;sub&nbsp; &nbsp;&nbsp;&nbsp;eax, r11d</li><li>.text:000000014015119E 41 0F AF C3&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;imul&nbsp; &nbsp; eax, r11d</li><li>.text:00000001401511A2 48 D3 C8&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;ror&nbsp; &nbsp;&nbsp;&nbsp;rax, cl</li><li>.text:00000001401511A5 48 33 D8&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;rbx, rax</li><li>.text:00000001401511A8 48 89 5D 28&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;[rbp+28h], rbx</li><li>.text:00000001401511AC 41 83 E0 3F&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;and&nbsp; &nbsp;&nbsp;&nbsp;r8d, 3Fh</li><li>.text:00000001401511B0 41 8A C8&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;cl, r8b</li><li>.text:00000001401511B3 48 D3 C3&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;rol&nbsp; &nbsp;&nbsp;&nbsp;rbx, cl</li><li>.text:00000001401511B6 48 89 5D 28&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;[rbp+28h], rbx</li><li>.text:00000001401511BA 49 03 DA&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;add&nbsp; &nbsp;&nbsp;&nbsp;rbx, r10</li><li>.text:00000001401511BD 48 89 5D 28&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;[rbp+28h], rbx</li><li>.text:00000001401511C1 45 33 C0&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;r8d, r8d</li><li>.text:00000001401511C4 44 89 45 48&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;[rbp+48h], r8d</li><li>.text:00000001401511C8</li><li>.text:00000001401511C8&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; loc_1401511C8:&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;; CODE XREF: CallPatchGuard_1+C0j</li><li>.text:00000001401511C8 41 0F B6 01&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;movzx&nbsp; &nbsp;eax, byte ptr [r9]</li><li>.text:00000001401511CC 83 E0 0F&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;and&nbsp; &nbsp;&nbsp;&nbsp;eax, 0Fh</li><li>.text:00000001401511CF 0F B6 54 05 30&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;movzx&nbsp; &nbsp;edx, byte ptr [rbp+rax+30h]</li><li>.text:00000001401511D4 49 83 21 F0&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;and&nbsp; &nbsp;&nbsp;&nbsp;qword ptr [r9], 0FFFFFFFFFFFFFFF0h</li><li>.text:00000001401511D8 49 0B 11&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;or&nbsp; &nbsp;&nbsp; &nbsp;rdx, [r9]</li><li>.text:00000001401511DB 49 89 11&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;[r9], rdx</li><li>.text:00000001401511DE 48 C1 CA 04&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;ror&nbsp; &nbsp;&nbsp;&nbsp;rdx, 4</li><li>.text:00000001401511E2 49 89 11&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;[r9], rdx</li><li>.text:00000001401511E5 41 FF C0&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;inc&nbsp; &nbsp;&nbsp;&nbsp;r8d</li><li>.text:00000001401511E8 44 89 45 48&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;[rbp+48h], r8d</li><li>.text:00000001401511EC 41 83 F8 10&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;cmp&nbsp; &nbsp;&nbsp;&nbsp;r8d, 10h</li><li>.text:00000001401511F0 72 D6&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;jb&nbsp; &nbsp;&nbsp; &nbsp;short loc_1401511C8</li><li>.text:00000001401511F2 49 83 C1 08&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;add&nbsp; &nbsp;&nbsp;&nbsp;r9, 8</li><li>.text:00000001401511F6 4C 89 4D 50&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;[rbp+50h], r9</li><li>.text:00000001401511FA 41 FF C3&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;inc&nbsp; &nbsp;&nbsp;&nbsp;r11d</li><li>.text:00000001401511FD 44 89 5D 40&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;[rbp+40h], r11d</li><li>.text:0000000140151201 41 83 FB 19&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;cmp&nbsp; &nbsp;&nbsp;&nbsp;r11d, 19h</li><li>.text:0000000140151205 0F 82 4A FF FF FF&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;jb&nbsp; &nbsp;&nbsp; &nbsp;loc_140151155</li><li>.text:000000014015120B 48 B9 F5 6F 1B AD 5F 93 44 62&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;rcx, 6244935FAD1B6FF5h</li><li>.text:0000000140151215 49 8B 02&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;rax, [r10]</li><li>.text:0000000140151218 48 33 C1&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;rax, rcx</li><li>.text:000000014015121B 48 89 45 28&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;[rbp+28h], rax</li><li>.text:000000014015121F 48 8B 45 28&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;rax, [rbp+28h]</li><li>.text:0000000140151223 48 B9 DB 27 2A BC 17 A2 15 6A&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;rcx, 6A15A217BC2A27DBh</li><li>.text:000000014015122D 48 33 C1&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;rax, rcx</li><li>.text:0000000140151230 48 89 45 28&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;[rbp+28h], rax</li><li>.text:0000000140151234 41 C6 02 2E&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;byte ptr [r10], 2Eh</li><li>.text:0000000140151238 41 C6 42 01 48&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;byte ptr [r10+1], 48h</li><li>.text:000000014015123D 41 C6 42 02 31&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;byte ptr [r10+2], 31h</li><li>.text:0000000140151242 41 C6 42 03 11&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;byte ptr [r10+3], 11h</li><li>.text:0000000140151247 45 33 C9&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;r9d, r9d</li><li>.text:000000014015124A 45 33 C0&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;r8d, r8d</li><li>.text:000000014015124D 48 8B 55 28&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;rdx, [rbp+28h]</li><li>.text:0000000140151251 49 8B CA&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;rcx, r10</li><li>.text:0000000140151254 41 FF D2&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;call&nbsp; &nbsp; r10</li><li>.text:0000000140151257 C7 85 58 01 00 00 01 00 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;dword ptr [rbp+158h], 1</li><li>.text:0000000140151261 83 45 20 02&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;add&nbsp; &nbsp;&nbsp;&nbsp;dword ptr [rbp+20h], 2</li><li>.text:0000000140151265 48 8D 15 25 08 EB FF&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;lea&nbsp; &nbsp;&nbsp;&nbsp;rdx, loc_140001A91</li><li>.text:000000014015126C 48 8B 8D 00 01 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;rcx, [rbp+100h]</li><li>.text:0000000140151273 E8 98 14 FE FF&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;call&nbsp; &nbsp; _local_unwind</li><li>.text:0000000140151278 90&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;nop</li><li>.text:0000000140151279</li><li>.text:0000000140151279&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; loc_140151279:&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;; CODE XREF: CallPatchGuard_1+15j</li><li>.text:0000000140151279 8B 45 20&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;eax, [rbp+20h]</li><li>.text:000000014015127C 83 F8 02&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;cmp&nbsp; &nbsp;&nbsp;&nbsp;eax, 2</li><li>.text:000000014015127F 0F 85 AB 00 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;jnz&nbsp; &nbsp;&nbsp;&nbsp;loc_140151330</li><li>.text:0000000140151285 48 8B 8D BA 00 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;rcx, [rbp+0BAh]</li><li>.text:000000014015128C 48 89 8D 20 01 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;[rbp+120h], rcx</li><li>.text:0000000140151293 4C 8B 85 B2 00 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;r8, [rbp+0B2h]</li><li>.text:000000014015129A 48 8B 85 BA 00 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;rax, [rbp+0BAh]</li><li>.text:00000001401512A1 48 89 85 D0 00 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;[rbp+0D0h], rax</li><li>.text:00000001401512A8 48 8B 55 6A&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;rdx, [rbp+6Ah]</li><li>.text:00000001401512AC 49 D3 C8&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;ror&nbsp; &nbsp;&nbsp;&nbsp;r8, cl</li><li>.text:00000001401512AF 8B C8&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;ecx, eax</li><li>.text:00000001401512B1 48 D3 C2&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;rol&nbsp; &nbsp;&nbsp;&nbsp;rdx, cl</li><li>.text:00000001401512B4 4C 8B 52 40&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;r10, [rdx+40h]</li><li>.text:00000001401512B8 4C 89 55 28&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;[rbp+28h], r10</li><li>.text:00000001401512BC 4D 33 D0&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;r10, r8</li><li>.text:00000001401512BF 48 B8 00 00 00 00 00 80 FF FF&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;rax, 0FFFF800000000000h</li><li>.text:00000001401512C9 4C 0B D0&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;or&nbsp; &nbsp;&nbsp; &nbsp;r10, rax</li><li>.text:00000001401512CC 4C 89 95 F8 00 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;[rbp+0F8h], r10</li><li>.text:00000001401512D3 4D 8B CA&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;r9, r10</li><li>.text:00000001401512D6 4C 89 55 50&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;[rbp+50h], r10</li><li>.text:00000001401512DA 41 8B CA&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;ecx, r10d</li><li>.text:00000001401512DD 83 E1 3F&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;and&nbsp; &nbsp;&nbsp;&nbsp;ecx, 3Fh</li><li>.text:00000001401512E0 49 8B C2&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;rax, r10</li><li>.text:00000001401512E3 48 D3 C8&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;ror&nbsp; &nbsp;&nbsp;&nbsp;rax, cl</li><li>.text:00000001401512E6 48 89 45 28&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;[rbp+28h], rax</li><li>.text:00000001401512EA C7 45 30 09 0A 0C 01&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;dword ptr [rbp+30h], 10C0A09h</li><li>.text:00000001401512F1 C7 45 34 0F 00 05 0E&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;dword ptr [rbp+34h], 0E05000Fh</li><li>.text:00000001401512F8 C7 45 38 04 03 07 0D&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;dword ptr [rbp+38h], 0D070304h</li><li>.text:00000001401512FF C7 45 3C 08 06 02 0B&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;dword ptr [rbp+3Ch], 0B020608h</li><li>.text:0000000140151306 33 D2&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;edx, edx</li><li>.text:0000000140151308 89 55 40&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;[rbp+40h], edx</li><li>.text:000000014015130B 8B C2&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;eax, edx</li><li>.text:000000014015130D 4C 8D 45 30&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;lea&nbsp; &nbsp;&nbsp;&nbsp;r8, [rbp+30h]</li><li>.text:0000000140151311 4C 03 C0&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;add&nbsp; &nbsp;&nbsp;&nbsp;r8, rax</li><li>.text:0000000140151314</li><li>.text:0000000140151314&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; loc_140151314:&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;; CODE XREF: CallPatchGuard_1+1F9j</li><li>.text:0000000140151314 41 8A 08&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;cl, [r8]</li><li>.text:0000000140151317 83 F1 09&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;ecx, 9</li><li>.text:000000014015131A 88 4C 15 30&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;[rbp+rdx+30h], cl</li><li>.text:000000014015131E FF C2&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;inc&nbsp; &nbsp;&nbsp;&nbsp;edx</li><li>.text:0000000140151320 89 55 40&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;[rbp+40h], edx</li><li>.text:0000000140151323 49 FF C0&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;inc&nbsp; &nbsp;&nbsp;&nbsp;r8</li><li>.text:0000000140151326 83 FA 10&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;cmp&nbsp; &nbsp;&nbsp;&nbsp;edx, 10h</li><li>.text:0000000140151329 72 E9&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;jb&nbsp; &nbsp;&nbsp; &nbsp;short loc_140151314</li><li>.text:000000014015132B E9 1A FE FF FF&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;jmp&nbsp; &nbsp;&nbsp;&nbsp;loc_14015114A</li><li>.text:0000000140151330&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; ; ---------------------------------------------------------------------------</li><li>.text:0000000140151330</li><li>.text:0000000140151330&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; loc_140151330:&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;; CODE XREF: CallPatchGuard_1+14Fj</li><li>.text:0000000140151330 48 8B 85 BA 00 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;rax, [rbp+0BAh]</li><li>.text:0000000140151337 48 89 85 10 01 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;[rbp+110h], rax</li><li>.text:000000014015133E 48 8B 95 B2 00 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;rdx, [rbp+0B2h]</li><li>.text:0000000140151345 8B C8&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;ecx, eax</li><li>.text:0000000140151347 48 D3 CA&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;ror&nbsp; &nbsp;&nbsp;&nbsp;rdx, cl</li><li>.text:000000014015134A 8B 02&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;eax, [rdx]</li><li>.text:000000014015134C</li><li>.text:000000014015134C&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; loc_14015134C:&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;; CODE XREF: CallPatchGuard_1+Fj</li><li>.text:000000014015134C 48 83 C4 28&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;add&nbsp; &nbsp;&nbsp;&nbsp;rsp, 28h</li><li>.text:0000000140151350 5D&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;pop&nbsp; &nbsp;&nbsp;&nbsp;rbp</li><li>.text:0000000140151351 5B&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;pop&nbsp; &nbsp;&nbsp;&nbsp;rbx</li><li>.text:0000000140151352 C3&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;retn</li><li>.text:0000000140151352&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; CallPatchGuard_1 endp</li><li><br>
+</li></ul><br>
+<i>复制代码</i><br>
+<br>
+自己实现了出来，代码如下：<br>
+<ul type="1" class="litype_1"><li></li><li>void DecodeCmpAppendDllSection(ULONG_PTR *pfnCmpAppendDllSection, ULONG_PTR KiWaitNever, ULONG_PTR KiWaitAlways)</li><li>{</li><li> auto DynamicFactor = ROR((ULONG_PTR)pfnCmpAppendDllSection,(ULONG)pfnCmpAppendDllSection &amp; 0x3f,64);</li><li> for (auto i = 0u;i &lt; 0x19/*0x19 * 0x8 = 0xC8*/;i++)</li><li> {</li><li>&nbsp;&nbsp;auto Code = (ULONG)pfnCmpAppendDllSection<i>;</i></li><li><i>&nbsp;&nbsp;pfnCmpAppendDllSection<i> = BSWAP_64(ROL(pfnCmpAppendDllSection<i> ^ KiWaitNever,(UCHAR)KiWaitNever,64) ^ DynamicFactor) ^ KiWaitAlways;</i></i></i></li><li><i><i><i>&nbsp;&nbsp;pfnCmpAppendDllSection<i> += (i * (ULONG_PTR)pfnCmpAppendDllSection);</i></i></i></i></li><li><i><i><i>&nbsp;&nbsp;DynamicFactor ^= ROR(((0xc8 - i) * i), ((~Code) &amp; 0x3f), 64);</i></i></i></li><li><i><i><i>&nbsp;&nbsp;DynamicFactor = ROL(DynamicFactor, Code &amp; 0x3f, 64) + (ULONG_PTR)pfnCmpAppendDllSection;</i></i></i></li><li><i><i><i>&nbsp;&nbsp;for (auto n = 0u;n &lt; 16;n++)</i></i></i></li><li><i><i><i>&nbsp;&nbsp;{</i></i></i></li><li><i><i><i>&nbsp; &nbsp;UCHAR Key[16] = { 0x00 ,0x03 ,0x05 ,0x08 ,0x06 ,0x09 ,0x0c ,0x07 ,0x0d ,0x0a ,0x0e ,0x04 ,0x01 ,0x0f ,0x0b ,0x02 };</i></i></i></li><li><i><i><i>&nbsp; &nbsp;pfnCmpAppendDllSection<i> = ROR(Key[pfnCmpAppendDllSection<i> &amp; 0xf] | (pfnCmpAppendDllSection<i> &amp; 0xfffffffffffffff0),4,64);</i></i></i></i></i></i></li><li><i><i><i>&nbsp;&nbsp;}</i></i></i></li><li><i><i><i> }</i></i></i></li><li><i><i><i>}</i></i></i></li><li><i><i><i><br>
+</i></i></i></li></ul><i><i><i><br>
+<i>复制代码</i><br>
+<br>
+我的思路是找到加密算法，然后在遍历内存的时候，为了效率我只先解密出0x10字节大小的内容，然后套用以前windows7解密方式再次解密出context，修改完成后也要重新加密两次回去。因为修改完最后要加密CmpAppendDllSection函数回去，那么就要找加密算法了，一番查找后，在FsRtlMdlReadCompleteDevEx函数里面找到里加密算法，示例如下：<br>
+<ul type="1" class="litype_1"><li></li><li></li><li>INITKDBG:000000014022AFB1&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; loc_14022AFB1:&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;; CODE XREF: FsRtlMdlReadCompleteDevEx+AFA1j</li><li>INITKDBG:000000014022AFB1 B8 03 00 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;eax, 3&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; ; 加密</li><li>INITKDBG:000000014022AFB6 88 9D 1B 01 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;[rbp+11Bh], bl</li><li>INITKDBG:000000014022AFBC 88 85 20 01 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;[rbp+120h], al</li><li>INITKDBG:000000014022AFC2 41 8B C9&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;ecx, r9d</li><li>INITKDBG:000000014022AFC5 B8 0C 00 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;eax, 0Ch</li><li>INITKDBG:000000014022AFCA 44 88 A5 18 01 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;[rbp+118h], r12b</li><li>INITKDBG:000000014022AFD1 88 85 19 01 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;[rbp+119h], al</li><li>INITKDBG:000000014022AFD7 4D 8B D1&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;r10, r9</li><li>INITKDBG:000000014022AFDA B8 0F 00 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;eax, 0Fh</li><li>INITKDBG:000000014022AFDF 44 88 AD 1E 01 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;[rbp+11Eh], r13b</li><li>INITKDBG:000000014022AFE6 4C 8B 6D 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;r13, [rbp+0]</li><li>INITKDBG:000000014022AFEA 41 8B DC&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;ebx, r12d</li><li>INITKDBG:000000014022AFED 4D 8B FC&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;r15, r12</li><li>INITKDBG:000000014022AFF0 C6 85 1D 01 00 00 02&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;byte ptr [rbp+11Dh], 2</li><li>INITKDBG:000000014022AFF7 44 8B A5 C0 00 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;r12d, [rbp+0C0h]</li><li>INITKDBG:000000014022AFFE 4D 8B D9&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;r11, r9</li><li>INITKDBG:000000014022B001 8D 70 01&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;lea&nbsp; &nbsp;&nbsp;&nbsp;esi, [rax+1]</li><li>INITKDBG:000000014022B004 C6 85 21 01 00 00 05&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;byte ptr [rbp+121h], 5</li><li>INITKDBG:000000014022B00B C6 85 24 01 00 00 06&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;byte ptr [rbp+124h], 6</li><li>INITKDBG:000000014022B012 C6 85 1F 01 00 00 07&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;byte ptr [rbp+11Fh], 7</li><li>INITKDBG:000000014022B019 C6 85 25 01 00 00 08&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;byte ptr [rbp+125h], 8</li><li>INITKDBG:000000014022B020 C6 85 22 01 00 00 09&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;byte ptr [rbp+122h], 9</li><li>INITKDBG:000000014022B027 C6 85 26 01 00 00 0A&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;byte ptr [rbp+126h], 0Ah</li><li>INITKDBG:000000014022B02E C6 85 1C 01 00 00 0B&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;byte ptr [rbp+11Ch], 0Bh</li><li>INITKDBG:000000014022B035 C6 85 27 01 00 00 0D&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;byte ptr [rbp+127h], 0Dh</li><li>INITKDBG:000000014022B03C C6 85 23 01 00 00 0E&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;byte ptr [rbp+123h], 0Eh</li><li>INITKDBG:000000014022B043 88 85 1A 01 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;[rbp+11Ah], al</li><li>INITKDBG:000000014022B049 49 D3 CA&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;ror&nbsp; &nbsp;&nbsp;&nbsp;r10, cl</li><li>INITKDBG:000000014022B04C</li><li>INITKDBG:000000014022B04C&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; loc_14022B04C:&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;; CODE XREF: FsRtlMdlReadCompleteDevEx+B0D2j</li><li>INITKDBG:000000014022B04C 49 8B 13&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;rdx, [r11]</li><li>INITKDBG:000000014022B04F BF 01 00 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;edi, 1</li><li>INITKDBG:000000014022B054 4C 8B C6&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;r8, rsi</li><li>INITKDBG:000000014022B057 8D 77 0E&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;lea&nbsp; &nbsp;&nbsp;&nbsp;esi, [rdi+0Eh]</li><li>INITKDBG:000000014022B05A</li><li>INITKDBG:000000014022B05A&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; loc_14022B05A:&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;; CODE XREF: FsRtlMdlReadCompleteDevEx+B07Aj</li><li>INITKDBG:000000014022B05A 41 0F B6 03&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;movzx&nbsp; &nbsp;eax, byte ptr [r11]</li><li>INITKDBG:000000014022B05E 48 83 E2 F0&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;and&nbsp; &nbsp;&nbsp;&nbsp;rdx, 0FFFFFFFFFFFFFFF0h</li><li>INITKDBG:000000014022B062 48 23 C6&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;and&nbsp; &nbsp;&nbsp;&nbsp;rax, rsi</li><li>INITKDBG:000000014022B065 0F B6 8C 05 18 01 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;movzx&nbsp; &nbsp;ecx, byte ptr [rbp+rax+118h]</li><li>INITKDBG:000000014022B06D 48 0B D1&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;or&nbsp; &nbsp;&nbsp; &nbsp;rdx, rcx</li><li>INITKDBG:000000014022B070 48 C1 CA 04&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;ror&nbsp; &nbsp;&nbsp;&nbsp;rdx, 4</li><li>INITKDBG:000000014022B074 49 89 13&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;[r11], rdx</li><li>INITKDBG:000000014022B077 4C 2B C7&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;sub&nbsp; &nbsp;&nbsp;&nbsp;r8, rdi</li><li>INITKDBG:000000014022B07A 75 DE&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;jnz&nbsp; &nbsp;&nbsp;&nbsp;short loc_14022B05A</li><li>INITKDBG:000000014022B07C 48 8B 7D 40&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;rdi, [rbp+40h]&nbsp;&nbsp;; KiWaitNever</li><li>INITKDBG:000000014022B080 49 2B D7&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;sub&nbsp; &nbsp;&nbsp;&nbsp;rdx, r15</li><li>INITKDBG:000000014022B083 49 89 13&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;[r11], rdx</li><li>INITKDBG:000000014022B086 45 85 E4&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;test&nbsp; &nbsp; r12d, r12d</li><li>INITKDBG:000000014022B089 75 13&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;jnz&nbsp; &nbsp;&nbsp;&nbsp;short loc_14022B09E</li><li>INITKDBG:000000014022B08B 49 33 D5&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;rdx, r13&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;; KiWaitAlways</li><li>INITKDBG:000000014022B08E 8B CF&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;ecx, edi</li><li>INITKDBG:000000014022B090 48 0F CA&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;bswap&nbsp; &nbsp;rdx</li><li>INITKDBG:000000014022B093 49 33 D2&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;rdx, r10</li><li>INITKDBG:000000014022B096 48 D3 CA&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;ror&nbsp; &nbsp;&nbsp;&nbsp;rdx, cl</li><li>INITKDBG:000000014022B099 48 33 D7&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;rdx, rdi</li><li>INITKDBG:000000014022B09C EB 03&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;jmp&nbsp; &nbsp;&nbsp;&nbsp;short loc_14022B0A1</li><li>INITKDBG:000000014022B09E&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; ; ---------------------------------------------------------------------------</li><li>INITKDBG:000000014022B09E</li><li>INITKDBG:000000014022B09E&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; loc_14022B09E:&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;; CODE XREF: FsRtlMdlReadCompleteDevEx+B089j</li><li>INITKDBG:000000014022B09E 49 33 D2&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;rdx, r10</li><li>INITKDBG:000000014022B0A1</li><li>INITKDBG:000000014022B0A1&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; loc_14022B0A1:&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;; CODE XREF: FsRtlMdlReadCompleteDevEx+B09Cj</li><li>INITKDBG:000000014022B0A1 49 89 13&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;[r11], rdx</li><li>INITKDBG:000000014022B0A4 8B CA&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;ecx, edx</li><li>INITKDBG:000000014022B0A6 BA C8 00 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;edx, 0C8h</li><li>INITKDBG:000000014022B0AB F7 D1&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;not&nbsp; &nbsp;&nbsp;&nbsp;ecx</li><li>INITKDBG:000000014022B0AD 2B D3&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;sub&nbsp; &nbsp;&nbsp;&nbsp;edx, ebx</li><li>INITKDBG:000000014022B0AF 4D 03 F9&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;add&nbsp; &nbsp;&nbsp;&nbsp;r15, r9</li><li>INITKDBG:000000014022B0B2 0F AF D3&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;imul&nbsp; &nbsp; edx, ebx</li><li>INITKDBG:000000014022B0B5 BE 10 00 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;esi, 10h</li><li>INITKDBG:000000014022B0BA FF C3&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;inc&nbsp; &nbsp;&nbsp;&nbsp;ebx</li><li>INITKDBG:000000014022B0BC 48 D3 CA&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;ror&nbsp; &nbsp;&nbsp;&nbsp;rdx, cl</li><li>INITKDBG:000000014022B0BF 41 8B 0B&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;ecx, [r11]</li><li>INITKDBG:000000014022B0C2 4C 33 D2&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;xor&nbsp; &nbsp;&nbsp;&nbsp;r10, rdx</li><li>INITKDBG:000000014022B0C5 49 D3 C2&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;rol&nbsp; &nbsp;&nbsp;&nbsp;r10, cl</li><li>INITKDBG:000000014022B0C8 49 83 C3 08&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;add&nbsp; &nbsp;&nbsp;&nbsp;r11, 8</li><li>INITKDBG:000000014022B0CC 4D 03 D1&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;add&nbsp; &nbsp;&nbsp;&nbsp;r10, r9</li><li>INITKDBG:000000014022B0CF 83 FB 19&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;cmp&nbsp; &nbsp;&nbsp;&nbsp;ebx, 19h</li><li>INITKDBG:000000014022B0D2 0F 82 74 FF FF FF&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;jb&nbsp; &nbsp;&nbsp; &nbsp;loc_14022B04C</li><li>INITKDBG:000000014022B0D8 48 8B 75 38&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;rsi, [rbp+38h]</li><li>INITKDBG:000000014022B0DC 48 C7 C7 00 74 79 B8&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;rdi, 0FFFFFFFFB8797400h</li><li>INITKDBG:000000014022B0E3 4C 8B 75 18&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;r14, [rbp+18h]</li><li>INITKDBG:000000014022B0E7 BB 01 00 00 00&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;mov&nbsp; &nbsp;&nbsp;&nbsp;ebx, 1</li><li>INITKDBG:000000014022B0EC</li><li>INITKDBG:000000014022B0EC&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; loc_14022B0EC:&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;; CODE XREF: FsRtlMdlReadCompleteDevEx+AF15j</li><li><br>
+</li></ul><br>
+<i>复制代码</i><br>
+<br>
+等我写出加密算法后发现有点儿不对了，果然一实验真不对，不好的预感来了，去FsRtlMdlReadCompleteDevEx一翻，加密算法有很多种，大同小异。然后再去翻解密算法，同样有十几种，之前看到以为都是一样的，但是细心一看都有些区别，崩溃...<br>
+那么想通过双解密后修改然后在双加密的方式来绕过windows10的pg就不好办了，我总不能去研究十几种加解密算法吧，而且哪种加密对应哪种解密还要慢慢实验，最郁闷的是解密的时候我要去试探十几种算法对效率也产生了很大困扰。于是此路不通了~<br>
+于是我再找办法，既然解密CmpAppendDllSection如此麻烦，那我就不解密CmpAppendDllSection函数。而是解密后面的内容。CmpAppendDllSection+0xc8以后的内容都是原来的加解密方法，那么能不能跳过CmpAppendDllSection函数而解密后面的内容呢？答案是能！但是有个问题是解密后面的内容每8字节用到的key不一样，key的动态计算方法在上面代码给出了，是下面这部分代码：<br>
+<ul type="1" class="litype_1"><li></li><li> auto TempSize = FollowContextSize;&nbsp; &nbsp; //context的尺寸</li><li> auto FollowContextKey = ContextKey;</li><li> //解密剩下的部分</li><li> do {</li><li>&nbsp;&nbsp;pTempMem[(0xC0 / sizeof(ULONG_PTR)) + TempSize] ^= FollowContextKey;</li><li>&nbsp;&nbsp;auto RorBit = static_cast&lt;UCHAR&gt;(TempSize);</li><li>&nbsp;&nbsp;FollowContextKey = ROR(FollowContextKey, RorBit, 64);</li><li> } while (--TempSize);</li><li><br>
+</li></ul><br>
+<i>复制代码</i><br>
+<br>
+想解密出CmpAppendDllSection之后的代码必须要有一个关键东西，就是context的尺寸，因为以这个尺寸为计算动态key的因子。这就麻烦了，context的大小我没办法得到，因为都解密不出来怎么得到呢。当然我可以用其他办法解密出来context的大小，但是程序中就要写死了，写死的话就不行了，因为context大小是随机的！那有没有不用context大小就能解密出剩下的部分呢，我想了半天虽然前后两次解密有联系，但是这种联系是不牢固的，大脑不够用不想去想了...<br>
+上面已经有两种办法不好使了，我比较追求好用的办法，于是继续研究。下面贴出windows10 pg执行的流程：<br>
+<img id="aimg_A46e4" onclick="zoom(this, this.src, 0, 0, 0)" class="zoom" width="600" file="http://www.mengwuji.net/data/attachment/forum/201711/09/023417f1bbbvemmczv0lbe.jpg" onmouseover="img_onmouseoverfunc(this)" style="cursor: pointer;" border="0" alt="" src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/023417f1bbbvemmczv0lbe.jpg" lazyloaded="true" _load="1"><br>
+上图中，0xffffe000`b0cae074就是CmpAppendDllSection地址。我试了很多次，因为我这个windows10版本比较底，发现它都是dpc例程触发的一个异常，然后异常中执行pg解密代码再运行，ExQueueWorkItem没触发过pg(难道我打开方式不对？？！)。所以针对我的这个版本，就好处理了。我们可以在KiExceptionDispatch函数这里拦截下，发现是KiCustomRecurseRoutine(0~9)函数内触发的异常，就跳过这个异常不让异常分发下去，这样pg就没有执行机会了。当然也没必要说一定拦截KiExceptionDispatch，具体拦截什么可以看图中调用流程，只要先于pg代码执行之前就行。<br>
+上面的三种办法，就第三种目前来说比较靠谱点儿，但是能不能兼容所有版本问题也很大，要是自己玩玩想更加了解pg运行原理，可以拿这种方法开刀。<br>
+<br>
+那么难道就没比较稳定的方法吗？答案是有的，我在弄第一种办法之前就想过一个办法，实验后发现很稳定的过掉了pg(狂喜<img id="aimg_qDqzB" onclick="zoom(this, this.src, 0, 0, 0)" class="zoom" file="http://www.mengwuji.net/static/image/smiley/yangcong/S24.gif" onmouseover="img_onmouseoverfunc(this)" lazyloadthumb="1" border="0" alt="" src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/S24.gif" lazyloaded="true" _load="1" style="">)。不过为了解密出它有很高的荣誉感所以才去研究第一种办法，结果泪奔<img id="aimg_J50bS" onclick="zoom(this, this.src, 0, 0, 0)" class="zoom" file="http://www.mengwuji.net/static/image/smiley/yangcong/S16.gif" onmouseover="img_onmouseoverfunc(this)" lazyloadthumb="1" border="0" alt="" src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/S16.gif" lazyloaded="true" _load="1" style="">。为了讨论才诞生出第二种第三种办法，同样泪奔...<img id="aimg_s0qNW" onclick="zoom(this, this.src, 0, 0, 0)" class="zoom" file="http://www.mengwuji.net/static/image/smiley/yangcong/S22.gif" onmouseover="img_onmouseoverfunc(this)" lazyloadthumb="1" border="0" alt="" src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/S22.gif" lazyloaded="true" _load="1" style=""><br>
+<br>
+上面是对windows10 pg的讨论，小伙伴们有什么办法也可以提出来交流一下。<br>
+<br>
+</i></i></i></i></i></td></tr></tbody></table>
+
+
+
+
+</div>
+<div id="comment_1750" class="cm">
+</div>
+
+<div id="post_rate_div_1750"></div>
+
+<div id="relate_subject"></div>
+</div>
+
+
+
+
+</div>
+
+
+</td></tr>
+<tr><td class="plc plm">
+<div id="p_btn" class="mtw mbm hm cl">
+<div class="tshare cl">
+<b>分享到:&nbsp;</b>
+
+<a href="javascript:;" onclick="showWindow(&#39;wechat_share&#39;, &#39;plugin.php?id=wechat:qrcode&amp;threadqr=848&amp;access=yes&amp;share=yes&#39;)"><i><img src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/share.png" alt="微信">微信</i></a>
+
+
+
+
+<a href="http://www.woaidaima.com/home.php?mod=spacecp&amp;ac=plugin&amp;id=qqconnect:spacecp&amp;pluginop=share&amp;sh_type=4&amp;thread_id=848" id="k_share_to_qq" title="QQ好友和群" target="_blank"><i><img src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/qq_share.png" alt="QQ好友和群">QQ好友和群</i></a>
+</div>
+<style type="text/css">
+.deanicon_bottom{ margin-top:78px;}
+.deanicon_bottom span{ font-size:12px; color:#666;}
+.deanicon_bottom span.deansc{ display:inline-block;}
+#favoritenumber{ display:inline-block;}
+.tshare { display:none;}
+</style>
+<a href="http://www.woaidaima.com/home.php?mod=spacecp&amp;ac=favorite&amp;type=thread&amp;id=848" id="k_favorite" onclick="showWindow(this.id, this.href, &#39;get&#39;, 0);" onmouseover="this.title = $(&#39;favoritenumber&#39;).innerHTML + &#39; 人收藏&#39;" title="收藏本帖"><img src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/favourite.png" alt="收藏"><div class="deanicon_bottom"><span class="deansc">收藏</span><span id="favoritenumber">0</span></div></a>
+</div>
+        
+        
+        
+        
+        
+        
+</td>
+</tr>
+<tr id="_postposition1750"></tr>
+<tr>
+<td class="pls"></td>
+<td class="plc" style="overflow:visible;--&gt; width:100%">
+<div class="po hin">
+<div class="pob cl">
+<em>
+<a class="fastre" href="http://www.woaidaima.com/forum.php?mod=post&amp;action=reply&amp;fid=59&amp;tid=848&amp;reppost=1750&amp;extra=page%3D1&amp;page=1" onclick="showWindow(&#39;reply&#39;, this.href)">回复</a>
+</em>
+
+<p>
+<a href="javascript:;" id="mgc_post_1750" onmouseover="showMenu(this.id)" class="showmenu" style="display: none;"></a>
+<a href="javascript:;" onclick="showWindow(&#39;miscreport1750&#39;, &#39;misc.php?mod=report&amp;rtype=post&amp;rid=1750&amp;tid=848&amp;fid=59&#39;, &#39;get&#39;, -1);return false;">举报</a>
+</p>
+
+<ul id="mgc_post_1750_menu" class="p_pop mgcmn" style="display: none;">
+</ul>
+<script type="text/javascript" reload="1">checkmgcmn('post_1750')</script>
+</div>
+</div>
+</td>
+</tr>
+<tr class="ad">
+<td class="pls">
+</td>
+</tr>
+</tbody></table>
+
+<script type="text/javascript" reload="1">
+aimgcount[1750] = ['qDqzB','J50bS','s0qNW','I04rj','A46e4'];
+attachimggroup(1750);
+var aimgfid = 0;
+</script>
+
+
+
+
+
+
+            </div>
+                            <div id="postlistreply" class="pl"><div id="post_new" class="viewthread_table" style="display: none"></div></div>
+            </div>
+    
+    
+    <form method="post" autocomplete="off" name="modactions" id="modactions">
+        <input type="hidden" name="formhash" value="04c356bb">
+        <input type="hidden" name="optgroup">
+        <input type="hidden" name="operation">
+        <input type="hidden" name="listextra" value="page%3D1">
+        <input type="hidden" name="page" value="1">
+    </form>
+    
+        
+        
+    <div class="pgs mtm mbm cl">
+                <span class="pgb y"><a href="http://www.woaidaima.com/forum-59-1.html">返回列表</a></span>
+                    <a class="deanfabuanniu" onclick="showWindow(&#39;newthread&#39;, &#39;forum.php?mod=post&amp;action=newthread&amp;fid=59&#39;)" href="javascript:;" title="发新帖">发表新帖</a>
+                    </div>
+    
+        <!--[diy=diyfastposttop]--><div id="diyfastposttop" class="area"></div><!--[/diy]-->
+            <script type="text/javascript">
+var postminchars = parseInt('10');
+var postmaxchars = parseInt('10000');
+var disablepostctrl = parseInt('0');
+</script>
+
+<div id="f_pst" class="pl bm bmw">
+<form method="post" autocomplete="off" id="fastpostform" action="http://www.woaidaima.com/forum.php?mod=post&amp;action=reply&amp;fid=59&amp;tid=848&amp;extra=page%3D1&amp;replysubmit=yes&amp;infloat=yes&amp;handlekey=fastpost" onsubmit="return fastpostvalidate(this)">
+<table cellspacing="0" cellpadding="0">
+<tbody><tr>
+<td class="pls">
+</td>
+<td class="plc">
+				<script type="text/javascript">
+					function fillreplyarea(){
+						var content = $('tuch_qreply').options[$('tuch_qreply').options.selectedIndex].text;
+						if($('tuch_qreply').options[$('tuch_qreply').options.selectedIndex].value != 0){
+							seditor_insertunit('fastpost', content);
+						}
+					}
+				</script>
+				快速回复<select id="tuch_qreply" onchange="fillreplyarea()"><option value="0">选择回复内容</option><option>楼主发帖辛苦了，谢谢楼主分享！</option><option>学习就来我爱代码，这里资源真不错！</option><option>既然你诚信诚意的推荐了，那我就回复了！</option><option>这东西不错，谢谢楼主！</option><option>这帖子不回对不起自己！</option><option>我看不错哦，谢谢楼主！</option><option>其实我一直觉得楼主品味不错！呵呵！</option><option>感谢咯住无私分享！真是个学习的好地方！</option><option>双击一波666！你是铁头娃，真皮沙发！</option></select>
+<span id="fastpostreturn"></span>
+
+
+<div class="cl">
+<div id="fastsmiliesdiv" class="y"><div id="fastsmiliesdiv_data"><div id="fastsmilies"></div></div></div><div class="hasfsl" id="fastposteditor">
+<div class="tedt mtn">
+<div class="bar">
+<span class="y">
+<a href="http://www.woaidaima.com/forum.php?mod=post&amp;action=reply&amp;fid=59&amp;tid=848" onclick="return switchAdvanceMode(this.href)">高级模式</a>
+</span><script src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/seditor.js.下载" type="text/javascript"></script>
+<div class="fpd">
+<a href="javascript:;" title="文字加粗" class="fbld">B</a>
+<a href="javascript:;" title="设置文字颜色" class="fclr" id="fastpostforecolor">Color</a>
+<a id="fastpostimg" href="javascript:;" title="图片" class="fmg">Image</a>
+<a id="fastposturl" href="javascript:;" title="添加链接" class="flnk">Link</a>
+<a id="fastpostquote" href="javascript:;" title="引用" class="fqt">Quote</a>
+<a id="fastpostcode" href="javascript:;" title="代码" class="fcd">Code</a>
+<a href="javascript:;" class="fsml" id="fastpostsml">Smilies</a>
+</div></div>
+<div class="area">
+<div class="pt hm">
+您需要登录后才可以回帖 <a href="http://www.woaidaima.com/member.php?mod=logging&amp;action=login" onclick="showWindow(&#39;login&#39;, this.href)" class="xi2">登录</a> | <a href="http://www.woaidaima.com/member.php?mod=register" class="xi2">立即注册</a>
+
+
+<a href="http://www.woaidaima.com/connect.php?mod=login&amp;op=init&amp;referer=forum.php%3Fmod%3Dviewthread%26tid%3D848%26extra%3Dpage%253D1%26page%3D1&amp;statfrom=login" target="_top" rel="nofollow"><img src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/qq_login.gif" class="vm"></a>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="seccheck_fastpost">
+</div>
+
+
+<input type="hidden" name="formhash" value="04c356bb">
+<input type="hidden" name="usesig" value="">
+<input type="hidden" name="subject" value="  ">
+<p class="ptm pnpost">
+<a href="http://www.woaidaima.com/home.php?mod=spacecp&amp;ac=credit&amp;op=rule&amp;fid=59" class="y" target="_blank">本版积分规则</a>
+<button type="button" onclick="showWindow(&#39;login&#39;, &#39;member.php?mod=logging&amp;action=login&amp;guestmessage=yes&#39;)" onmouseover="checkpostrule(&#39;seccheck_fastpost&#39;, &#39;ac=reply&#39;);this.onmouseover=null" name="replysubmit" id="fastpostsubmit" class="pn pnc vm" value="replysubmit" tabindex="5">发表回复</button>
+<label for="fastpostrefresh"><input id="fastpostrefresh" type="checkbox" class="pc">回帖后跳转到最后一页</label>
+<script type="text/javascript">if(getcookie('fastpostrefresh') == 1) {$('fastpostrefresh').checked=true;}</script>
+</p>
+</td>
+</tr>
+</tbody></table>
+</form>
+</div>
+        
+        
+            
+            <script type="text/javascript">
+        new lazyload();
+        </script>
+        
+            <script type="text/javascript">document.onkeyup = function(e){keyPageScroll(e, 0, 0, 'forum.php?mod=viewthread&tid=848', 1);}</script>
+        </div>
+    </div>
+
+<div class="wp mtn">
+<!--[diy=diy3]--><div id="diy3" class="area"></div><!--[/diy]-->
+</div>
+
+<script type="text/javascript">
+function succeedhandle_followmod(url, msg, values) {
+var fObj = $('followmod_'+values['fuid']);
+if(values['type'] == 'add') {
+fObj.innerHTML = '不收听';
+fObj.href = 'home.php?mod=spacecp&ac=follow&op=del&fuid='+values['fuid'];
+} else if(values['type'] == 'del') {
+fObj.innerHTML = '收听TA';
+fObj.href = 'home.php?mod=spacecp&ac=follow&op=add&hash=04c356bb&fuid='+values['fuid'];
+}
+}
+fixed_avatar([1750], 1);
+</script>
+<script type="text/javascript">
+jQuery(function() { 
+var elm = jQuery('.deansideboxs_move'); 
+var startPos = jQuery(elm).offset().top; 
+jQuery.event.add(window, "scroll", function() { 
+var p = jQuery(window).scrollTop(); 
+jQuery(elm).css('position',((p) > startPos) ? 'fixed' : 'static'); 
+jQuery(elm).css('top',((p) > startPos) ? '65px' : ''); 
+}); 
+}); 
+</script>	</div>
+
+
+<script type="text/javascript">
+var rel_tid = "848";
+var rel_title = "%E3%80%90%E8%BD%AC%E3%80%91windows10+patchguard%E7%BB%95%E8%BF%87%E8%AE%A8%E8%AE%BA";
+var rel_reltid = "0";
+var rel_prepos = "";
+var my_siteid = "0";
+var rel_uid = "0";
+var rel_views = "1783";
+var rel_replies = "1";
+var rel_page = "1";
+var rel_show = "1";
+</script>
+<script src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/relate_subject.js.下载" type="text/javascript" charset="GBK"></script>
+
+
+
+<script src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/discuz_mini.js.下载" type="text/javascript"></script>
+<script type="text/javascript" charset="utf-8">
+if (typeof DiscuzMini != 'undefined' && typeof DiscuzMini == 'object') {
+DiscuzMini.showMini('https://www.google.com/', {"response_type":"JSONP","s_id":"0","s_site_gid":7,"s_site_uid":0,"ts":1577196015,"sig":"483fcb191cbea6c12a29fb0488bfbcce"});
+}
+</script>
+
+
+
+<script type="text/javascript">
+_attachEvent(window, 'load', getForbiddenFormula, document);
+function getForbiddenFormula() {
+var toGetForbiddenFormulaFIds = function () {
+ajaxget('plugin.php?id=cloudsearch&formhash=04c356bb');
+};
+var a = document.body.getElementsByTagName('a');
+for(var i = 0;i < a.length;i++){
+if(a[i].getAttribute('sc')) {
+a[i].setAttribute('mid', hash(a[i].href));
+a[i].onmousedown = function() {toGetForbiddenFormulaFIds();};
+}
+}
+var btn = document.body.getElementsByTagName('button');
+for(var i = 0;i < btn.length;i++){
+if(btn[i].getAttribute('sc')) {
+btn[i].setAttribute('mid', hash(btn[i].id));
+btn[i].onmousedown = function() {toGetForbiddenFormulaFIds();};
+}
+}
+}
+</script>
+
+    
+    <div class="deanfooter">
+    	<div class="deanfttop">
+        	<div class="w1180">
+            	<div class="deanfttl">
+                	<div class="deanftlogo">
+                        <img src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/ftlogo.png">
+                    </div>
+                    <div class="deanftkouhao">
+                        C++游戏编程
+                    </div>
+                    <div class="deantels">QQ群:492188454</div>
+                    <div class="deanservicetime">还没想好要放什么</div>
+                    <div class="deanservicetime">我爱代码 QQ：394999482</div>
+                </div>
+            	
+            	<div class="deanfttm">
+                	<ul>
+                    	<li>
+                        	<h5>我爱代码</h5>
+                            <a href="http://www.woaidaima.com/#" target="_blank">我爱代码</a>
+                            <a href="http://www.woaidaima.com/#" target="_blank">我爱代码</a>
+                            <a href="http://www.woaidaima.com/#" target="_blank">我爱代码</a>
+                            <a href="http://www.woaidaima.com/#" target="_blank">我爱代码</a>
+                            <a href="http://www.woaidaima.com/#" target="_blank">我爱代码</a>
+                            <a href="http://www.woaidaima.com/#" target="_blank">我爱代码</a>
+                        </li>
+                        <div class="clear"></div>
+                    </ul>
+                </div>
+                <div class="deanfttr">
+                	<div class="deanerweimaft">
+                    	<img src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/ftqrcode.jpg">
+                    </div>
+                    <p>扫一扫关注我们</p>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        
+        <div class="deanftbottom">
+        	<p>欢迎访问 <a href="http://www.woaidaima.com/" target="_blank">我爱代码!</a> <em>X3.2</em>© 2010-2018 <a href="http://www.woaidaima.com/" target="_blank">woaidaima Inc.</a>( <a href="http://www.miitbeian.gov.cn/" target="_blank">陇ICP备 17000105号-1</a> )
+<script>var lainframe;</script>
+            <script src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/f.txt" type="text/javascript"></script><a href="https://www.51.la/?comId=19366889" title="51.La 网站流量统计系统" target="_blank"><span style="display:inline-block;background-color:#EF5350;color:#fff;padding:2px 5px;font-family:arial;font-size:12px;font-weight:bold;">51La</span></a></p>
+
+        </div>
+    </div>    
+    
+    
+<div id="ft" style="margin:0;padding:0; height:0;"></div>
+<script src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/home.php" type="text/javascript"></script>
+<div id="scrolltop" style="display:none;">
+<span hidefocus="true"><a title="返回顶部" onclick="window.scrollTo(&#39;0&#39;,&#39;0&#39;)" id="scrolltopa"><b>返回顶部</b></a></span>
+<span>
+<a href="http://www.woaidaima.com/forum-59-1.html" hidefocus="true" class="returnlist" title="返回列表"><b>返回列表</b></a>
+</span>
+</div>
+
+
+<script type="text/javascript">_attachEvent(window, 'scroll', function () { showTopLink(); });checkBlind();</script>
+			<div id="discuz_tips" style="display:none;"></div>
+			<script type="text/javascript">
+				var tipsinfo = '0|X3.2|0.6||0||0|7|1577196015||2';
+			</script>
+			<script src="./【转】windows10 patchguard绕过讨论 - 代码片段 - 我爱代码 - 我爱代码_files/discuz_tips.js.下载" type="text/javascript" charset="UTF-8"></script>
+
+
+</body></html>

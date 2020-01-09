@@ -1,0 +1,24 @@
+void make_pg_fire()
+{
+		Idtr idt = {};
+		__sidt(&idt);
+		const auto old_limit = idt.limit;
+		idt.limit = 0xffff;
+		__lidt(&idt);
+		__sidt(&idt); 
+}
+
+ffffb70b`cc0d1ab0 fffff805`652318c2 nt!KiSwapContext+0x76
+        ffffb70b`cc0d1bf0 fffff805`65230f54 nt!KiSwapThread+0x3f2
+        ffffb70b`cc0d1c90 fffff805`652306f5 nt!KiCommitThreadWait+0x144
+        ffffb70b`cc0d1d30 ffffd381`ad904cf7 nt!KeWaitForSingleObject+0x255
+        ffffb70b`cc0d1e10 ffffd381`adfcc630 0xffffd381`ad904cf7
+        ffffb70b`cc0d1e18 fffff805`00000000 0xffffd381`adfcc630
+        ffffb70b`cc0d1e20 ffffd381`b416f000 0xfffff805`00000000
+        ffffb70b`cc0d1e28 fffff805`65227400 0xffffd381`b416f000
+        ffffb70b`cc0d1e30 fffff805`6523a3e1 nt!IopFreeIrp+0x20
+        ffffb70b`cc0d1e70 fffff805`65239d47 nt!IopfCompleteRequest+0x681
+        ffffb70b`cc0d1f80 fffff805`6a487486 nt!IofCompleteRequest+0x17
+        ffffb70b`cc0d1fb0 fffff805`6a47d4be Ntfs!NtfsExtendedCompleteRequestInternal+0x186
+        ffffb70b`cc0d2020 ffffb70b`cc0d25c0 Ntfs!NtfsCommonWrite+0x2fce
+        ffffb70b`cc0d2250 00000000`00000000 0xffffb70b`cc0d25c0
