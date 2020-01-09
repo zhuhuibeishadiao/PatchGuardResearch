@@ -2,12 +2,12 @@
 
 **此项目能够动态解密pgContext的一部分**  
 pgContext是由多个部分组成    
-0~0xc8是一部分    
-0~RtlMinimalBarrier的偏移是一部分(在1803上,此偏移为0x1A2A8)    
-RtlMinimalBarrier~RtlMinimalBarrier+0xA00 是明文    
-0x1A2A8+0xA00 ~ ....是另一部加密的Context    
+0 - 0xc8是一部分    
+0 - RtlMinimalBarrier的偏移是一部分(在1803上,此偏移为0x1A2A8)    
+RtlMinimalBarrier - RtlMinimalBarrier+0xA00 是明文    
+0x1A2A8+0xA00 - ....是另一部加密的Context    
 具体可以看doc中的dump.log    
-此项目解密0~RtlMinimalBarrier的偏移    
+此项目解密0 - RtlMinimalBarrier的偏移    
 对于攻破PatchGuard,这段偏移中的数据已经足够    
 
 ## 原理
