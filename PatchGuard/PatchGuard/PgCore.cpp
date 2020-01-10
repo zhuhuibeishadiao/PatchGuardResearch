@@ -445,18 +445,33 @@ BOOLEAN PgCoreDecrytionPartDump(PULONG64 pgContext, SIZE_T ContextSize, PPG_CORE
 
 }
 
-BOOLEAN PgCoreCompareFilelds(PULONG64 pg, ULONG64 pFilelds[2], ULONG rcx)
+BOOLEAN PgCoreCompareFilelds(PULONG64 pg, ULONG64 pFilelds[4], ULONG rcx)
 {
-    auto rorkey = pg[1] ^ pFilelds[1];
+    auto rorkey = pg[3] ^ pFilelds[3];
     
     rorkey = __ror64(rorkey, rcx);
 
     rorkey = __btc64(rorkey, rorkey);
 
-    if ((rorkey ^ pg[0]) == pFilelds[0])
-        return true;
-    else
-        return false;
+    if ((rorkey ^ pg[2]) == pFilelds[2])
+    {
+        rcx--;
+        rorkey = __ror64(rorkey, rcx);
+        rorkey = __btc64(rorkey, rorkey);
+
+        if ((rorkey ^ pg[1]) == pFilelds[1])
+        {
+            rcx--;
+
+            rorkey = __ror64(rorkey, rcx);
+            rorkey = __btc64(rorkey, rorkey);
+
+            if ((rorkey ^ pg[0]) == pFilelds[0])
+                return true;
+        }
+    }
+
+    return false;
 }
 
 BOOLEAN NTAPI PgCorePoolCallback(BOOLEAN bNonPagedPool, PVOID Va, SIZE_T size, UCHAR tag[4], PVOID context)
@@ -528,19 +543,19 @@ BOOLEAN NTAPI PgCorePoolCallback(BOOLEAN bNonPagedPool, PVOID Va, SIZE_T size, U
     {
         CompareFields = (PULONG64)p;
 
-        size_t rcx = 6;
-        // 用nt!ExAcquireResourceExclusiveLite和 nt!ExAcquireResourceSharedLite进行碰撞
+        size_t rcx = 8;
+        // 用ExFreePool开始碰撞
         BOOLEAN bFouned = PgCoreCompareFilelds(CompareFields, pCoreInfo->PgContextFiled, rcx);
 
         if (!bFouned)
         {
-            rcx = 5;
+            rcx = 7;
             bFouned = PgCoreCompareFilelds(CompareFields, pCoreInfo->PgContextFiled, rcx);
         }
 
         if (bFouned)
         {
-            if (rcx == 6)
+            if (rcx == 8)
                 offsetHeader = 0x1d; // offset ExAcquireResourceSharedLite - 0xe8 = pg context    0x1d = e8 / 8
             else
                 offsetHeader = 0x1c; // offset ExAcquireResourceSharedLite - 0xe0 = pg context    0x1c = e0 / 8
@@ -553,8 +568,8 @@ BOOLEAN NTAPI PgCorePoolCallback(BOOLEAN bNonPagedPool, PVOID Va, SIZE_T size, U
             LOGF_INFO("PgContext:%p    size:%p    rcx:%p\r\n", PgContext, PgContextSize, rcx);
 
             //PgCoreDumpPgContext(PgContext, PgContextSize);
-            ULONG64 offset = 0;
-            ULONG64 rorkey = 0;
+            //ULONG64 offset = 0;
+            //ULONG64 rorkey = 0;
             // 解密c8~第二部分结束
             //PgCoreGetFirstRorKeyAndOffsetByC3(&rorkey, &offset, PgContext, PgContextSize, (PPG_CORE_INFO)context);
             // 解密c8~0x988
@@ -574,13 +589,86 @@ BOOLEAN NTAPI PgCorePhysicalMemoryCallback(PVOID Va, SIZE_T size, PVOID context)
     if (!MmIsAddressValid(Va) || !MmIsAddressValid((PCHAR)Va + size - 1))
         return true;
 
-    // some code
+    static PVOID pLastVa = NULL;
+
+    if (pLastVa == Va)
+        return true;
+
+    PPG_CORE_INFO pCoreInfo = reinterpret_cast<PPG_CORE_INFO>(context);
+
+    if (pCoreInfo == NULL)
+        return false;
+
+    PCHAR p = (PCHAR)Va;
+
+    PCHAR pEnd = p + size - 0x8 * 4;
+
+    ULONG offsetHeader = 0;
+
+    PULONG64 CompareFields = NULL;
+
+    do
+    {
+        CompareFields = (PULONG64)p;
+
+        for (size_t i = 10; i > 0; i--)
+        {
+            if (PgCoreCompareFilelds(CompareFields, pCoreInfo->PgContextFiled, i))
+            {
+                auto PhysicalMemorySize = PgIdpGetPhysicalMemoryBlockSize(Va);
+                LOGF_INFO("Va:%p    rcx:%p    size:%p\r\n", Va, i, PhysicalMemorySize);
+                return true;
+            }
+        }
+
+        //size_t rcx = 8;
+
+        //// 用nt!ExAcquireResourceExclusiveLite和 nt!ExAcquireResourceSharedLite进行碰撞
+        //BOOLEAN bFouned = PgCoreCompareFilelds(CompareFields, pCoreInfo->PgContextFiled, rcx);
+
+        //if (!bFouned)
+        //{
+        //    rcx = 7;
+        //    bFouned = PgCoreCompareFilelds(CompareFields, pCoreInfo->PgContextFiled, rcx);
+        //}
+
+        //if (bFouned)
+        //{
+        //    if (rcx == 8)
+        //        offsetHeader = 0x1d; // offset ExAcquireResourceSharedLite - 0xe8 = pg context    0x1d = e8 / 8
+        //    else
+        //        offsetHeader = 0x1c; // offset ExAcquireResourceSharedLite - 0xe0 = pg context    0x1c = e0 / 8
+
+        //    auto PgContext = CompareFields - offsetHeader;
+        //    auto PhysicalMemorySize = PgIdpGetPhysicalMemoryBlockSize(Va);
+
+        //    if (PhysicalMemorySize == 0)
+        //    {
+        //        LOGF_ERROR("pg reboot!\r\n");
+        //        PhysicalMemorySize = PAGE_SIZE;
+        //    }
+
+        //    auto PgContextSize = PhysicalMemorySize - ((ULONG64)PgContext - (ULONG64)Va);
+        //    LOGF_DEBUG("pgCoreInfo:%p\r\n", pCoreInfo);
+        //    LOGF_INFO("Va:%p    PgContext:%p    size:%p    rcx:%p\r\n", Va, PgContext, PgContextSize, rcx);
+
+        //    return true;
+        //}
+
+        p++;
+    } while ((ULONG64)p < (ULONG64)pEnd);
+
+    pLastVa = Va;
 
     return true;
 }
 
 NTSTATUS PgCoreFindPgContext(PPG_CORE_INFO pgCoreInfo)
 {
+    LOGF_DEBUG("-----[PgCore] Find PgContext in pool.-----\r\n");
+    PgHelperEnumBigPool(PgCorePoolCallback, pgCoreInfo, NULL);
+    LOGF_DEBUG("-----[PgCore] Find PgContext in pool end.-----\r\n");
+
     LOGF_DEBUG("-----[PgCore] Find PgContext in PhysicalMemory.-----\r\n");
 
     auto status = PgIdpEnumPhysicalMemory(PgCorePhysicalMemoryCallback, pgCoreInfo);

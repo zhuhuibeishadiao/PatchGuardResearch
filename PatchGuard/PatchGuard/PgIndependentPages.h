@@ -11,4 +11,6 @@ BOOLEAN PgIdpMmIsAccessibleAddress(PVOID Address);
 
 NTSTATUS PgIdpEnumPhysicalMemory(ENUMPHYSICALCALLBACK callback, PVOID context);
 
+SIZE_T PgIdpGetPhysicalMemoryBlockSize(PVOID Va);
+
 #endif

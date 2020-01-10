@@ -408,6 +408,7 @@ typedef struct _MI_SYSTEM_PTE_TYPE
 #define MM_PTE_COPY_ON_WRITE_MASK 0x200
 #define MM_PTE_PROTOTYPE_MASK     0x400
 #define MM_PTE_TRANSITION_MASK    0x800
+#define MM_PTE_EXECUTE            0x8000000000000000
 
 #define MiGetPxeOffset(va) \
     ((ULONG)(((ULONG_PTR)(va) >> PXI_SHIFT) & PXI_MASK))

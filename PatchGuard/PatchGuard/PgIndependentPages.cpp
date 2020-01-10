@@ -104,115 +104,6 @@ GetVirtualAddressMappedByPxe(
     return GetVirtualAddressMappedByPde((PMMPTE)GetVirtualAddressMappedByPde(Pxe));
 }
 
-
-//VOID
-//NTAPI
-//PgIdpInitializeSystemPtesBitMap(
-//    __inout PMMPTE BasePte,
-//    __in PFN_NUMBER NumberOfPtes,
-//    __out PRTL_BITMAP BitMap
-//)
-//{
-//    PMMPTE PointerPxe = NULL;
-//    PMMPTE PointerPpe = NULL;
-//    PMMPTE PointerPde = NULL;
-//    PMMPTE PointerPte = NULL;
-//    PVOID PointerAddress = NULL;
-//    ULONG BitNumber = 0;
-//    PVOID BeginAddress = NULL;
-//    PVOID EndAddress = NULL;
-//
-//    /*
-//    PatchGuard Context pages allocate by MmAllocateIndependentPages
-//
-//    PTE field like this
-//
-//    nt!_MMPTE
-//    [+0x000] Long             : 0x2da963 [Type: unsigned __int64]
-//    [+0x000] VolatileLong     : 0x2da963 [Type: unsigned __int64]
-//    [+0x000] Hard             [Type: _MMPTE_HARDWARE]
-//
-//    [+0x000 ( 0: 0)] Valid            : 0x1     [Type: unsigned __int64] <- MM_PTE_VALID_MASK
-//    [+0x000 ( 1: 1)] Dirty1           : 0x1     [Type: unsigned __int64] <- MM_PTE_DIRTY_MASK
-//    [+0x000 ( 2: 2)] Owner            : 0x0     [Type: unsigned __int64]
-//    [+0x000 ( 3: 3)] WriteThrough     : 0x0     [Type: unsigned __int64]
-//    [+0x000 ( 4: 4)] CacheDisable     : 0x0     [Type: unsigned __int64]
-//    [+0x000 ( 5: 5)] Accessed         : 0x1     [Type: unsigned __int64] <- MM_PTE_ACCESS_MASK
-//    [+0x000 ( 6: 6)] Dirty            : 0x1     [Type: unsigned __int64] <- MM_PTE_DIRTY_MASK
-//    [+0x000 ( 7: 7)] LargePage        : 0x0     [Type: unsigned __int64]
-//    [+0x000 ( 8: 8)] Global           : 0x1     [Type: unsigned __int64] <- MM_PTE_GLOBAL_MASK
-//    [+0x000 ( 9: 9)] CopyOnWrite      : 0x0     [Type: unsigned __int64]
-//    [+0x000 (10:10)] Unused           : 0x0     [Type: unsigned __int64]
-//    [+0x000 (11:11)] Write            : 0x1     [Type: unsigned __int64] <- MM_PTE_WRITE_MASK
-//    [+0x000 (47:12)] PageFrameNumber  : 0x2da   [Type: unsigned __int64] <- pfndata index
-//    [+0x000 (51:48)] reserved1        : 0x0     [Type: unsigned __int64]
-//    [+0x000 (62:52)] SoftwareWsIndex  : 0x0     [Type: unsigned __int64]
-//    [+0x000 (63:63)] NoExecute        : 0x0     [Type: unsigned __int64] <- page can executable
-//
-//    [+0x000] Flush            [Type: _HARDWARE_PTE]
-//    [+0x000] Proto            [Type: _MMPTE_PROTOTYPE]
-//    [+0x000] Soft             [Type: _MMPTE_SOFTWARE]
-//    [+0x000] TimeStamp        [Type: _MMPTE_TIMESTAMP]
-//    [+0x000] Trans            [Type: _MMPTE_TRANSITION]
-//    [+0x000] Subsect          [Type: _MMPTE_SUBSECTION]
-//    [+0x000] List             [Type: _MMPTE_LIST]
-//    */
-//
-//#define VALID_PTE_SET_BITS \
-//            ( MM_PTE_VALID_MASK | MM_PTE_DIRTY_MASK | MM_PTE_WRITE_MASK | MM_PTE_ACCESS_MASK)
-//
-//#define VALID_PTE_UNSET_BITS \
-//            ( MM_PTE_WRITE_THROUGH_MASK | MM_PTE_CACHE_DISABLE_MASK | MM_PTE_COPY_ON_WRITE_MASK )
-//
-//    BeginAddress = GetVirtualAddressMappedByPte(BasePte);
-//    EndAddress = GetVirtualAddressMappedByPte(BasePte + NumberOfPtes);
-//
-//    PointerAddress = BeginAddress;
-//
-//    do {
-//        PointerPxe = GetPxeAddress(PointerAddress);
-//
-//        if (0 != PointerPxe->u.Hard.Valid) {
-//            PointerPpe = GetPpeAddress(PointerAddress);
-//
-//            if (0 != PointerPpe->u.Hard.Valid) {
-//                PointerPde = GetPdeAddress(PointerAddress);
-//
-//                if (0 != PointerPde->u.Hard.Valid) {
-//                    if (0 == PointerPde->u.Hard.LargePage) {
-//                        PointerPte = GetPteAddress(PointerAddress);
-//
-//                        if (0 != PointerPte->u.Hard.Valid) {
-//                            if (0 == PointerPte->u.Hard.NoExecute) {
-//                                if (VALID_PTE_SET_BITS == (PointerPte->u.Long & VALID_PTE_SET_BITS)) {
-//                                    if (0 == (PointerPte->u.Long & VALID_PTE_UNSET_BITS)) {
-//                                        BitNumber = (ULONG)(PointerPte - BasePte);
-//                                        RtlSetBit(BitMap, BitNumber);
-//                                    }
-//                                }
-//                            }
-//                        }
-//
-//                        PointerAddress = GetVirtualAddressMappedByPte(PointerPte + 1);
-//                    }
-//                    else {
-//                        PointerAddress = GetVirtualAddressMappedByPde(PointerPde + 1);
-//                    }
-//                }
-//                else {
-//                    PointerAddress = GetVirtualAddressMappedByPde(PointerPde + 1);
-//                }
-//            }
-//            else {
-//                PointerAddress = GetVirtualAddressMappedByPpe(PointerPpe + 1);
-//            }
-//        }
-//        else {
-//            PointerAddress = GetVirtualAddressMappedByPxe(PointerPxe + 1);
-//        }
-//    } while ((ULONG_PTR)PointerAddress < (ULONG_PTR)EndAddress);
-//}
-
 VOID PgIdpInitializeSystemSpace(
     __inout PPG_IDDP_INFO Block
 )
@@ -331,86 +222,6 @@ NTSTATUS PgIdpInitialization()
     return STATUS_SUCCESS;
 }
 
-//NTSTATUS PgIdpEnumIndependentPages(ENUMMEMORYCALLBACK callback, PVOID context)
-//{
-//    auto status = STATUS_SUCCESS;
-//
-//    if (g_Iddp.Valid != IDDP_INFO_INIT_SUCCESS)
-//    {
-//        status = PgIdpInitialization();
-//
-//        if (!NT_SUCCESS(status))
-//            return status;
-//    }
-//
-//    PRTL_BITMAP BitMap = NULL;
-//    ULONG BitMapSize = 0;
-//    PFN_NUMBER NumberOfPtes = 0;
-//    ULONG HintIndex = 0;
-//    ULONG StartingRunIndex = 0;
-//
-//    NumberOfPtes = g_Iddp.SystemPteInfo->Bitmap.SizeOfBitMap * 8;
-//
-//    BitMapSize =
-//        sizeof(RTL_BITMAP) + (ULONG)((((NumberOfPtes + 1) + 31) / 32) * 4);
-//
-//    BitMap = (PRTL_BITMAP)ExAllocatePool(NonPagedPool, BitMapSize);
-//
-//    if (NULL != BitMap) {
-//        RtlInitializeBitMap(
-//            BitMap,
-//            (PULONG)(BitMap + 1),
-//            (ULONG)(NumberOfPtes + 1));
-//
-//        RtlClearAllBits(BitMap);
-//
-//        PgIdpInitializeSystemPtesBitMap(
-//            g_Iddp.SystemPteInfo->BasePte,
-//            NumberOfPtes,
-//            BitMap);
-//
-//        do {
-//            HintIndex = RtlFindSetBits(
-//                BitMap,
-//                1,
-//                HintIndex);
-//
-//            if (MAXULONG != HintIndex) {
-//                RtlFindNextForwardRunClear(
-//                    BitMap,
-//                    HintIndex,
-//                    &StartingRunIndex);
-//
-//                RtlClearBits(BitMap, HintIndex, StartingRunIndex - HintIndex);
-//
-//                //if (StartingRunIndex -
-//                //    HintIndex >= BYTES_TO_PAGES(PgBlock->SizeINITKDBG)) {
-//
-//                //    /*PgCompareFields(
-//                //        PgBlock,
-//                //        PgSystemPtes,
-//                //        GetVirtualAddressMappedByPte(PgBlock->BasePte + HintIndex),
-//                //        (StartingRunIndex - HintIndex) * PAGE_SIZE);*/
-//                //        //ULONG RegionSize = (StartingRunIndex - HintIndex) * PAGE_SIZE;
-//
-//                //    DPRINT("%p    0x%x    0x%x    0x%x\n", GetVirtualAddressMappedByPte(PgBlock->PteSystem->BasePte + HintIndex), (StartingRunIndex - HintIndex) * PAGE_SIZE, StartingRunIndex, HintIndex);
-//                //}
-//
-//                if (!callback(TRUE, GetVirtualAddressMappedByPte(g_Iddp.SystemPteInfo->BasePte + HintIndex), (StartingRunIndex - HintIndex) * PAGE_SIZE, (PUCHAR)'pddi', context))
-//                    break;
-//
-//                HintIndex = StartingRunIndex;
-//            }
-//        } while (HintIndex < NumberOfPtes);
-//
-//        ExFreePool(BitMap);
-//
-//        return STATUS_SUCCESS;
-//    }
-//
-//    return STATUS_NO_MEMORY;
-//}
-
 BOOLEAN PgIdpMmIsAccessibleAddress(PVOID Address)
 {
     auto pxe = GetPxeAddress(Address);
@@ -451,6 +262,22 @@ BOOLEAN PgIdpMmIsExecutebleAddress(PVOID Address)
     return true;
 }
 
+void insert_sort(PVOID* R, int n)
+{
+    int i, j;
+    for (i = 1; i < n; i++)
+    {
+        auto t = R[i];
+
+        for (j = i - 1; j >= 0 && t < R[j]; j--)
+        {
+            R[j + 1] = R[j];
+        }
+
+        R[j + 1] = t;
+    }
+}
+
 NTSTATUS PgIdpEnumPhysicalMemory(ENUMPHYSICALCALLBACK callback, PVOID context)
 {
     if (callback == NULL)
@@ -460,6 +287,19 @@ NTSTATUS PgIdpEnumPhysicalMemory(ENUMPHYSICALCALLBACK callback, PVOID context)
 
     if (PhysicalMemoryBlock == NULL)
         return STATUS_INSUFFICIENT_RESOURCES;
+
+    auto NumberOfPtes = g_Iddp.SystemPteInfo->Bitmap.SizeOfBitMap * 8;
+
+    PVOID* ptr = (PVOID*)ExAllocatePoolWithTag(NonPagedPool, NumberOfPtes, 'pdig');
+
+    if (ptr == NULL)
+    {
+        ExFreePool(PhysicalMemoryBlock);
+        return STATUS_INSUFFICIENT_RESOURCES;
+    }
+
+    RtlZeroMemory(ptr, NumberOfPtes);
+    auto Count = 0;
 
     auto i = 0;
     while (PhysicalMemoryBlock[i].NumberOfBytes.QuadPart != 0)
@@ -476,14 +316,14 @@ NTSTATUS PgIdpEnumPhysicalMemory(ENUMPHYSICALCALLBACK callback, PVOID context)
                 {
                     PVOID ImageBase = nullptr;
 
-                    //MmGetPhysicalAddress();
-
                     RtlPcToFileHeader(MapAddress, &ImageBase);
 
                     if (!ImageBase)
                     {
-                        if (!callback(MapAddress, PAGE_SIZE, context))
-                            break;
+                        /*if (!callback(MapAddress, PAGE_SIZE, context))
+                            break;*/
+                        ptr[Count] = MapAddress;
+                        Count++;
                     }
                 }
             }
@@ -495,6 +335,58 @@ NTSTATUS PgIdpEnumPhysicalMemory(ENUMPHYSICALCALLBACK callback, PVOID context)
     }
 
     ExFreePool(PhysicalMemoryBlock);
+    insert_sort(ptr, Count);
+    
+    for (i = 0; i < Count; i++)
+    {
+        if (ptr[i] && MmIsAddressValid(ptr[i]))
+        {
+            if (!callback(ptr[i], PAGE_SIZE, context))
+                break;
+        }
+    }
+
+    ExFreePoolWithTag(ptr, 'pdig');
 
     return STATUS_SUCCESS;
+}
+
+SIZE_T PgIdpGetPhysicalMemoryBlockSize(PVOID Va)
+{
+    if (Va == NULL)
+        return 0;
+
+    if (!MmIsAddressValid(Va))
+        return 0;
+
+    if (MmGetPhysicalAddress(Va).QuadPart == 0)
+        return 0;
+
+    if (!PgIdpMmIsAccessibleAddress(Va))
+        return 0;
+
+    PCHAR p = nullptr;
+
+    size_t i = 0;
+
+    for (i = 0; i < 0x95; i++)
+    {
+        p = (PCHAR)Va + PAGE_SIZE * i;
+
+        if (!MmIsAddressValid(p))
+            break;
+
+        auto phy = MmGetPhysicalAddress(p);
+
+        if (phy.QuadPart == 0)
+            break;
+
+        if (!PgIdpMmIsAccessibleAddress(p))
+            break;
+    }
+
+    if (i == 0)
+        return 0;
+
+    return i * PAGE_SIZE;
 }
