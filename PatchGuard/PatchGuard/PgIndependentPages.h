@@ -1,7 +1,27 @@
 #ifndef _PG_INDEPENDENT_PAGES_H_
 #define _PG_INDEPENDENT_PAGES_H_
 
+typedef enum _PG_PREOP_CALLBACK_STATUS {
+    PG_PREOP_CALL_POST_AND_FIND_SIZE,
+    PG_PREOP_NOT_CALL_POST,
+    PG_PREOP_BREAK
+} PG_PREOP_CALLBACK_STATUS, *PPG_PREOP_CALLBACK_STATUS;
+
+typedef PG_PREOP_CALLBACK_STATUS(NTAPI *PG_PREOP_CALLBACK)(PVOID Va, SIZE_T size, PVOID CallbackContext, PVOID* PostContext);
+
+typedef BOOLEAN(NTAPI *PG_POSTOP_CALLBACK)(PVOID Va, SIZE_T size, PVOID CallbackContext, PVOID PostContext);
+
+typedef POOL_TYPE(NTAPI *FNMiDeterminePoolType)(PVOID Va);
+
+typedef struct _PG_OPERATION_CALLBACKS
+{
+    PG_PREOP_CALLBACK PreCallBack;
+    PG_POSTOP_CALLBACK PostCallBack;
+}PG_OPERATION_CALLBACKS, *PPG_OPERATION_CALLBACKS;
+
 typedef BOOLEAN(NTAPI *ENUMPHYSICALCALLBACK)(PVOID Va, SIZE_T size, PVOID context);
+
+NTSTATUS PgIdpEnumPhysicalMemoryEx(PPG_OPERATION_CALLBACKS callbacks, PVOID context);
 
 NTSTATUS PgIdpInitialization();
 
@@ -12,5 +32,7 @@ BOOLEAN PgIdpMmIsAccessibleAddress(PVOID Address);
 NTSTATUS PgIdpEnumPhysicalMemory(ENUMPHYSICALCALLBACK callback, PVOID context);
 
 SIZE_T PgIdpGetPhysicalMemoryBlockSize(PVOID Va);
+
+NTSTATUS PgIdpEnumIndependentPages(ENUMMEMORYCALLBACK callback, PVOID context);
 
 #endif

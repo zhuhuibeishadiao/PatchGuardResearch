@@ -38,6 +38,8 @@ PVOID PgHelperGetUndocumentFunctionAddress(
     LONG AddNum,
     BOOLEAN ByName);
 
+PVOID PgHelperGetNtosBase();
+
 #ifndef RvaToVa
 #define RvaToVa(p) \
             ((PVOID)((PCHAR)(ULONG_PTR)(p) + \

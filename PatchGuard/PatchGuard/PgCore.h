@@ -5,6 +5,8 @@ typedef struct _PG_CORE_INFO
 {
     ULONG NtosInitSizeOfRawData;
     ULONG PgEntryPointRVA;
+    ULONG64 NtosBase;
+    ULONG64 NtosEnd;
     ULONG64 PgContextFiled[4];
     ULONG64 PgEntryPointFiled[4];
     ULONG64 PgDbgBreakPointWithStatusFiled[2];

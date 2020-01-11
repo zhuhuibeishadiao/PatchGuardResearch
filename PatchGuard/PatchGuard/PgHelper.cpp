@@ -1192,3 +1192,13 @@ PVOID PgHelperGetLDE()
 
     return Lde;
 }
+
+PVOID PgHelperGetNtosBase()
+{
+    auto p = (PVOID)PgHelperGetRoutineName(L"ZwCreateFile");
+
+    PVOID imageBase = nullptr;
+    RtlPcToFileHeader(p, &imageBase);
+
+    return imageBase;
+}

@@ -71,6 +71,28 @@ NTSTATUS PgCoreinitialization(PPG_CORE_INFO pgCoreInfo)
             break;
         }
 
+        PIMAGE_NT_HEADERS64 pHdr = RtlImageNtHeader(pMappedNtos);
+
+        if (pHdr == NULL)
+        {
+            status = STATUS_INVALID_IMAGE_FORMAT;
+            LOGF_ERROR("get nt header faild : %p\r\n", status);
+            break;
+        }
+
+        pgCoreInfo->NtosBase = (ULONG64)PgHelperGetNtosBase();
+
+        if (pgCoreInfo->NtosBase == 0)
+        {
+            status = STATUS_INVALID_IMAGE_FORMAT;
+            LOGF_ERROR("get ntos base : %p\r\n", status);
+            break;
+        }
+
+        pgCoreInfo->NtosEnd = pgCoreInfo->NtosBase + pHdr->OptionalHeader.SizeOfImage;
+
+        LOGF_DEBUG("ntos base:%p    size:%p\r\n", pgCoreInfo->NtosBase, pHdr->OptionalHeader.SizeOfImage);
+
         auto pInitDBGSection = PgHelperGetSection("INITKDBG", pMappedNtos);
 
         if (pInitDBGSection == NULL)
@@ -543,6 +565,9 @@ BOOLEAN NTAPI PgCorePoolCallback(BOOLEAN bNonPagedPool, PVOID Va, SIZE_T size, U
     {
         CompareFields = (PULONG64)p;
 
+        if (!PgIdpMmIsAccessibleAddress(CompareFields) || !PgIdpMmIsAccessibleAddress(CompareFields + 4))
+            break;
+
         size_t rcx = 8;
         // ÓÃExFreePool¿ªÊ¼Åö×²
         BOOLEAN bFouned = PgCoreCompareFilelds(CompareFields, pCoreInfo->PgContextFiled, rcx);
@@ -584,6 +609,113 @@ BOOLEAN NTAPI PgCorePoolCallback(BOOLEAN bNonPagedPool, PVOID Va, SIZE_T size, U
     return true;
 }
 
+//BOOLEAN NTAPI PgCorePoolCallbackEx(BOOLEAN bNonPagedPool, PVOID Va, SIZE_T size, UCHAR tag[4], PVOID context)
+//{
+//    if (bNonPagedPool == false)
+//        return true;
+//
+//    if (size > 0x95000)
+//        return true;
+//
+//    if (context == NULL)
+//        return false;
+//
+//    PPG_CORE_INFO pCoreInfo = reinterpret_cast<PPG_CORE_INFO>(context);
+//
+//    if (size < pCoreInfo->NtosInitSizeOfRawData)
+//        return true;
+//
+//    PCHAR p = (PCHAR)Va;
+//
+//    PCHAR pEnd = p + size - 0x8 * 5;
+//
+//    //ULONG offsetHeader = 0;
+//
+//    PULONG64 CompareFields = NULL;
+//
+//    /*
+//            rs1
+//            INIT:00000001409ABA8F                               loc_1409ABA8F:                          ; CODE XREF: CmpAppendDllSection+8E¡ýj
+//            INIT:00000001409ABA8F 48 31 84 CA C0 00 00 00                       xor     [rdx+rcx*8+0C0h], rax
+//            INIT:00000001409ABA97 48 D3 C8                                      ror     rax, cl
+//            INIT:00000001409ABA9A 48 0F BB C0                                   btc     rax, rax
+//            INIT:00000001409ABA9E E2 EF                                         loop    loc_1409ABA8F
+//
+//            0: kd> ?a3a00b5ab0c9b857-A3A03F5891C8B4E8
+//            Evaluate expression: -57165494549649 = ffffcc02`1f01036f
+//            0: kd> dps ffffcc02`1f01036f L120
+//            ffffcc02`1f01036f  903d3204`e5cc5ce4
+//            .................
+//            .................
+//            offset:0xc8
+//            ffffcc02`1f010437  00000000`00000000                                                        rcx = 1
+//            ffffcc02`1f01043f  00000000`00000000                                                        rcx = 2
+//            ffffcc02`1f010447  00000000`00000000                                                        rcx = 3
+//            ffffcc02`1f01044f  00000000`00000000                                                        rcx = 4
+//            ffffcc02`1f010457  fffff807`3162ce00 nt!ExAcquireResourceSharedLite                         rcx = 5
+//            ffffcc02`1f01045f  fffff807`3162ca20 nt!ExAcquireResourceExclusiveLite                      rcx = 6
+//            ffffcc02`1f010467  fffff807`3196a010 nt!ExAllocatePoolWithTag                               rcx = 7
+//            ffffcc02`1f01046f  fffff807`3196a0a0 nt!ExFreePool                                          rcx = 8
+//            ffffcc02`1f010477  fffff807`31c299e0 nt!ExMapHandleToPointer
+//            ffffcc02`1f01047f  fffff807`316b0060 nt!ExQueueWorkItem
+//                                                                                                        rcx = (offset-0xc0) / 8
+//                                                                                                        // offset = rcx * 8 + 0xc0;
+//            rs5.
+//            ffff8183`c20a0014  daa1c838`0103c62e
+//            .................
+//            .................
+//            offset:0xc8
+//            ffff8183`c20a00dc  00000000`00000000                                                        rcx = 1
+//            ffff8183`c20a00e4  00000000`00000000                                                        rcx = 2
+//            ffff8183`c20a00ec  00000000`00000000                                                        rcx = 3
+//            ffff8183`c20a00f4  fffff802`472b6350 nt!ExAcquireResourceSharedLite                         rcx = 4
+//            ffff8183`c20a00fc  fffff802`472b60e0 nt!ExAcquireResourceExclusiveLite                      rcx = 5
+//            ffff8183`c20a0104  fffff802`4755c030 nt!ExAllocatePoolWithTag                               rcx = 6
+//            ffff8183`c20a010c  fffff802`4755c010 nt!ExFreePool                                          rcx = 7
+//
+//           */
+//    do
+//    {
+//        CompareFields = (PULONG64)p;
+//
+//        if (!PgIdpMmIsAccessibleAddress(CompareFields) || !PgIdpMmIsAccessibleAddress(CompareFields + 4))
+//            break;
+//
+//        if (CompareFields[0] == 0x00000000000000c3)
+//        {
+//            /*
+//            ffffa38a`2cf1dc45  00000000`00000000
+//            ffffa38a`2cf1dc4d  fffff806`20cbe8c7 nt!ExQueueWorkItem+0x7
+//            ffffa38a`2cf1dc55  56d15c8b`00000010
+//            ffffa38a`2cf1dc5d  00000000`00000001
+//            ffffa38a`2cf1dc65  00000000`00000000
+//            ffffa38a`2cf1dc6d  00000000`00000000
+//            ffffa38a`2cf1dc75  00000000`00000000
+//            ffffa38a`2cf1dc7d  fffff806`20cbe8d7 nt!ExQueueWorkItem+0x17
+//            ffffa38a`2cf1dc85  2ecc050e`0000008a
+//
+//            */
+//            PULONG64 tmp = (PULONG64)((PCHAR)CompareFields + 1);
+//
+//            if (tmp[0] == 0)
+//            {
+//                if (tmp[1] > pCoreInfo->NtosBase && tmp[1] < pCoreInfo->NtosEnd)
+//                {
+//                    if (tmp[3] == 0x0000000000000001)
+//                    {
+//                        LOGF_DEBUG("hot pg -> %p    %p\r\n", Va, CompareFields);
+//                        return true;
+//                    }
+//                }
+//            }
+//        }
+//
+//        p++;
+//    } while ((ULONG64)p < (ULONG64)pEnd);
+//
+//    return true;
+//}
+
 BOOLEAN NTAPI PgCorePhysicalMemoryCallback(PVOID Va, SIZE_T size, PVOID context)
 {
     if (!MmIsAddressValid(Va) || !MmIsAddressValid((PCHAR)Va + size - 1))
@@ -617,6 +749,18 @@ BOOLEAN NTAPI PgCorePhysicalMemoryCallback(PVOID Va, SIZE_T size, PVOID context)
             {
                 auto PhysicalMemorySize = PgIdpGetPhysicalMemoryBlockSize(Va);
                 LOGF_INFO("Va:%p    rcx:%p    size:%p\r\n", Va, i, PhysicalMemorySize);
+
+                if (i == 8)
+                    offsetHeader = 0x1d; // offset ExAcquireResourceSharedLite - 0xe8 = pg context    0x1d = e8 / 8
+                else
+                    offsetHeader = 0x1c; // offset ExAcquireResourceSharedLite - 0xe0 = pg context    0x1c = e0 / 8
+
+                auto PgContext = CompareFields - offsetHeader;
+                auto PgContextSize = size - ((ULONG64)PgContext - (ULONG64)Va);
+
+                LOGF_INFO("PgContext:%p    size:%p    rcx:%p\r\n", PgContext, PgContextSize, i);
+                //PgCoreDecrytionPartDump(PgContext, PgContextSize, (PPG_CORE_INFO)context);
+
                 return true;
             }
         }
@@ -663,18 +807,473 @@ BOOLEAN NTAPI PgCorePhysicalMemoryCallback(PVOID Va, SIZE_T size, PVOID context)
     return true;
 }
 
+BOOLEAN NTAPI PgCorePhysicalMemoryCallbackEx(PVOID Va, SIZE_T size, PVOID context)
+{
+    if (!MmIsAddressValid(Va) || !MmIsAddressValid((PCHAR)Va + size - 1))
+        return true;
+
+    if (size > 0x95000)
+        return true;
+
+    if (context == NULL)
+        return false;
+
+    PPG_CORE_INFO pCoreInfo = reinterpret_cast<PPG_CORE_INFO>(context);
+
+    PCHAR p = (PCHAR)Va;
+
+    PCHAR pEnd = p + size - 0x8 * 5;
+
+    //ULONG offsetHeader = 0;
+
+    PULONG64 CompareFields = NULL;
+
+    /*
+            rs1
+            INIT:00000001409ABA8F                               loc_1409ABA8F:                          ; CODE XREF: CmpAppendDllSection+8E¡ýj
+            INIT:00000001409ABA8F 48 31 84 CA C0 00 00 00                       xor     [rdx+rcx*8+0C0h], rax
+            INIT:00000001409ABA97 48 D3 C8                                      ror     rax, cl
+            INIT:00000001409ABA9A 48 0F BB C0                                   btc     rax, rax
+            INIT:00000001409ABA9E E2 EF                                         loop    loc_1409ABA8F
+
+            0: kd> ?a3a00b5ab0c9b857-A3A03F5891C8B4E8
+            Evaluate expression: -57165494549649 = ffffcc02`1f01036f
+            0: kd> dps ffffcc02`1f01036f L120
+            ffffcc02`1f01036f  903d3204`e5cc5ce4
+            .................
+            .................
+            offset:0xc8
+            ffffcc02`1f010437  00000000`00000000                                                        rcx = 1
+            ffffcc02`1f01043f  00000000`00000000                                                        rcx = 2
+            ffffcc02`1f010447  00000000`00000000                                                        rcx = 3
+            ffffcc02`1f01044f  00000000`00000000                                                        rcx = 4
+            ffffcc02`1f010457  fffff807`3162ce00 nt!ExAcquireResourceSharedLite                         rcx = 5
+            ffffcc02`1f01045f  fffff807`3162ca20 nt!ExAcquireResourceExclusiveLite                      rcx = 6
+            ffffcc02`1f010467  fffff807`3196a010 nt!ExAllocatePoolWithTag                               rcx = 7
+            ffffcc02`1f01046f  fffff807`3196a0a0 nt!ExFreePool                                          rcx = 8
+            ffffcc02`1f010477  fffff807`31c299e0 nt!ExMapHandleToPointer
+            ffffcc02`1f01047f  fffff807`316b0060 nt!ExQueueWorkItem
+                                                                                                        rcx = (offset-0xc0) / 8
+                                                                                                        // offset = rcx * 8 + 0xc0;
+            rs5.
+            ffff8183`c20a0014  daa1c838`0103c62e
+            .................
+            .................
+            offset:0xc8
+            ffff8183`c20a00dc  00000000`00000000                                                        rcx = 1
+            ffff8183`c20a00e4  00000000`00000000                                                        rcx = 2
+            ffff8183`c20a00ec  00000000`00000000                                                        rcx = 3
+            ffff8183`c20a00f4  fffff802`472b6350 nt!ExAcquireResourceSharedLite                         rcx = 4
+            ffff8183`c20a00fc  fffff802`472b60e0 nt!ExAcquireResourceExclusiveLite                      rcx = 5
+            ffff8183`c20a0104  fffff802`4755c030 nt!ExAllocatePoolWithTag                               rcx = 6
+            ffff8183`c20a010c  fffff802`4755c010 nt!ExFreePool                                          rcx = 7
+
+           */
+    do
+    {
+        CompareFields = (PULONG64)p;
+
+        if (!PgIdpMmIsAccessibleAddress(CompareFields) || !PgIdpMmIsAccessibleAddress(CompareFields + 4))
+            break;
+
+        if (CompareFields[0] == 0x00000000000000c3)
+        {
+            /*
+            ffffa38a`2cf1dc45  00000000`00000000
+            ffffa38a`2cf1dc4d  fffff806`20cbe8c7 nt!ExQueueWorkItem+0x7
+            ffffa38a`2cf1dc55  56d15c8b`00000010
+            ffffa38a`2cf1dc5d  00000000`00000001
+            ffffa38a`2cf1dc65  00000000`00000000
+            ffffa38a`2cf1dc6d  00000000`00000000
+            ffffa38a`2cf1dc75  00000000`00000000
+            ffffa38a`2cf1dc7d  fffff806`20cbe8d7 nt!ExQueueWorkItem+0x17
+            ffffa38a`2cf1dc85  2ecc050e`0000008a
+
+            */
+
+            
+            PULONG64 tmp = (PULONG64)((PCHAR)CompareFields + 1);
+
+            if (tmp[0] == 0)
+            {
+                if (tmp[1] > pCoreInfo->NtosBase && tmp[1] < pCoreInfo->NtosEnd)
+                {
+                    if (tmp[3] == 0x0000000000000001)
+                    {
+                        LOGF_DEBUG("PgCorePhysicalMemoryCallbackEx hot pg -> %p    %p\r\n", Va, CompareFields);
+                        return true;
+                    }
+                }
+            }
+        }
+
+        p++;
+    } while ((ULONG64)p < (ULONG64)pEnd);
+
+    return true;
+}
+
+PG_PREOP_CALLBACK_STATUS NTAPI PgCorePreCallback(PVOID Va, SIZE_T size, PVOID CallbackContext, PVOID* PostContext)
+{
+    if (!MmIsAddressValid(Va) || !MmIsAddressValid((PCHAR)Va + size - 1))
+        return PG_PREOP_NOT_CALL_POST;
+
+    if (size > 0x95000)
+        return PG_PREOP_NOT_CALL_POST;
+
+    if (CallbackContext == NULL)
+        return PG_PREOP_BREAK;
+
+    PPG_CORE_INFO pCoreInfo = reinterpret_cast<PPG_CORE_INFO>(CallbackContext);
+
+    PCHAR p = (PCHAR)Va;
+
+    PCHAR pEnd = p + size - 0x8 * 8;
+
+    //ULONG offsetHeader = 0;
+
+    PULONG64 CompareFields = NULL;
+
+    /*
+            rs1
+            INIT:00000001409ABA8F                               loc_1409ABA8F:                          ; CODE XREF: CmpAppendDllSection+8E¡ýj
+            INIT:00000001409ABA8F 48 31 84 CA C0 00 00 00                       xor     [rdx+rcx*8+0C0h], rax
+            INIT:00000001409ABA97 48 D3 C8                                      ror     rax, cl
+            INIT:00000001409ABA9A 48 0F BB C0                                   btc     rax, rax
+            INIT:00000001409ABA9E E2 EF                                         loop    loc_1409ABA8F
+
+            0: kd> ?a3a00b5ab0c9b857-A3A03F5891C8B4E8
+            Evaluate expression: -57165494549649 = ffffcc02`1f01036f
+            0: kd> dps ffffcc02`1f01036f L120
+            ffffcc02`1f01036f  903d3204`e5cc5ce4
+            .................
+            .................
+            offset:0xc8
+            ffffcc02`1f010437  00000000`00000000                                                        rcx = 1
+            ffffcc02`1f01043f  00000000`00000000                                                        rcx = 2
+            ffffcc02`1f010447  00000000`00000000                                                        rcx = 3
+            ffffcc02`1f01044f  00000000`00000000                                                        rcx = 4
+            ffffcc02`1f010457  fffff807`3162ce00 nt!ExAcquireResourceSharedLite                         rcx = 5
+            ffffcc02`1f01045f  fffff807`3162ca20 nt!ExAcquireResourceExclusiveLite                      rcx = 6
+            ffffcc02`1f010467  fffff807`3196a010 nt!ExAllocatePoolWithTag                               rcx = 7
+            ffffcc02`1f01046f  fffff807`3196a0a0 nt!ExFreePool                                          rcx = 8
+            ffffcc02`1f010477  fffff807`31c299e0 nt!ExMapHandleToPointer
+            ffffcc02`1f01047f  fffff807`316b0060 nt!ExQueueWorkItem
+                                                                                                        rcx = (offset-0xc0) / 8
+                                                                                                        // offset = rcx * 8 + 0xc0;
+            rs5.
+            ffff8183`c20a0014  daa1c838`0103c62e
+            .................
+            .................
+            offset:0xc8
+            ffff8183`c20a00dc  00000000`00000000                                                        rcx = 1
+            ffff8183`c20a00e4  00000000`00000000                                                        rcx = 2
+            ffff8183`c20a00ec  00000000`00000000                                                        rcx = 3
+            ffff8183`c20a00f4  fffff802`472b6350 nt!ExAcquireResourceSharedLite                         rcx = 4
+            ffff8183`c20a00fc  fffff802`472b60e0 nt!ExAcquireResourceExclusiveLite                      rcx = 5
+            ffff8183`c20a0104  fffff802`4755c030 nt!ExAllocatePoolWithTag                               rcx = 6
+            ffff8183`c20a010c  fffff802`4755c010 nt!ExFreePool                                          rcx = 7
+
+           */
+    do
+    {
+        CompareFields = (PULONG64)p;
+
+        if (!PgIdpMmIsAccessibleAddress(CompareFields) || !PgIdpMmIsAccessibleAddress(CompareFields + 6))
+            break;
+
+        if (CompareFields[0] == 0x00000000000000c3)
+        {
+            /*
+            ffffa38a`2cf1dc45  00000000`00000000
+            ffffa38a`2cf1dc4d  fffff806`20cbe8c7 nt!ExQueueWorkItem+0x7
+            ffffa38a`2cf1dc55  56d15c8b`00000010
+            ffffa38a`2cf1dc5d  00000000`00000001
+            ffffa38a`2cf1dc65  00000000`00000000
+            ffffa38a`2cf1dc6d  00000000`00000000
+            ffffa38a`2cf1dc75  00000000`00000000
+            ffffa38a`2cf1dc7d  fffff806`20cbe8d7 nt!ExQueueWorkItem+0x17
+            ffffa38a`2cf1dc85  2ecc050e`0000008a
+
+            */
+
+
+            PULONG64 tmp = (PULONG64)((PCHAR)CompareFields + 1);
+
+            if (tmp[0] == 0)
+            {
+                if (tmp[1] > pCoreInfo->NtosBase && tmp[1] < pCoreInfo->NtosEnd)
+                {
+                    if (tmp[3] == 0x0000000000000001)
+                    {
+                        *PostContext = CompareFields;
+                        LOGF_DEBUG("PgCorePhysicalMemoryCallbackEx hot pg by c3 -> %p    %p\r\n", Va, CompareFields);
+                        return PG_PREOP_CALL_POST_AND_FIND_SIZE;
+                    }
+                }
+            }
+        }
+
+        if (CompareFields[0] > pCoreInfo->NtosBase && CompareFields[0] < pCoreInfo->NtosEnd)
+        {
+            if (CompareFields[2] == 0x0000000000000001)
+            {
+                if (CompareFields[3] == 0 && CompareFields[4] == 0 && CompareFields[5] == 0)
+                {
+                    if (CompareFields[6] > pCoreInfo->NtosBase && CompareFields[6] < pCoreInfo->NtosEnd)
+                    {
+                        *PostContext = CompareFields;
+                        LOGF_DEBUG("PgCorePhysicalMemoryCallbackEx not by c3 hot pg -> %p    %p\r\n", Va, CompareFields);
+                        return PG_PREOP_CALL_POST_AND_FIND_SIZE;
+                    }
+                }
+            }
+
+        }
+
+        p++;
+    } while ((ULONG64)p < (ULONG64)pEnd);
+
+    return PG_PREOP_NOT_CALL_POST;
+}
+
+BOOLEAN NTAPI PgCorePostCallback(PVOID Va, SIZE_T size, PVOID CallbackContext, PVOID PostContext)
+{
+    if (Va == nullptr || size > 0x95000 || CallbackContext == nullptr)
+        return false;
+
+    LOGF_DEBUG("PgCorePostCallback -> base:%p    size:%p    PreContext:%p\r\n", Va, size, PostContext);
+
+    return true;
+}
+
+//BOOLEAN NTAPI PgCorePhysicalMemoryCallbackEx(PVOID Va, SIZE_T size, PVOID context)
+//{
+//    if (!MmIsAddressValid(Va) || !MmIsAddressValid((PCHAR)Va + size - 1))
+//        return true;
+//
+//    if (size > 0x95000)
+//        return true;
+//
+//    if (context == NULL)
+//        return false;
+//
+//    PPG_CORE_INFO pCoreInfo = reinterpret_cast<PPG_CORE_INFO>(context);
+//
+//    PCHAR p = (PCHAR)Va;
+//
+//    PCHAR pEnd = p + size - 0x8 * 8;
+//
+//    //ULONG offsetHeader = 0;
+//
+//    PULONG64 CompareFields = NULL;
+//
+//    /*
+//            rs1
+//            INIT:00000001409ABA8F                               loc_1409ABA8F:                          ; CODE XREF: CmpAppendDllSection+8E¡ýj
+//            INIT:00000001409ABA8F 48 31 84 CA C0 00 00 00                       xor     [rdx+rcx*8+0C0h], rax
+//            INIT:00000001409ABA97 48 D3 C8                                      ror     rax, cl
+//            INIT:00000001409ABA9A 48 0F BB C0                                   btc     rax, rax
+//            INIT:00000001409ABA9E E2 EF                                         loop    loc_1409ABA8F
+//
+//            0: kd> ?a3a00b5ab0c9b857-A3A03F5891C8B4E8
+//            Evaluate expression: -57165494549649 = ffffcc02`1f01036f
+//            0: kd> dps ffffcc02`1f01036f L120
+//            ffffcc02`1f01036f  903d3204`e5cc5ce4
+//            .................
+//            .................
+//            offset:0xc8
+//            ffffcc02`1f010437  00000000`00000000                                                        rcx = 1
+//            ffffcc02`1f01043f  00000000`00000000                                                        rcx = 2
+//            ffffcc02`1f010447  00000000`00000000                                                        rcx = 3
+//            ffffcc02`1f01044f  00000000`00000000                                                        rcx = 4
+//            ffffcc02`1f010457  fffff807`3162ce00 nt!ExAcquireResourceSharedLite                         rcx = 5
+//            ffffcc02`1f01045f  fffff807`3162ca20 nt!ExAcquireResourceExclusiveLite                      rcx = 6
+//            ffffcc02`1f010467  fffff807`3196a010 nt!ExAllocatePoolWithTag                               rcx = 7
+//            ffffcc02`1f01046f  fffff807`3196a0a0 nt!ExFreePool                                          rcx = 8
+//            ffffcc02`1f010477  fffff807`31c299e0 nt!ExMapHandleToPointer
+//            ffffcc02`1f01047f  fffff807`316b0060 nt!ExQueueWorkItem
+//                                                                                                        rcx = (offset-0xc0) / 8
+//                                                                                                        // offset = rcx * 8 + 0xc0;
+//            rs5.
+//            ffff8183`c20a0014  daa1c838`0103c62e
+//            .................
+//            .................
+//            offset:0xc8
+//            ffff8183`c20a00dc  00000000`00000000                                                        rcx = 1
+//            ffff8183`c20a00e4  00000000`00000000                                                        rcx = 2
+//            ffff8183`c20a00ec  00000000`00000000                                                        rcx = 3
+//            ffff8183`c20a00f4  fffff802`472b6350 nt!ExAcquireResourceSharedLite                         rcx = 4
+//            ffff8183`c20a00fc  fffff802`472b60e0 nt!ExAcquireResourceExclusiveLite                      rcx = 5
+//            ffff8183`c20a0104  fffff802`4755c030 nt!ExAllocatePoolWithTag                               rcx = 6
+//            ffff8183`c20a010c  fffff802`4755c010 nt!ExFreePool                                          rcx = 7
+//
+//           */
+//    do
+//    {
+//        CompareFields = (PULONG64)p;
+//
+//        if (!PgIdpMmIsAccessibleAddress(CompareFields) || !PgIdpMmIsAccessibleAddress(CompareFields + 6))
+//            break;
+//
+//        /*
+//            ffffa38a`2cf1dc45  00000000`00000000
+//            ffffa38a`2cf1dc4d  fffff806`20cbe8c7 nt!ExQueueWorkItem+0x7
+//            ffffa38a`2cf1dc55  56d15c8b`00000010
+//            ffffa38a`2cf1dc5d  00000000`00000001
+//            ffffa38a`2cf1dc65  00000000`00000000
+//            ffffa38a`2cf1dc6d  00000000`00000000
+//            ffffa38a`2cf1dc75  00000000`00000000
+//            ffffa38a`2cf1dc7d  fffff806`20cbe8d7 nt!ExQueueWorkItem+0x17
+//            ffffa38a`2cf1dc85  2ecc050e`0000008a
+//
+//            ffff9a80`2819b41a  fffff800`6ee02ff8 nt!ExQueueWorkItem+0x121c98
+//            ffff9a80`2819b422  38427ba7`0000001c
+//            ffff9a80`2819b42a  00000000`00000001
+//            ffff9a80`2819b432  00000000`00000000
+//            ffff9a80`2819b43a  00000000`00000000
+//            ffff9a80`2819b442  00000000`00000000
+//            ffff9a80`2819b44a  fffff800`6ece1360 nt!ExQueueWorkItem
+//            ffff9a80`2819b452  48b213a2`00000050
+//            ffff9a80`2819b45a  00000000`00000001
+//
+//
+//        */
+//        if (CompareFields[0] > pCoreInfo->NtosBase && CompareFields[0] < pCoreInfo->NtosEnd)
+//        {
+//            if (CompareFields[2] == 0x0000000000000001)
+//            {
+//                if (CompareFields[3] == 0 && CompareFields[4] == 0 && CompareFields[5] == 0)
+//                {
+//                    if (CompareFields[6] > pCoreInfo->NtosBase && CompareFields[6] < pCoreInfo->NtosEnd)
+//                    {
+//                        LOGF_DEBUG("PgCorePhysicalMemoryCallbackEx hot pg -> %p    %p\r\n", Va, CompareFields);
+//                        return true;
+//                    }
+//                }
+//            }
+//            
+//        }
+//
+//        p++;
+//    } while ((ULONG64)p < (ULONG64)pEnd);
+//
+//    return true;
+//}
+
+BOOLEAN NTAPI PgCorePoolCallbackEx(BOOLEAN bNonPagedPool, PVOID Va, SIZE_T size, UCHAR tag[4], PVOID context)
+{
+    if (bNonPagedPool == false)
+        return true;
+
+    if (size > 0x95000)
+        return true;
+
+    if (context == NULL)
+        return false;
+
+    PPG_CORE_INFO pCoreInfo = reinterpret_cast<PPG_CORE_INFO>(context);
+
+    if (size < pCoreInfo->NtosInitSizeOfRawData)
+        return true;
+
+    PCHAR p = (PCHAR)Va;
+
+    PCHAR pEnd = p + size - 0x8 * 8;
+
+    //ULONG offsetHeader = 0;
+
+    PULONG64 CompareFields = NULL;
+
+    /*
+            rs1
+            INIT:00000001409ABA8F                               loc_1409ABA8F:                          ; CODE XREF: CmpAppendDllSection+8E¡ýj
+            INIT:00000001409ABA8F 48 31 84 CA C0 00 00 00                       xor     [rdx+rcx*8+0C0h], rax
+            INIT:00000001409ABA97 48 D3 C8                                      ror     rax, cl
+            INIT:00000001409ABA9A 48 0F BB C0                                   btc     rax, rax
+            INIT:00000001409ABA9E E2 EF                                         loop    loc_1409ABA8F
+
+            0: kd> ?a3a00b5ab0c9b857-A3A03F5891C8B4E8
+            Evaluate expression: -57165494549649 = ffffcc02`1f01036f
+            0: kd> dps ffffcc02`1f01036f L120
+            ffffcc02`1f01036f  903d3204`e5cc5ce4
+            .................
+            .................
+            offset:0xc8
+            ffffcc02`1f010437  00000000`00000000                                                        rcx = 1
+            ffffcc02`1f01043f  00000000`00000000                                                        rcx = 2
+            ffffcc02`1f010447  00000000`00000000                                                        rcx = 3
+            ffffcc02`1f01044f  00000000`00000000                                                        rcx = 4
+            ffffcc02`1f010457  fffff807`3162ce00 nt!ExAcquireResourceSharedLite                         rcx = 5
+            ffffcc02`1f01045f  fffff807`3162ca20 nt!ExAcquireResourceExclusiveLite                      rcx = 6
+            ffffcc02`1f010467  fffff807`3196a010 nt!ExAllocatePoolWithTag                               rcx = 7
+            ffffcc02`1f01046f  fffff807`3196a0a0 nt!ExFreePool                                          rcx = 8
+            ffffcc02`1f010477  fffff807`31c299e0 nt!ExMapHandleToPointer
+            ffffcc02`1f01047f  fffff807`316b0060 nt!ExQueueWorkItem
+                                                                                                        rcx = (offset-0xc0) / 8
+                                                                                                        // offset = rcx * 8 + 0xc0;
+            rs5.
+            ffff8183`c20a0014  daa1c838`0103c62e
+            .................
+            .................
+            offset:0xc8
+            ffff8183`c20a00dc  00000000`00000000                                                        rcx = 1
+            ffff8183`c20a00e4  00000000`00000000                                                        rcx = 2
+            ffff8183`c20a00ec  00000000`00000000                                                        rcx = 3
+            ffff8183`c20a00f4  fffff802`472b6350 nt!ExAcquireResourceSharedLite                         rcx = 4
+            ffff8183`c20a00fc  fffff802`472b60e0 nt!ExAcquireResourceExclusiveLite                      rcx = 5
+            ffff8183`c20a0104  fffff802`4755c030 nt!ExAllocatePoolWithTag                               rcx = 6
+            ffff8183`c20a010c  fffff802`4755c010 nt!ExFreePool                                          rcx = 7
+
+           */
+    do
+    {
+        CompareFields = (PULONG64)p;
+
+        if (!PgIdpMmIsAccessibleAddress(CompareFields) || !PgIdpMmIsAccessibleAddress(CompareFields + 6))
+            break;
+
+        if (CompareFields[0] > pCoreInfo->NtosBase && CompareFields[0] < pCoreInfo->NtosEnd)
+        {
+            if (CompareFields[2] == 0x0000000000000001)
+            {
+                if (CompareFields[3] == 0 && CompareFields[4] == 0 && CompareFields[5] == 0)
+                {
+                    if (CompareFields[6] > pCoreInfo->NtosBase && CompareFields[6] < pCoreInfo->NtosEnd)
+                    {
+                        LOGF_INFO("PgCorePoolCallbackEx: Tag: %.*s, Address: 0x%p, Size: 0x%p\r\n", 4, tag, Va, size);
+                        LOGF_DEBUG("PgCorePoolCallbackEx hot pg -> %p    %p\r\n", Va, CompareFields);
+                        return true;
+                    }
+                }
+            }
+
+        }
+
+        p++;
+    } while ((ULONG64)p < (ULONG64)pEnd);
+
+    return true;
+}
+
 NTSTATUS PgCoreFindPgContext(PPG_CORE_INFO pgCoreInfo)
 {
-    LOGF_DEBUG("-----[PgCore] Find PgContext in pool.-----\r\n");
-    PgHelperEnumBigPool(PgCorePoolCallback, pgCoreInfo, NULL);
-    LOGF_DEBUG("-----[PgCore] Find PgContext in pool end.-----\r\n");
+    //LOGF_DEBUG("-----[PgCore] Find PgContext in pool.-----\r\n");
+    ////PgHelperEnumBigPool(PgCorePoolCallback, pgCoreInfo, NULL);
+    PgHelperEnumBigPool(PgCorePoolCallbackEx, pgCoreInfo, NULL);
+    //LOGF_DEBUG("-----[PgCore] Find PgContext in pool end.-----\r\n");
 
-    LOGF_DEBUG("-----[PgCore] Find PgContext in PhysicalMemory.-----\r\n");
+    LOGF_DEBUG("-----[PgCore] Find PgContext in physical.-----\r\n");
+    //PgIdpEnumPhysicalMemory(PgCorePhysicalMemoryCallback, pgCoreInfo);
+    //auto status = PgIdpEnumPhysicalMemory(PgCorePhysicalMemoryCallbackEx, pgCoreInfo);
+    PG_OPERATION_CALLBACKS callbacks;
+    callbacks.PreCallBack = PgCorePreCallback;
+    callbacks.PostCallBack = PgCorePostCallback;
+    PgIdpEnumPhysicalMemoryEx(&callbacks, pgCoreInfo);
+    
+    LOGF_DEBUG("-----[PgCore] Find PgContext in physical end.-----\r\n");
 
-    auto status = PgIdpEnumPhysicalMemory(PgCorePhysicalMemoryCallback, pgCoreInfo);
-
-    LOGF_DEBUG("-----[PgCore] Find PgContext in PhysicalMemory end.-----\r\n");
-
+    auto status = STATUS_SUCCESS;
 
     if(!NT_SUCCESS(status))
         LOGF_ERROR("[PgCore] Enum Physical Memory return 0x%x\r\n", status);
