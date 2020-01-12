@@ -1,0 +1,97 @@
+15:07:13.096	DBG	ZwCreateFile    FFFFF8076F3BE550
+15:07:13.096	DBG	ntos base:FFFFF8076F200000    size:0000000000AB6000
+15:07:13.096	DBG	PgEntryPointRVA:00000000000007E8
+15:07:13.096	DBG	ExAcquireResourceSharedLite    FFFFF8076F2374F0
+15:07:13.112	DBG	ExAcquireResourceExclusiveLite    FFFFF8076F237110
+15:07:13.112	DBG	ExAllocatePoolWithTag    FFFFF8076F56F010
+15:07:13.112	DBG	ExFreePool    FFFFF8076F56F0A0
+15:07:13.112	DBG	DbgBreakPointWithStatus    FFFFF8076F3C9370
+15:07:13.112	DBG	size:0000000000000002
+15:07:13.112	DBG	RtlCaptureContext    FFFFF8076F3C9510
+15:07:13.112	DBG	size:0000000000000137
+15:07:13.112	DBG	memcpy    FFFFF8076F3D4240
+15:07:13.112	DBG	size:0000000000000052
+15:07:13.112	DBG	KeIsEmptyAffinityEx    FFFFF8076F2276B0
+15:07:13.112	DBG	size:0000000000000026
+15:07:13.112	DBG	KeBugCheckEx    FFFFF8076F3C14E0
+15:07:13.112	DBG	size:0000000000000120
+15:07:13.112	DBG	ZwCreateFile    FFFFF8076F3BE550
+15:07:13.112	DBG	ZwCreateFile    FFFFF8076F3BE550
+15:07:13.112	DBG	PgCoreinitialization success.
+15:07:13.112	DBG	-----[PgCore] Find PgContext in pool.-----
+15:07:13.284	DBG	-----[PgCore] Find PgContext in pool end.-----
+15:07:13.284	DBG	-----[PgCore] Find PgContext in physical.-----
+15:07:13.472	DBG	-----[PgCore] Find PgContext in physical end.-----
+15:07:43.487	DBG	-----[PgCore] Find PgContext in pool.-----
+15:07:43.612	DBG	-----[PgCore] Find PgContext in pool end.-----
+15:07:43.612	DBG	-----[PgCore] Find PgContext in physical.-----
+15:07:43.800	DBG	-----[PgCore] Find PgContext in physical end.-----
+15:08:13.815	DBG	-----[PgCore] Find PgContext in pool.-----
+15:08:13.925	DBG	-----[PgCore] Find PgContext in pool end.-----
+15:08:13.925	DBG	-----[PgCore] Find PgContext in physical.-----
+15:08:14.113	DBG	-----[PgCore] Find PgContext in physical end.-----
+15:08:44.128	DBG	-----[PgCore] Find PgContext in pool.-----
+15:08:44.143	INF	PgCorePoolCallbackEx: Tag: AlSc, Address: 0xFFFFE68F94302000, Size: 0x000000000005C000
+15:08:44.159	DBG	PgCorePoolCallbackEx hot pg -> FFFFE68F94302000    FFFFE68F9431DC12
+15:08:44.237	DBG	-----[PgCore] Find PgContext in pool end.-----
+15:08:44.237	DBG	-----[PgCore] Find PgContext in physical.-----
+15:08:44.409	DBG	PgCorePhysicalMemoryCallbackEx hot pg by c3 -> FFFFE68F94302000    FFFFE68F9431DC09
+15:08:44.409	DBG	PgCorePostCallback -> base:FFFFE68F94302000    size:000000000005C000    PreContext:FFFFE68F9431DC09
+15:08:44.425	DBG	-----[PgCore] Find PgContext in physical end.-----
+15:09:14.440	DBG	-----[PgCore] Find PgContext in pool.-----
+15:09:14.456	INF	PgCorePoolCallbackEx: Tag: AlSc, Address: 0xFFFFE68F94302000, Size: 0x000000000005C000
+15:09:14.456	DBG	PgCorePoolCallbackEx hot pg -> FFFFE68F94302000    FFFFE68F9431DC12
+15:09:14.549	DBG	-----[PgCore] Find PgContext in pool end.-----
+15:09:14.549	DBG	-----[PgCore] Find PgContext in physical.-----
+15:09:14.721	DBG	PgCorePhysicalMemoryCallbackEx hot pg by c3 -> FFFFE68F94302000    FFFFE68F9431DC09
+15:09:14.721	DBG	PgCorePostCallback -> base:FFFFE68F94302000    size:000000000005C000    PreContext:FFFFE68F9431DC09
+15:09:14.737	DBG	-----[PgCore] Find PgContext in physical end.-----
+15:09:44.753	DBG	-----[PgCore] Find PgContext in pool.-----
+15:09:44.768	INF	PgCorePoolCallbackEx: Tag: AlSc, Address: 0xFFFFE68F94302000, Size: 0x000000000005C000
+15:09:44.768	DBG	PgCorePoolCallbackEx hot pg -> FFFFE68F94302000    FFFFE68F9431DC12
+15:09:44.862	DBG	-----[PgCore] Find PgContext in pool end.-----
+15:09:44.862	DBG	-----[PgCore] Find PgContext in physical.-----
+15:09:45.034	DBG	PgCorePhysicalMemoryCallbackEx hot pg by c3 -> FFFFE68F94302000    FFFFE68F9431DC09
+15:09:45.034	DBG	PgCorePostCallback -> base:FFFFE68F94302000    size:000000000005C000    PreContext:FFFFE68F9431DC09
+15:09:45.050	DBG	-----[PgCore] Find PgContext in physical end.-----
+15:10:15.081	DBG	-----[PgCore] Find PgContext in pool.-----
+15:10:15.096	INF	PgCorePoolCallbackEx: Tag: AlSc, Address: 0xFFFFE68F94302000, Size: 0x000000000005C000
+15:10:15.096	DBG	PgCorePoolCallbackEx hot pg -> FFFFE68F94302000    FFFFE68F9431DC12
+15:10:15.190	DBG	-----[PgCore] Find PgContext in pool end.-----
+15:10:15.190	DBG	-----[PgCore] Find PgContext in physical.-----
+15:10:15.362	DBG	PgCorePhysicalMemoryCallbackEx hot pg by c3 -> FFFFE68F94302000    FFFFE68F9431DC09
+15:10:15.362	DBG	PgCorePostCallback -> base:FFFFE68F94302000    size:000000000005C000    PreContext:FFFFE68F9431DC09
+15:10:15.378	DBG	-----[PgCore] Find PgContext in physical end.-----
+15:10:45.394	DBG	-----[PgCore] Find PgContext in pool.-----
+15:10:45.519	DBG	-----[PgCore] Find PgContext in pool end.-----
+15:10:45.519	DBG	-----[PgCore] Find PgContext in physical.-----
+15:10:45.706	DBG	-----[PgCore] Find PgContext in physical end.-----
+15:11:15.722	DBG	-----[PgCore] Find PgContext in pool.-----
+15:11:15.846	DBG	-----[PgCore] Find PgContext in pool end.-----
+15:11:15.846	DBG	-----[PgCore] Find PgContext in physical.-----
+15:11:16.034	DBG	-----[PgCore] Find PgContext in physical end.-----
+15:11:46.050	DBG	-----[PgCore] Find PgContext in pool.-----
+15:11:46.175	DBG	-----[PgCore] Find PgContext in pool end.-----
+15:11:46.175	DBG	-----[PgCore] Find PgContext in physical.-----
+15:11:46.363	DBG	-----[PgCore] Find PgContext in physical end.-----
+15:12:16.378	DBG	-----[PgCore] Find PgContext in pool.-----
+15:12:16.502	DBG	-----[PgCore] Find PgContext in pool end.-----
+15:12:16.502	DBG	-----[PgCore] Find PgContext in physical.-----
+15:12:16.690	DBG	-----[PgCore] Find PgContext in physical end.-----
+15:12:46.706	DBG	-----[PgCore] Find PgContext in pool.-----
+15:12:46.768	INF	PgCorePoolCallbackEx: Tag: AlSc, Address: 0xFFFFE68FC6078000, Size: 0x0000000000076000
+15:12:46.768	DBG	PgCorePoolCallbackEx hot pg -> FFFFE68FC6078000    FFFFE68FC609416B
+15:12:46.815	DBG	-----[PgCore] Find PgContext in pool end.-----
+15:12:46.815	DBG	-----[PgCore] Find PgContext in physical.-----
+15:12:46.878	DBG	PgCorePhysicalMemoryCallbackEx hot pg by c3 -> FFFFE68FC6078000    FFFFE68FC6094162
+15:12:46.878	DBG	PgCorePostCallback -> base:FFFFE68FC6078000    size:0000000000076000    PreContext:FFFFE68FC6094162
+15:12:47.003	DBG	-----[PgCore] Find PgContext in physical end.-----
+15:13:17.019	DBG	-----[PgCore] Find PgContext in pool.-----
+15:13:17.080	INF	PgCorePoolCallbackEx: Tag: AlSc, Address: 0xFFFFE68FC6078000, Size: 0x0000000000076000
+15:13:17.080	DBG	PgCorePoolCallbackEx hot pg -> FFFFE68FC6078000    FFFFE68FC609416B
+15:13:17.127	DBG	-----[PgCore] Find PgContext in pool end.-----
+15:13:17.127	DBG	-----[PgCore] Find PgContext in physical.-----
+15:13:17.190	DBG	PgCorePhysicalMemoryCallbackEx hot pg by c3 -> FFFFE68FC6078000    FFFFE68FC6094162
+15:13:17.190	DBG	PgCorePostCallback -> base:FFFFE68FC6078000    size:0000000000076000    PreContext:FFFFE68FC6094162
+15:13:17.315	DBG	-----[PgCore] Find PgContext in physical end.-----
+15:13:47.330	DBG	Loop Find Thread exit.

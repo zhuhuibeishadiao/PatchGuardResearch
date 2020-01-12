@@ -12,6 +12,7 @@ extern "C" {
 #include "../../helper/kLog/kLogLib/Log.h"
 
 #include "PgStruct.h"
+#include "hash.h"
 #include "asm.h"
 #include "PgHelper.h"
 #include "PgIndependentPages.h"

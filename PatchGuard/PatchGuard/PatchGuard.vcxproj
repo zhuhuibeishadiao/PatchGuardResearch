@@ -146,6 +146,7 @@
     <FilesToPackage Include="$(TargetPath)" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="hash.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PgCore.cpp" />
     <ClCompile Include="PgHelper.cpp" />
@@ -153,6 +154,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="asm.h" />
+    <ClInclude Include="hash.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PgCore.h" />
     <ClInclude Include="PgHelper.h" />
