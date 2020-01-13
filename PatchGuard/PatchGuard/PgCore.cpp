@@ -393,7 +393,7 @@ BOOLEAN PgCoreGetFirstRorKeyAndOffsetByC3(ULONG64* lpRorKey, ULONG64* lpOffset, 
         return false;
     }
 
-    p = &p[1];
+    /*p = &p[1];
     rorKey = *p ^ pgCore->PgRtlMinimalBarrierFiled[1];
     offset = (ULONG64)p - (ULONG64)pgContext;
 
@@ -410,7 +410,7 @@ BOOLEAN PgCoreGetFirstRorKeyAndOffsetByC3(ULONG64* lpRorKey, ULONG64* lpOffset, 
 
         p--;
         offset = offset - 8;
-    }
+    }*/
 
     return false;
 }
@@ -604,13 +604,15 @@ BOOLEAN NTAPI PgCorePoolCallback(BOOLEAN bNonPagedPool, PVOID Va, SIZE_T size, U
 
             LOGF_INFO("Tag: %.*s, Address: 0x%p, Size: 0x%p\r\n", 4, tag, Va, size);
 
-            LOGF_INFO("PgContext:%p    size:%p    rcx:%p\r\n", PgContext, PgContextSize, rcx);
+            auto rdtsc = __rdtsc();
+
+            LOGF_INFO("PgContext:%p    size:%p    rcx:%p    rdtsc:%p    %lld\r\n", PgContext, PgContextSize, rcx, rdtsc, rdtsc);
 
             //PgCoreDumpPgContext(PgContext, PgContextSize);
-            //ULONG64 offset = 0;
-            //ULONG64 rorkey = 0;
+            ULONG64 offset = 0;
+            ULONG64 rorkey = 0;
             // 解密c8~第二部分结束
-            //PgCoreGetFirstRorKeyAndOffsetByC3(&rorkey, &offset, PgContext, PgContextSize, (PPG_CORE_INFO)context);
+            PgCoreGetFirstRorKeyAndOffsetByC3(&rorkey, &offset, PgContext, PgContextSize, (PPG_CORE_INFO)context);
             // 解密c8~0x988
             //PgCoreDecrytionPartDump(PgContext, PgContextSize, (PPG_CORE_INFO)context);
 
@@ -804,7 +806,9 @@ BOOLEAN NTAPI PgCorePostCallback(PVOID Va, SIZE_T size, PVOID CallbackContext, P
         // 这个情况咋办呢?
     }
 
-    LOGF_DEBUG("PgCorePostCallback -> base:%p    size:%p    PreContext:%p\r\n", Va, size, PostContext);
+    PPG_PRE_POST_CONTEXT PreContext = (PPG_PRE_POST_CONTEXT)PostContext;
+
+    LOGF_DEBUG("PgCorePostCallback -> base:%p    size:%p    PreContext:%p    ScanType:%s\r\n", Va, size, PreContext->ScanedAddress, PreContext->ScanType == PgScanType_c3 ? "c3" : "routine");
 
     ExFreePoolWithTag(PostContext, 'tsoP');
 
@@ -912,8 +916,8 @@ BOOLEAN NTAPI PgCorePoolCallbackEx(BOOLEAN bNonPagedPool, PVOID Va, SIZE_T size,
 NTSTATUS PgCoreFindPgContext(PPG_CORE_INFO pgCoreInfo)
 {
     LOGF_DEBUG("-----[PgCore] Find PgContext in pool.-----\r\n");
-    ////PgHelperEnumBigPool(PgCorePoolCallback, pgCoreInfo, NULL);
-    PgHelperEnumBigPool(PgCorePoolCallbackEx, pgCoreInfo, NULL);
+    PgHelperEnumBigPool(PgCorePoolCallback, pgCoreInfo, NULL);
+    //PgHelperEnumBigPool(PgCorePoolCallbackEx, pgCoreInfo, NULL);
     LOGF_DEBUG("-----[PgCore] Find PgContext in pool end.-----\r\n");
 
     LOGF_DEBUG("-----[PgCore] Find PgContext in physical.-----\r\n");
