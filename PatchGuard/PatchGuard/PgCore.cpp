@@ -412,7 +412,7 @@ BOOLEAN PgCoreGetFirstRorKeyAndOffsetByC3(ULONG64* lpRorKey, ULONG64* lpOffset, 
         offset = offset - 8;
     }*/
 
-    return false;
+    return true;
 }
 
 BOOLEAN PgCoreDecrytionPartDump(PULONG64 pgContext, SIZE_T ContextSize, PPG_CORE_INFO pCore)
@@ -752,7 +752,7 @@ PG_PREOP_CALLBACK_STATUS NTAPI PgCorePreCallback(PVOID Va, SIZE_T size, PVOID Ca
         }
 
         /*
-        1903 1909 可能出现找不到c3的情况 直接用结构体碰撞
+        可能出现找不到c3的情况 直接用结构体碰撞
         */
         if (CompareFields[0] > pCoreInfo->NtosBase && CompareFields[0] < pCoreInfo->NtosEnd)
         {
@@ -804,6 +804,66 @@ BOOLEAN NTAPI PgCorePostCallback(PVOID Va, SIZE_T size, PVOID CallbackContext, P
     {
         LOGF_WARN("PgCorePostCallback -> size is PAGE_SIZE\r\n");
         // 这个情况咋办呢?
+        /*
+        10:45:31.298	DBG	-----[PgCore] Find PgContext in physical.-----
+        10:45:31.345	DBG	PgCorePhysicalMemoryCallbackEx hit pg by c3 -> FFFFBC01A693A000    FFFFBC01A693A40B
+        10:45:31.363	DBG	key:FFFFBC01A693A000    base:0000000000000000    Va:FFFFBC01A693A000    size:0000000000001000    type:32
+        10:45:31.363	WRN	PgCorePostCallback -> size is PAGE_SIZE
+        10:45:31.383	DBG	PgCorePostCallback -> base:FFFFBC01A693A000    size:0000000000001000    PreContext:FFFFBC01A693A40B    ScanType:c3
+        10:45:31.407	DBG	PgCorePhysicalMemoryCallbackEx hit pg by c3 -> FFFFAA82BC29C000    FFFFAA82BC2B6359
+        10:45:31.407	DBG	key:FFFFAA82BC29C000    base:FFFFAA82BC29C000    Va:FFFFAA82BC29C000    size:0000000000068000    type:0
+        10:45:31.431	DBG	PgCorePostCallback -> base:FFFFAA82BC29C000    size:0000000000068000    PreContext:FFFFAA82BC2B6359    ScanType:c3
+        10:45:31.455	DBG	-----[PgCore] Find PgContext in physical end.-----
+
+        WRN:NonPagedPoolSession PAGE_SIZE 命中
+        查看后发现pg正在解密 还没解密完?
+
+        ffffbc01`a69209f3  e7d54562`876622b7
+        ffffbc01`a69209fb  fc0785a8`60e3055d
+        ffffbc01`a6920a03  95e784c0`f128a1e1
+        ffffbc01`a6920a0b  60abbf80`f0b50c1c
+        ffffbc01`a6920a13  1a1704c6`da8b8ed1
+        ffffbc01`a6920a1b  1838c157`7f004aeb
+        ffffbc01`a6920a23  5dfc0785`a860e305
+        ffffbc01`a6920a2b  2d430718`2aefe03c
+        ffffbc01`a6920a33  82aefe03`c2d43071
+        ffffbc01`a6920a3b  785a860e`3055dfc0
+        ffffbc01`a6920a43  8c1577f0`1e16a183
+        ffffbc01`a6920a4b  0f0b50c1`c60abbf8
+        kd>
+        ffffbc01`a6920a53  c60abbf8`0f0b50c1
+        ffffbc01`a6920a5b  1e16a183`8c1577f0
+        ffffbc01`a6920a63  3055dfc0`785a860e
+        ffffbc01`a6920a6b  c2d43071`82aefe03
+        ffffbc01`a6920a73  2aefe03c`2d431467
+        ffffbc01`a6920a7b  a860e305`5dfc0785
+        ffffbc01`a6920a83  00000005`00000011
+        ffffbc01`a6920a8b  fffff803`3c5ab810
+        ffffbc01`a6920a93  00000000`000000ae
+        ffffbc01`a6920a9b  fffff803`3bdac650 nt!KeBugCheckEx
+        ffffbc01`a6920aa3  00000000`00000120
+        ffffbc01`a6920aab  fffff803`3be64660 nt!KeBugCheck2
+        ffffbc01`a6920ab3  00000000`00000de0
+        ffffbc01`a6920abb  fffff803`3be657a0 nt!KiBugCheckDebugBreak
+        ffffbc01`a6920ac3  00000000`000000b5
+        ffffbc01`a6920acb  fffff803`3bdb8080 nt!KiDebugTrapOrFault
+        kd>
+        ffffbc01`a6920ad3  00000000`0000043f
+        ffffbc01`a6920adb  fffff803`3bdb5470 nt!DbgBreakPointWithStatus
+        ffffbc01`a6920ae3  00000000`00000002
+        ffffbc01`a6920aeb  fffff803`3bdb5610 nt!RtlCaptureContext
+        ffffbc01`a6920af3  00000000`00000137
+        ffffbc01`a6920afb  fffff803`3bdce44c nt!KeQueryCurrentStackInformation+0x1a906c
+        ffffbc01`a6920b03  00000000`00000074
+        ffffbc01`a6920b0b  fffff803`3bc253e0 nt!KeQueryCurrentStackInformation
+        ffffbc01`a6920b13  00000000`0000018a
+        ffffbc01`a6920b1b  fffff803`3bdac9a0 nt!KiSaveProcessorControlState
+        ffffbc01`a6920b23  00000000`00000172
+        ffffbc01`a6920b2b  fffff803`3bdc04c0 nt!memcpy
+        ffffbc01`a6920b33  00000000`00000339
+        ffffbc01`a6920b3b  fffff803`3be55710 nt!IoSaveBugCheckProgress
+
+        */
     }
 
     PPG_PRE_POST_CONTEXT PreContext = (PPG_PRE_POST_CONTEXT)PostContext;
