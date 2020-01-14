@@ -694,9 +694,8 @@ PG_PREOP_CALLBACK_STATUS NTAPI PgCorePreCallback(PVOID Va, SIZE_T size, PVOID Ca
         if (!PgIdpMmIsAccessibleAddress(CompareFields) || !PgIdpMmIsAccessibleAddress(CompareFields + 6))
             break;
 
-        if (CompareFields[0] == 0x00000000000000c3)
-        {
-            /*
+        /*
+            xxxxxxxxxxxxxxxxx  xxxxxxxxxxxxxxxxx 可能是全加密 半加密 最后一个字节未加密
             ffffa38a`2cf1dc45  00000000`00000000
             ffffa38a`2cf1dc4d  fffff806`20cbe8c7 nt!ExQueueWorkItem+0x7
             ffffa38a`2cf1dc55  56d15c8b`00000010
@@ -719,41 +718,9 @@ PG_PREOP_CALLBACK_STATUS NTAPI PgCorePreCallback(PVOID Va, SIZE_T size, PVOID Ca
                 PVOID Fileds[3];
             }
 
-            */
-
-
-            PULONG64 tmp = (PULONG64)((PCHAR)CompareFields + 1);
-
-            if (tmp[0] == 0)
-            {
-                if (tmp[1] > pCoreInfo->NtosBase && tmp[1] < pCoreInfo->NtosEnd)
-                {
-                    if (tmp[3] == 0x0000000000000001)
-                    {
-                        PPG_PRE_POST_CONTEXT PreContext = (PPG_PRE_POST_CONTEXT)ExAllocatePoolWithTag(NonPagedPool, sizeof(PG_PRE_POST_CONTEXT), 'tsoP');
-
-                        if (PreContext == nullptr)
-                        {
-                            LOGF_ERROR("%s:Alloc Context faild.\r\n", __FUNCDNAME__);
-                            return PG_PREOP_BREAK;
-                        }
-
-                        RtlZeroMemory(PreContext, sizeof(PG_PRE_POST_CONTEXT));
-
-                        PreContext->ScanType = PgScanType_c3;
-                        PreContext->ScanedAddress = CompareFields;
-
-                        *PostContext = PreContext;
-                        LOGF_DEBUG("PgCorePhysicalMemoryCallbackEx hit pg by c3 -> %p    %p\r\n", Va, CompareFields);
-                        return PG_PREOP_CALL_POST_AND_FIND_SIZE;
-                    }
-                }
-            }
-        }
-
-        /*
-        可能出现找不到c3的情况 直接用结构体碰撞
         */
+
+        // 扫出来的可能不是第一个 在PostCallback中做判断
         if (CompareFields[0] > pCoreInfo->NtosBase && CompareFields[0] < pCoreInfo->NtosEnd)
         {
             if (CompareFields[2] == 0x0000000000000001)
@@ -773,7 +740,7 @@ PG_PREOP_CALLBACK_STATUS NTAPI PgCorePreCallback(PVOID Va, SIZE_T size, PVOID Ca
                         RtlZeroMemory(PreContext, sizeof(PG_PRE_POST_CONTEXT));
 
                         PreContext->ScanType = PgScanType_Routine;
-                        PreContext->ScanedAddress = CompareFields;
+                        PreContext->ScanedAddress = CompareFields - 1; // -1 这是第二部分加密的结尾
 
                         *PostContext = PreContext;
                         LOGF_DEBUG("PgCorePhysicalMemoryCallbackEx hit pg by Routine -> %p    %p\r\n", Va, CompareFields);
@@ -781,7 +748,6 @@ PG_PREOP_CALLBACK_STATUS NTAPI PgCorePreCallback(PVOID Va, SIZE_T size, PVOID Ca
                     }
                 }
             }
-
         }
 
         p++;
@@ -800,10 +766,13 @@ BOOLEAN NTAPI PgCorePostCallback(PVOID Va, SIZE_T size, PVOID CallbackContext, P
         return false;
     }
 
+    PPG_PRE_POST_CONTEXT PreContext = (PPG_PRE_POST_CONTEXT)PostContext;
+
+    LOGF_DEBUG("PgCorePostCallback -> base:%p    size:%p    PreContext:%p    ScanType:%s\r\n", Va, size, PreContext->ScanedAddress, PreContext->ScanType == PgScanType_c3 ? "c3" : "routine");
+
     if (size == PAGE_SIZE)
     {
         LOGF_WARN("PgCorePostCallback -> size is PAGE_SIZE\r\n");
-        // 这个情况咋办呢?
         /*
         10:45:31.298	DBG	-----[PgCore] Find PgContext in physical.-----
         10:45:31.345	DBG	PgCorePhysicalMemoryCallbackEx hit pg by c3 -> FFFFBC01A693A000    FFFFBC01A693A40B
@@ -865,10 +834,87 @@ BOOLEAN NTAPI PgCorePostCallback(PVOID Va, SIZE_T size, PVOID CallbackContext, P
 
         */
     }
+    else
+    {
+         /*
+         xxxxxxxxxxxxxxxxx  xxxxxxxxxxxxxxxxx 可能是全加密 半加密 最后一个字节未加密
+            ffffa38a`2cf1dc45  00000000`00000000
+            ffffa38a`2cf1dc4d  fffff806`20cbe8c7 nt!ExQueueWorkItem+0x7
+            ffffa38a`2cf1dc55  56d15c8b`00000010
+            ffffa38a`2cf1dc5d  00000000`00000001
+            ffffa38a`2cf1dc65  00000000`00000000
+            ffffa38a`2cf1dc6d  00000000`00000000
+            ffffa38a`2cf1dc75  00000000`00000000
+            ffffa38a`2cf1dc7d  fffff806`20cbe8d7 nt!ExQueueWorkItem+0x17
+            ffffa38a`2cf1dc85  2ecc050e`0000008a
 
-    PPG_PRE_POST_CONTEXT PreContext = (PPG_PRE_POST_CONTEXT)PostContext;
+            c3下面的0可能是用于对齐?
 
-    LOGF_DEBUG("PgCorePostCallback -> base:%p    size:%p    PreContext:%p    ScanType:%s\r\n", Va, size, PreContext->ScanedAddress, PreContext->ScanType == PgScanType_c3 ? "c3" : "routine");
+            剩下的结构体
+            _struct xxxxx
+            {
+                PVOID routine;
+                ULONG checksum?;
+                ULONG routineCodeSize;
+                PVOID unknow;(一直为1)
+                PVOID Fileds[3];
+            }
+         */
+        PULONG64 pEndOfPgVContext = (PULONG64)PreContext->ScanedAddress;
+
+        do
+        {
+            if (*(pEndOfPgVContext - 1) == 0)
+            {
+                DPRINT("The address of the hit point is not the first:%p\r\n", pEndOfPgVContext);
+                break;
+            }
+
+            PUCHAR pRtlMinimalBarrier = (PUCHAR)pEndOfPgVContext - 1;
+
+            /*
+                INITKDBG:0000000140349D3D 0F BA E2 10                                   bt      edx, 10h
+                INITKDBG:0000000140349D41 73 09                                         jnb     short loc_140349D4C
+                INITKDBG:0000000140349D43 B8 01 00 00 00                                mov     eax, 1
+                INITKDBG:0000000140349D48 F0 01 41 04                                   lock add [rcx+4], eax
+                INITKDBG:0000000140349D4C
+                INITKDBG:0000000140349D4C                               loc_140349D4C:                          ; CODE XREF: RtlMinimalBarrier+45j
+                INITKDBG:0000000140349D4C 32 C0                                         xor     al, al
+                INITKDBG:0000000140349D4E C3                                            retn
+                INITKDBG:0000000140349D4E                               RtlMinimalBarrier endp
+            */
+
+            static UCHAR RtlMinimalBarrier[8] = {0xc3, 0xc0, 0x32, 0x04, 0x41, 0x01, 0xf0, 0x00};
+
+            size_t i = 0;
+            for (i = 0; i < sizeof(RtlMinimalBarrier); i++)
+            {
+                pRtlMinimalBarrier = pRtlMinimalBarrier - i;
+
+                if (*pRtlMinimalBarrier != RtlMinimalBarrier[i])
+                    break;
+            }
+
+            if (i == 0)
+            {
+                DPRINT("pg alignment.\r\n");
+            }
+
+            if (i == sizeof(RtlMinimalBarrier))
+            {
+                DPRINT("pg Decryption in progress or completed.\r\n");
+                DbgBreakPoint();
+                break;
+            }
+
+            pEndOfPgVContext = (PULONG64)(pRtlMinimalBarrier - 7);
+
+            // 这里我们通过碰撞offset来撞即可
+            DPRINT("pgVContext:%p\r\n", pEndOfPgVContext);
+
+        } while (false);
+            
+    }
 
     ExFreePoolWithTag(PostContext, 'tsoP');
 
