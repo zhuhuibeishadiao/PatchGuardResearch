@@ -1,5 +1,23 @@
 #include "pch.h"
 
+#define ULONG64_TO_NET(val)	((ULONG64) ( \
+      (((ULONG64) (val) &						\
+	(ULONG64) (0x00000000000000ffU)) << 56) |	\
+      (((ULONG64) (val) &						\
+	(ULONG64) (0x000000000000ff00U)) << 40) |	\
+      (((ULONG64) (val) &						\
+	(ULONG64) (0x0000000000ff0000U)) << 24) |	\
+      (((ULONG64) (val) &						\
+	(ULONG64) (0x00000000ff000000U)) <<  8) |	\
+      (((ULONG64) (val) &						\
+	(ULONG64) (0x000000ff00000000U)) >>  8) |	\
+      (((ULONG64) (val) &						\
+	(ULONG64) (0x0000ff0000000000U)) >> 24) |	\
+      (((ULONG64) (val) &						\
+	(ULONG64) (0x00ff000000000000U)) >> 40) |	\
+      (((ULONG64) (val) &						\
+	(ULONG64) (0xff00000000000000U)) >> 56)))
+
 enum PG_SCAN_TYPE
 {
     PgScanType_Unknow = 0,
@@ -909,8 +927,71 @@ BOOLEAN NTAPI PgCorePostCallback(PVOID Va, SIZE_T size, PVOID CallbackContext, P
 
             pEndOfPgVContext = (PULONG64)(pRtlMinimalBarrier - 7);
 
+            static UCHAR FiledsCode[] = { 0xc3, 0xc0, 0x32, 0x04, 0x41, 0x01, 0xf0, 0x00, 0x00, 0x00, 0x01, 0xb8, 0x09, 0x73, 0x10, 0xe2, 0xba, 0x0F, 0xF4, 0x75, 0xC0, 0x3B, 0x41, 0xC1, 0x23, 0x41, 0x01, 0x8B, 0x90, 0xF3, 0xC3 ,0x01, 0x89 };
+
+            ULONG64 tmp[3] = { 0 };
+            tmp[0] = ULONG64_TO_NET(((PULONG64)(&FiledsCode[i]))[0]);
+            tmp[1] = ULONG64_TO_NET(((PULONG64)(&FiledsCode[i]))[1]);
+            tmp[2] = ULONG64_TO_NET(((PULONG64)(&FiledsCode[i]))[2]);
+
+            DPRINT("0:%p\r\n", tmp[0]);
+            DPRINT("1:%p\r\n", tmp[1]);
+            DPRINT("2:%p\r\n", tmp[2]);
+
             // 这里我们通过碰撞offset来撞即可
-            DPRINT("pgVContext:%p\r\n", pEndOfPgVContext);
+            DPRINT("pgVContext:%p    unAlignment:%p\r\n", pEndOfPgVContext, i);
+
+            /*
+            1909 offset:1bb44
+            1903 offset:1b4f3
+            1803 offset:1a2b1
+
+            偏移应该在这个范围
+
+            还有一种思路 进行ror rax,cl 这个cl取值范围很小 也就是说rcx低位很容易碰撞出来
+            0~256之间
+
+
+            在NonePool内存的 知道base,就很容易算出偏移
+            pgContext满足以下条件
+            pgContext > base & pgContext < base + 0x400
+            */
+
+            size_t offset = (PCHAR)PreContext->ScanedAddress - (PCHAR)Va;
+            size_t offsetEnd = offset - 0x400;
+
+            if (offset < 0x10000)
+            {
+                DPRINT("The offset is too small :%p\r\n", offset);
+                break;
+            }
+
+            // 此时offset 的取值范围就在当前offset ~ offset - 0x400之前
+            pEndOfPgVContext = pEndOfPgVContext - 1;
+
+            auto rorkey = tmp[0] ^ pEndOfPgVContext[1];
+
+            DPRINT("first rorkey:%p\r\n", rorkey);
+
+            for (; offset > offsetEnd; offset--)
+            {
+                size_t rcx = (offset - 0xc0) / 8 + 1;
+
+                rorkey = tmp[0] ^ pEndOfPgVContext[1];
+
+                rorkey = __ror64(rorkey, rcx);
+
+                rorkey = __btc64(rorkey, rorkey);
+
+                if ((rorkey ^ pEndOfPgVContext[0]) == tmp[1])
+                {
+                    DPRINT("find offset:%p\r\n", offset);
+                }
+            }
+
+            
+
+            DbgBreakPoint();
 
         } while (false);
             
